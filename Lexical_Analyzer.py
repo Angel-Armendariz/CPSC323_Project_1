@@ -121,6 +121,11 @@ class Lexer:
             elif self.current_char == ')':
                 tokens.append(Token(TOK_RPAREN))
                 self.advance()
+            elif self.current_char in Identifiers:
+                if self.current_char != None and self.current_char in Letters:
+                    while self.current_char in Identifiers:
+                        self.advance()
+                tokens.append(Token(TOK_ID))
             else:
                 position_begin = self.pos.copy()
                 char = self.current_char
