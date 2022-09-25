@@ -6,7 +6,7 @@ Numbers = '0123456789'
 
 #################### IDENTIFIERS ####################
 
-
+Letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 
