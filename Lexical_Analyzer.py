@@ -53,7 +53,7 @@ class Position:
 #################### TOKENS ####################
 
 TOK_INT		= 'INT'
-TOK_FLOAT    = 'FLOAT'
+TOK_REAL    = 'REAL'
 TOK_PLUS     = 'PLUS'
 TOK_MINUS    = 'MINUS'
 TOK_MUL      = 'MUL'
@@ -161,7 +161,7 @@ class Lexer:
         if dot_count == 0:
             return Token(TOK_INT, int(num_str))
         else:
-            return Token(TOK_FLOAT, float(num_str))
+            return Token(TOK_REAL, float(num_str))
 
 #################### RUN ####################
 
