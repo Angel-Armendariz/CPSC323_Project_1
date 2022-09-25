@@ -9,6 +9,14 @@ Numbers = '0123456789'
 
 Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+
+#################### KEYWORDS #######################
+
+Keywords = ["break", "bool", "case", "char", "const", "continue", "default", "do",
+            "double", "else", "long", "register", "for", "if", "short", "sizeof", "static"
+            "signed", "unsigned", "struct", "return", "switch", "typedef", "void", "return"
+            "while", "string"]
+
 #################### FOR WHEN WE MAKE OOPSIE DAISISES/ERRORS ####################
 
 class Oopsie:
@@ -85,6 +93,7 @@ TOK_TYPEDEF = 'KEYWORD'
 TOK_VOID = 'KEYWORD'
 TOK_SIGNED = 'KEYWORD'
 TOK_UNSIGNED = 'KEYWORD'
+TOK_STRING = 'KEYWORD'
 TOK_WHILE = 'KEYWORD'
 TOK_ID = 'IDENTIFIERS'
 
