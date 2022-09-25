@@ -4,6 +4,11 @@
 
 Numbers = '0123456789'
 
+#################### IDENTIFIERS ####################
+
+
+Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
 #################### FOR WHEN WE MAKE OOPSIE DAISISES/ERRORS ####################
 
 class Oopsie:
