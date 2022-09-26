@@ -126,16 +126,18 @@ class Lexer:
             elif self.current_char == ')':
                 tokens.append(Token(TOK_RPAREN))
                 self.advance()
-            elif self.current_char in Letters:
+
+            elif self.current_char in Keywords:
+                self.advance() 
+                tokens.append(Token(TOK_KEY, self.text))
+
+            elif self.current_char in Letters and self.text not in Keywords :
                 while self.current_char != None and self.current_char in Identifiers:
                     self.advance()
-                if Numbers in self.text:
-                    position_begin = self.pos.copy()
-                    char = self.current_char
-                    self.advance()
-                    return [], IllegalCharOopsie(position_begin, self.pos, "'" + char + "'")     
-                elif 1+1==2:
-                    tokens.append(Token(TOK_ID, self.text))
+                tokens.append(Token(TOK_ID, self.text))
+                    
+                
+
             else:
                 position_begin = self.pos.copy()
                 char = self.current_char
@@ -161,11 +163,9 @@ class Lexer:
             return Token(TOK_INT, int(num_str))
         else:
             return Token(TOK_REAL, float(num_str))
-
 #################### RUN ####################
 
 def run(fn, text):
     lexer = Lexer(fn, text)
     tokens, oopsie = lexer.make_tokens()
-
     return tokens, oopsie
