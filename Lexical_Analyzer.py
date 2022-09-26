@@ -109,7 +109,7 @@ class Lexer:
         while self.current_char != None:
             if self.current_char in ' \t':
                 self.advance()
-            elif self.current_char in Numbers and self.text not in Letters and self.current_char not in Underscore:
+            elif self.current_char in Numbers:
                 tokens.append(self.make_number())
             elif self.current_char == '+':
                 tokens.append(Token(TOK_PLUS))
