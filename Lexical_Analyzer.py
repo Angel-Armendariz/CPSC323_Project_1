@@ -20,7 +20,7 @@ Underscore = '_'
 Keywords = ["break", "bool", "case", "char", "const", "continue", "default", "do",
             "double", "else", "long", "register", "for", "if", "short", "sizeof", "static"
             "signed", "unsigned", "struct", "return", "switch", "typedef", "void", "return"
-            "while", "string"]
+            "while", "string", "int", "true", "false"]
 
 #################### FOR WHEN WE MAKE OOPSIE DAISISES/ERRORS ####################
 
