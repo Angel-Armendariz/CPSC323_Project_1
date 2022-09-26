@@ -1,3 +1,7 @@
+#################### To-do list
+# make the identifiers not also trip the integers section 
+# make the file read from the source testing code instead of the input for testing 
+# make a section for recogizing the keywords 
 
 #################### CONSTANTS ####################
 
@@ -8,6 +12,7 @@ Numbers = '0123456789'
 
 Letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+Underscore = '_'
 
 
 #################### KEYWORDS #######################
@@ -101,7 +106,7 @@ class Lexer:
         while self.current_char != None:
             if self.current_char in ' \t':
                 self.advance()
-            elif self.current_char in Numbers:
+            elif self.current_char in Numbers and self.text not in Letters and self.current_char not in Underscore:
                 tokens.append(self.make_number())
             elif self.current_char == '+':
                 tokens.append(Token(TOK_PLUS))
@@ -121,11 +126,16 @@ class Lexer:
             elif self.current_char == ')':
                 tokens.append(Token(TOK_RPAREN))
                 self.advance()
-            elif self.current_char in Identifiers:
-                if self.current_char != None and self.current_char in Letters:
-                    while self.current_char in Identifiers:
-                        self.advance()
-                tokens.append(Token(TOK_ID, self.text))
+            elif self.current_char in Letters:
+                while self.current_char != None and self.current_char in Identifiers:
+                    self.advance()
+                if Numbers in self.text:
+                    position_begin = self.pos.copy()
+                    char = self.current_char
+                    self.advance()
+                    return [], IllegalCharOopsie(position_begin, self.pos, "'" + char + "'")     
+                elif 1+1==2:
+                    tokens.append(Token(TOK_ID, self.text))
             else:
                 position_begin = self.pos.copy()
                 char = self.current_char
