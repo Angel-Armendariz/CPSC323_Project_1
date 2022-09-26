@@ -6,6 +6,9 @@
 #################### CONSTANTS ####################
 
 
+from winreg import HKEY_LOCAL_MACHINE
+
+
 Numbers = '0123456789'
 
 #################### IDENTIFIERS ####################
@@ -133,7 +136,7 @@ class Lexer:
                     while self.current_char in ' \t':
                         self.advance()
                     holder += self.current_char
-                    self.advance() 
+                    self.advance()
                 tokens.append(Token(TOK_KEY, holder))
 
             elif self.current_char in Letters and self.text not in Keywords:
@@ -143,7 +146,10 @@ class Lexer:
                         self.advance()
                     holder += self.current_char
                     self.advance()
-                tokens.append(Token(TOK_ID, holder))
+                if holder in Keywords:
+                    tokens.append(Token(TOK_KEY, holder))
+                else:
+                    tokens.append(Token(TOK_ID, holder))
                     
             else:
                 position_begin = self.pos.copy()
