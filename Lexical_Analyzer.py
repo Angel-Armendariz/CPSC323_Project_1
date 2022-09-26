@@ -128,14 +128,22 @@ class Lexer:
                 self.advance()
 
             elif self.text in Keywords:
+                holder= ''
                 while self.current_char != None:
+                    while self.current_char in ' \t':
+                        self.advance()
+                    holder += self.current_char
                     self.advance() 
-                tokens.append(Token(TOK_KEY, self.text))
+                tokens.append(Token(TOK_KEY, holder))
 
             elif self.current_char in Letters and self.text not in Keywords:
+                holder=''
                 while self.current_char != None and self.current_char in Identifiers:
+                    while self.current_char in ' \t':
+                        self.advance()
+                    holder += self.current_char
                     self.advance()
-                tokens.append(Token(TOK_ID, self.text))
+                tokens.append(Token(TOK_ID, holder))
                     
             else:
                 position_begin = self.pos.copy()
