@@ -6,6 +6,8 @@
 #################### CONSTANTS ####################
 
 
+from ast import Num
+from tkinter import E
 from winreg import HKEY_LOCAL_MACHINE
 
 
@@ -130,6 +132,10 @@ class Lexer:
                 tokens.append(Token(TOK_RPAREN))
                 self.advance()
 
+            #Not sure, but able to give error if string starts w number
+            elif self.text[0] in Numbers:
+                return IllegalCharOopsie()
+                
             elif self.text in Keywords:
                 holder= ''
                 while self.current_char != None:
@@ -138,7 +144,7 @@ class Lexer:
                     holder += self.current_char
                     self.advance()
                 tokens.append(Token(TOK_KEY, holder))
-
+            
             elif self.current_char in Letters and self.text not in Keywords:
                 holder=''
                 while self.current_char != None and self.current_char in Identifiers:
@@ -150,7 +156,7 @@ class Lexer:
                     tokens.append(Token(TOK_KEY, holder))
                 else:
                     tokens.append(Token(TOK_ID, holder))
-                    
+
             else:
                 position_begin = self.pos.copy()
                 char = self.current_char
