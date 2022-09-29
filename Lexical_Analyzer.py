@@ -72,10 +72,10 @@ class Position:
 
 TOK_INT		= 'INT'
 TOK_REAL    = 'REAL'
-TOK_PLUS     = 'PLUS'
-TOK_MINUS    = 'MINUS'
-TOK_MUL      = 'MUL'
-TOK_DIV      = 'DIV'
+TOK_PLUS     = 'OPERATOR'
+TOK_MINUS    = 'OPERATOR'
+TOK_MUL      = 'OPERATOR'
+TOK_DIV      = 'OPERATOR'
 TOK_LPAREN   = 'LPAREN'
 TOK_RPAREN   = 'RPAREN'
 TOK_KEY = 'KEYWORD'
@@ -114,16 +114,16 @@ class Lexer:
             elif self.current_char in Numbers:
                 tokens.append(self.make_number())
             elif self.current_char == '+':
-                tokens.append(Token(TOK_PLUS))
+                tokens.append(Token(TOK_PLUS, "+"))
                 self.advance()
             elif self.current_char == '-':
-                tokens.append(Token(TOK_MINUS))
+                tokens.append(Token(TOK_MINUS, "-"))
                 self.advance()
             elif self.current_char == '*':
-                tokens.append(Token(TOK_MUL))
+                tokens.append(Token(TOK_MUL, "*"))
                 self.advance()
             elif self.current_char == '/':
-                tokens.append(Token(TOK_DIV))
+                tokens.append(Token(TOK_DIV, "/"))
                 self.advance()
             elif self.current_char == '(':
                 tokens.append(Token(TOK_LPAREN))
