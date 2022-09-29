@@ -1,7 +1,7 @@
 #################### To-do list
-# make the identifiers not also trip the integers section 
+# make sure it gives an error if string starts with a digit
+
 # make the file read from the source testing code instead of the input for testing 
-# make a section for recogizing the keywords 
 
 #################### CONSTANTS ####################
 
@@ -106,7 +106,7 @@ class Lexer:
         self.current_char = self.text[self.pos.index] if self.pos.index < len(self.text) else None
     
     #Needs work, but splits string, commented for now
-    def check_identifier(self):
+    '''def check_identifier(self):
         tokens = []
         for value in self.text.split():
             tokens.append(value)
@@ -114,13 +114,13 @@ class Lexer:
             if value in Numbers:
                 print('yes')
             else:
-                print('Value: {} is not an identifier'.format(value))
+                print('Value: {} is not an identifier'.format(value))'''
 
     def make_tokens(self):
         tokens = []
 
         while self.current_char != None:
-            #self.check_identifier()
+            #self.check_identifier(), if wanted to use another function to check for identifiers
 
             if self.current_char in ' \t':
                 self.advance()
@@ -169,10 +169,15 @@ class Lexer:
                         self.advance()
                     holder += self.current_char
                     self.advance()
+
                 if holder in Keywords:
+                    # when i do print(holder) to check string split, it outputs the keywords correctly
+                    # but if holder in Numbers, it does not identify it
+                    # if condition might need to change for holder to hold strings w numbers too??
                     tokens.append(Token(TOK_KEY, holder))
+
                 else:
-                    tokens.append(Token(TOK_ID, holder))
+                    tokens.append(Token(TOK_ID, holder))           
 
             else:
                 position_begin = self.pos.copy()
