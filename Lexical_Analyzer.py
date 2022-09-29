@@ -132,9 +132,13 @@ class Lexer:
                 tokens.append(Token(TOK_RPAREN))
                 self.advance()
 
-            #Not sure, but able to give error if string starts w number
+            #Not sure, but able to give error only if first input string starts w number
+                    #Then it will output the whole input string as an error
             elif self.text[0] in Numbers:
-                return IllegalCharOopsie()
+                position_begin = self.pos.copy()
+                error = self.text
+                self.advance()
+                return [], IllegalCharOopsie(position_begin, self.pos, "'" + error + "'")
                 
             elif self.text in Keywords:
                 holder= ''
