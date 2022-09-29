@@ -104,11 +104,22 @@ class Lexer:
     def advance(self):
         self.pos.advance(self.current_char)
         self.current_char = self.text[self.pos.index] if self.pos.index < len(self.text) else None
+    
+    #Needs work, but splits string, commented for now
+    '''def check_identifier(self):
+        tokens = []
+        for value in self.text.split():
+            if value == 'hello bye':
+                print('good')
+            else:
+                print('Value: {} is not an identifier'.format(value))'''
 
     def make_tokens(self):
         tokens = []
 
         while self.current_char != None:
+            self.check_identifier()
+
             if self.current_char in ' \t':
                 self.advance()
             elif self.current_char in Numbers:
@@ -139,7 +150,7 @@ class Lexer:
                 error = self.text
                 self.advance()
                 return [], IllegalCharOopsie(position_begin, self.pos, "'" + error + "'")
-                
+
             elif self.text in Keywords:
                 holder= ''
                 while self.current_char != None:
