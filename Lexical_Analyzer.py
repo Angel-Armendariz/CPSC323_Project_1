@@ -118,7 +118,7 @@ class Lexer:
         tokens = []
 
         while self.current_char != None:
-            self.check_identifier()
+            #self.check_identifier()
 
             if self.current_char in ' \t':
                 self.advance()
