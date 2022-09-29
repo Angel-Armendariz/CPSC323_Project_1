@@ -106,13 +106,15 @@ class Lexer:
         self.current_char = self.text[self.pos.index] if self.pos.index < len(self.text) else None
     
     #Needs work, but splits string, commented for now
-    '''def check_identifier(self):
+    def check_identifier(self):
         tokens = []
         for value in self.text.split():
-            if value == 'hello bye':
-                print('good')
+            tokens.append(value)
+            print(value)
+            if value in Numbers:
+                print('yes')
             else:
-                print('Value: {} is not an identifier'.format(value))'''
+                print('Value: {} is not an identifier'.format(value))
 
     def make_tokens(self):
         tokens = []
