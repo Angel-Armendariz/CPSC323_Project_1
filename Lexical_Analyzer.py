@@ -15,9 +15,6 @@ from winreg import HKEY_LOCAL_MACHINE
 Numbers = '0123456789'
 Underscore = '_'
 
-#################### SEPARATORS ####################
-Separators = ['(', ')', '{', '}', ',', ';']
-
 #################### IDENTIFIERS ####################
 
 Letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -85,8 +82,8 @@ TOK_PLUS     = 'OPERATOR'
 TOK_MINUS    = 'OPERATOR'
 TOK_MUL      = 'OPERATOR'
 TOK_DIV      = 'OPERATOR'
-TOK_LPAREN   = 'LPAREN'
-TOK_RPAREN   = 'RPAREN'
+TOK_LPAREN   = 'SEPARATOR'
+TOK_RPAREN   = 'SEPARATOR'
 TOK_KEY = 'KEYWORD'
 TOK_ID = 'IDENTIFIERS'
 
@@ -148,10 +145,10 @@ class Lexer:
                 tokens.append(Token(TOK_DIV, "/"))
                 self.advance()
             elif self.current_char == '(':
-                tokens.append(Token(TOK_LPAREN))
+                tokens.append(Token(TOK_LPAREN, "("))
                 self.advance()
             elif self.current_char == ')':
-                tokens.append(Token(TOK_RPAREN))
+                tokens.append(Token(TOK_RPAREN, ")"))
                 self.advance()
 
             #Not sure, but able to give error only if first input string starts w number
