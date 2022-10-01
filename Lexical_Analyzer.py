@@ -2,7 +2,6 @@
 # 1.) throw an error when a nonletter is in front of an identifier; ex: >1hello, >true 1hello --> should throw an error
 # -- for this, we need to do something for self.current_char to read if it is an integer
 #  2.) FSM implementation of states in 2d array????
-# 3.) make the file read from the source testing code instead of the input for testing 
 
 #################### CONSTANTS ####################
 
