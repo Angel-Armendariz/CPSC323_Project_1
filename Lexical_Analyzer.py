@@ -82,8 +82,11 @@ TOK_PLUS     = 'OPERATOR'
 TOK_MINUS    = 'OPERATOR'
 TOK_MUL      = 'OPERATOR'
 TOK_DIV      = 'OPERATOR'
+TOK_EQUALS = 'OPERATOR'
 TOK_LPAREN   = 'SEPARATOR'
 TOK_RPAREN   = 'SEPARATOR'
+TOK_COMMA = 'SEPARATOR'
+TOK_SEMICOLON = 'SEPARATOR'
 TOK_KEY = 'KEYWORD'
 TOK_ID = 'IDENTIFIERS'
 
@@ -144,11 +147,20 @@ class Lexer:
             elif self.current_char == '/':
                 tokens.append(Token(TOK_DIV, "/"))
                 self.advance()
+            elif self.current_char == '=':
+                tokens.append(Token(TOK_EQUALS, "="))
+                self.advance()
             elif self.current_char == '(':
                 tokens.append(Token(TOK_LPAREN, "("))
                 self.advance()
             elif self.current_char == ')':
                 tokens.append(Token(TOK_RPAREN, ")"))
+                self.advance()
+            elif self.current_char == ',':
+                tokens.append(Token(TOK_COMMA, ","))
+                self.advance()
+            elif self.current_char == ';':
+                tokens.append(Token(TOK_SEMICOLON, ";"))
                 self.advance()
 
             #Not sure, but able to give error only if first input string starts w number
