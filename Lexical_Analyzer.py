@@ -22,7 +22,7 @@ Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 #################### KEYWORDS #######################
 
-Keywords = ["intger", "boolean", "real", "if", "else", "endif", "while", "return",
+Keywords = ["integer", "boolean", "real", "if", "else", "endif", "while", "return",
             "get", "put", "true", "false", "function"]
 
 #################### SEPERATORS ######################
