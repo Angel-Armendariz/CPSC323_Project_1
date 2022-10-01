@@ -22,10 +22,8 @@ Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 #################### KEYWORDS #######################
 
-Keywords = ["break", "boolean", "case", "char", "const", "continue", "default", "do",
-            "double", "else", "false", "float", "function", "long", "register", "for", "if", 
-            "int", "short", "sizeof", "static", "signed", "unsigned", "struct", "return", 
-            "switch", "typedef", "void", "return", "while", "string", "true"]
+Keywords = ["intger", "boolean", "real", "if", "else", "endif", "while", "return",
+            "get", "put", "true", "false", "function"]
 
 #################### FOR WHEN WE MAKE OOPSIE DAISISES/ERRORS ####################
 
