@@ -1,6 +1,7 @@
-#################### To-do list
-# make sure it gives an error if string starts with a digit
-
+#################### To-do list########################
+# throw an error when a nonletter is in front of an identifier; ex: >1hello, >true 1hello --> should throw an error
+# identify each individual operator to operators in general instead of >+ is plus, should be + is operator
+# identify separators
 # make the file read from the source testing code instead of the input for testing 
 
 #################### CONSTANTS ####################
@@ -12,20 +13,22 @@ from winreg import HKEY_LOCAL_MACHINE
 
 
 Numbers = '0123456789'
+Underscore = '_'
+
+#################### SEPARATORS ####################
+Separators = ['(', ')', '{', '}', ',', ';']
 
 #################### IDENTIFIERS ####################
 
 Letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-Underscore = '_'
-
 
 #################### KEYWORDS #######################
 
-Keywords = ["break", "bool", "case", "char", "const", "continue", "default", "do",
-            "double", "else", "long", "register", "for", "if", "short", "sizeof", "static"
+Keywords = ["break", "boolean", "case", "char", "const", "continue", "default", "do",
+            "double", "else", "false", "float", "function", "long", "register", "for", "if", "int", "short", "sizeof", "static"
             "signed", "unsigned", "struct", "return", "switch", "typedef", "void", "return"
-            "while", "string", "int", "true", "false"]
+            "while", "string", "true"]
 
 #################### FOR WHEN WE MAKE OOPSIE DAISISES/ERRORS ####################
 
@@ -44,6 +47,12 @@ class Oopsie:
 class IllegalCharOopsie(Oopsie):
     def __init__(self, position_begin, position_end, details):
         super().__init__(position_begin, position_end, 'Illegal Character', details)
+
+#for wrong identifier message
+class IllegalIdentifierOopsie(Oopsie):
+    def __init__(self, position_begin, position_end, details):
+        super().__init__(position_begin, position_end, 'Error', details)
+
 
 #################### POSITION ####################
 
@@ -151,7 +160,7 @@ class Lexer:
                 position_begin = self.pos.copy()
                 error = self.text
                 self.advance()
-                return [], IllegalCharOopsie(position_begin, self.pos, "'" + error + "'")
+                return [], IllegalIdentifierOopsie(position_begin, self.pos, "'" + error + "'")
 
             elif self.text in Keywords:
                 holder= ''
