@@ -25,6 +25,12 @@ Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 Keywords = ["intger", "boolean", "real", "if", "else", "endif", "while", "return",
             "get", "put", "true", "false", "function"]
 
+#################### SEPERATORS ######################
+Seperators = ',$(){};='
+
+#################### OPERATORS #######################
+Operators = ["==", "!=", ">", "<", "<=", "=>", "+", "-", "*", "/"]
+
 #################### FOR WHEN WE MAKE OOPSIE DAISISES/ERRORS ####################
 
 class Oopsie:
