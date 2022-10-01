@@ -1,8 +1,7 @@
 #################### To-do list########################
-# throw an error when a nonletter is in front of an identifier; ex: >1hello, >true 1hello --> should throw an error
-# identify each individual operator to operators in general instead of >+ is plus, should be + is operator
-# identify separators
-# make the file read from the source testing code instead of the input for testing 
+# 1.) throw an error when a nonletter is in front of an identifier; ex: >1hello, >true 1hello --> should throw an error
+# 2.) FSM implementation of states in 2d array????
+# 3.) make the file read from the source testing code instead of the input for testing 
 
 #################### CONSTANTS ####################
 
@@ -83,6 +82,8 @@ TOK_MINUS    = 'OPERATOR'
 TOK_MUL      = 'OPERATOR'
 TOK_DIV      = 'OPERATOR'
 TOK_EQUALS = 'OPERATOR'
+TOK_LEFTARROW = 'OPERATOR'
+TOK_RIGHTARROW = 'OPERATOR'
 TOK_LPAREN   = 'SEPARATOR'
 TOK_RPAREN   = 'SEPARATOR'
 TOK_COMMA = 'SEPARATOR'
@@ -149,6 +150,12 @@ class Lexer:
                 self.advance()
             elif self.current_char == '=':
                 tokens.append(Token(TOK_EQUALS, "="))
+                self.advance()
+            elif self.current_char == '<':
+                tokens.append(Token(TOK_LEFTARROW, "<"))
+                self.advance()
+            elif self.current_char == '>':
+                tokens.append(Token(TOK_RIGHTARROW, ">"))
                 self.advance()
             elif self.current_char == '(':
                 tokens.append(Token(TOK_LPAREN, "("))
