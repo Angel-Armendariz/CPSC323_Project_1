@@ -1,12 +1,14 @@
 #################### To-do list########################
 # 1.) throw an error when a nonletter is in front of an identifier; ex: >1hello, >true 1hello --> should throw an error
-# 2.) FSM implementation of states in 2d array????
+# -- for this, we need to do something for self.current_char to read if it is an integer
+#  2.) FSM implementation of states in 2d array????
 # 3.) make the file read from the source testing code instead of the input for testing 
 
 #################### CONSTANTS ####################
 
 
 from ast import Num
+from lib2to3.pytree import convert
 from tkinter import E
 from winreg import HKEY_LOCAL_MACHINE
 
@@ -22,9 +24,9 @@ Identifiers = '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 #################### KEYWORDS #######################
 
 Keywords = ["break", "boolean", "case", "char", "const", "continue", "default", "do",
-            "double", "else", "false", "float", "function", "long", "register", "for", "if", "int", "short", "sizeof", "static"
-            "signed", "unsigned", "struct", "return", "switch", "typedef", "void", "return"
-            "while", "string", "true"]
+            "double", "else", "false", "float", "function", "long", "register", "for", "if", 
+            "int", "short", "sizeof", "static", "signed", "unsigned", "struct", "return", 
+            "switch", "typedef", "void", "return", "while", "string", "true"]
 
 #################### FOR WHEN WE MAKE OOPSIE DAISISES/ERRORS ####################
 
@@ -186,7 +188,7 @@ class Lexer:
                     holder += self.current_char
                     self.advance()
                 tokens.append(Token(TOK_KEY, holder))
-            
+
             elif self.current_char in Letters and self.text not in Keywords:
                 holder=''
                 while self.current_char != None and self.current_char in Identifiers:
