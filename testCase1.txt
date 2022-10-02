@@ -1,0 +1,8 @@
+$
+    if(100 < 99){
+        return True;
+    }endif
+    else{
+        return False;
+    }
+$
