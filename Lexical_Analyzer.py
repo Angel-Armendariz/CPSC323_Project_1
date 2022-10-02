@@ -122,7 +122,7 @@ class Lexer:
     def make_tokens(self):
         tokens = []
         while self.current_char != None:
-            if self.current_char in ' \t':
+            if self.current_char in ' \t \n':
                 self.advance()
             elif self.current_char == '/':
                 self.advance()
@@ -151,7 +151,7 @@ class Lexer:
                     tokens.append(Token(TOK_EQUALGTR, "=>"))
                     self.advance()
                     self.advance()
-                elif(self.text[c+1] != '>'):
+                else:
                     tokens.append(Token(TOK_EQUALS, "="))
                     self.advance()
             elif self.current_char == '<':
