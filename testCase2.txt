@@ -1,0 +1,16 @@
+/* a function that returns the value of C in the pythagorean theorem*/
+
+function findC (real a, real b){
+	real c;    
+	c = (a*a) + (b*b);
+	c = c/2;
+	return c;
+}
+
+$
+	real a, b;  /* declarations */
+	a = 5.0;
+	b = 10.0;
+
+	get(findC(a,b));
+$

@@ -1,0 +1,32 @@
+/* functions that magically convert small data into a bigger data type */
+
+function bitsToBytes (integer bits)
+{
+    return  8 * bits;
+}
+
+function bytesToKB (integer bytes)
+{
+    return 1024 * bytes;
+}
+
+function KBtoMB (integer KB){
+    return 1024 * KB;
+}
+
+$
+    integer bits, bytes, KB; /* declarations */
+
+    get(bits, bytes, KB);
+    
+    if(bits < 0){
+        return false;
+    } endif
+
+    while(bits < KB){
+        put(bitsToBytes(bits));
+        put(bytesToKB(bytes));
+        put(KBtoMB(KB));
+    }
+
+$
