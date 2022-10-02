@@ -120,6 +120,13 @@ class Lexer:
         while self.current_char != None:
             if self.current_char in ' \t':
                 self.advance()
+            elif self.current_char == '/':
+                self.advance()
+                if self.current_char == '*':
+                    self.advance()
+                    while self.current_char != '*':
+                        self.advance()
+                self.advance()
             elif self.current_char in Numbers:
                 tokens.append(self.make_number())
             elif self.current_char == '+':
