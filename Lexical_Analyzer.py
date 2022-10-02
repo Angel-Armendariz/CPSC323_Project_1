@@ -83,6 +83,7 @@ TOK_DIV      = 'OPERATOR'
 TOK_EQUALS = 'SEPARATOR'
 TOK_TWOEQUALS = 'OPERATOR'
 TOK_EQUALGTR = 'OPERATOR'
+TOK_EQUALLESS = 'OPERATOR'
 TOK_LEFTARROW = 'OPERATOR'
 TOK_RIGHTARROW = 'OPERATOR'
 TOK_LPAREN   = 'SEPARATOR'
@@ -149,6 +150,10 @@ class Lexer:
                 c = self.text.index(self.current_char)
                 if(self.text[c+1] == '>'):
                     tokens.append(Token(TOK_EQUALGTR, "=>"))
+                    self.advance()
+                    self.advance()
+                if(self.text[c+1] == '<'):
+                    tokens.append(Token(TOK_EQUALLESS, "=<"))
                     self.advance()
                     self.advance()
                 else:
