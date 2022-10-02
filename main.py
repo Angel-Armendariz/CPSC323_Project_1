@@ -14,6 +14,11 @@ file = open("testFile.txt", "r")
 inputText = file.read()
 file.close()
 answer, oopsie = Lexical_Analyzer.run('<stdin>', inputText)
+#Prints out the test file tokens out to outputFile.txt which gets overwritten each time 
+f = open("outputFile.txt", "w")
+for item in answer:
+    f.write("%s\n" % item)
+f.close()
 
 if oopsie: print(oopsie.convert_string())
 else: 
