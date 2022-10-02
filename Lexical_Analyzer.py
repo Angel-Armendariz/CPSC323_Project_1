@@ -173,7 +173,7 @@ class Lexer:
                 tokens.append(Token(TOK_LBRACKET, "{"))
                 self.advance()
             elif self.current_char == '}':
-                tokens.append(Token(TOK_DOLLAR, "}"))
+                tokens.append(Token(TOK_RBRACKET, "}"))
                 self.advance()
 
             elif self.text[0] in Numbers:
