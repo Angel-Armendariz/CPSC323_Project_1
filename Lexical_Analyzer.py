@@ -80,13 +80,17 @@ TOK_PLUS     = 'OPERATOR'
 TOK_MINUS    = 'OPERATOR'
 TOK_MUL      = 'OPERATOR'
 TOK_DIV      = 'OPERATOR'
-TOK_EQUALS = 'OPERATOR'
+TOK_EQUALS = 'SEPARATOR'
+TOK_TWOEQUALS = 'OPERATOR'
 TOK_LEFTARROW = 'OPERATOR'
 TOK_RIGHTARROW = 'OPERATOR'
 TOK_LPAREN   = 'SEPARATOR'
 TOK_RPAREN   = 'SEPARATOR'
 TOK_COMMA = 'SEPARATOR'
 TOK_SEMICOLON = 'SEPARATOR'
+TOK_DOLLAR = 'SEPARATOR'
+TOK_LBRACKET = 'SEPARATOR'
+TOK_RBRACKET = 'SEPARATOR'
 TOK_KEY = 'KEYWORD'
 TOK_ID = 'IDENTIFIERS'
 
@@ -161,6 +165,15 @@ class Lexer:
                 self.advance()
             elif self.current_char == ';':
                 tokens.append(Token(TOK_SEMICOLON, ";"))
+                self.advance()
+            elif self.current_char == '$':
+                tokens.append(Token(TOK_DOLLAR, "$"))
+                self.advance()
+            elif self.current_char == '{':
+                tokens.append(Token(TOK_LBRACKET, "{"))
+                self.advance()
+            elif self.current_char == '}':
+                tokens.append(Token(TOK_DOLLAR, "}"))
                 self.advance()
 
             elif self.text[0] in Numbers:
