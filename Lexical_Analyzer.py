@@ -82,6 +82,7 @@ TOK_MUL      = 'OPERATOR'
 TOK_DIV      = 'OPERATOR'
 TOK_EQUALS = 'SEPARATOR'
 TOK_TWOEQUALS = 'OPERATOR'
+TOK_EQUALGTR = 'OPERATOR'
 TOK_LEFTARROW = 'OPERATOR'
 TOK_RIGHTARROW = 'OPERATOR'
 TOK_LPAREN   = 'SEPARATOR'
@@ -120,7 +121,6 @@ class Lexer:
 
     def make_tokens(self):
         tokens = []
-
         while self.current_char != None:
             if self.current_char in ' \t':
                 self.advance()
@@ -146,8 +146,14 @@ class Lexer:
                 tokens.append(Token(TOK_DIV, "/"))
                 self.advance()
             elif self.current_char == '=':
-                tokens.append(Token(TOK_EQUALS, "="))
-                self.advance()
+                c = self.text.index(self.current_char)
+                if(self.text[c+1] == '>'):
+                    tokens.append(Token(TOK_EQUALGTR, "=>"))
+                    self.advance()
+                    self.advance()
+                elif(self.text[c+1] != '>'):
+                    tokens.append(Token(TOK_EQUALS, "="))
+                    self.advance()
             elif self.current_char == '<':
                 tokens.append(Token(TOK_LEFTARROW, "<"))
                 self.advance()
