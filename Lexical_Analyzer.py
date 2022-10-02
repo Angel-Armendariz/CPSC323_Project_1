@@ -1,10 +1,4 @@
-#################### To-do list########################
-# 1.) throw an error when a nonletter is in front of an identifier; ex: >1hello, >true 1hello --> should throw an error
-# -- for this, we need to do something for self.current_char to read if it is an integer
-#  2.) FSM implementation of states in 2d array????
-
 #################### CONSTANTS ####################
-
 
 from ast import Num
 from lib2to3.pytree import convert
@@ -119,24 +113,11 @@ class Lexer:
     def advance(self):
         self.pos.advance(self.current_char)
         self.current_char = self.text[self.pos.index] if self.pos.index < len(self.text) else None
-    
-    #Needs work, but splits string, commented for now
-    '''def check_identifier(self):
-        tokens = []
-        for value in self.text.split():
-            tokens.append(value)
-            print(value)
-            if value in Numbers:
-                print('yes')
-            else:
-                print('Value: {} is not an identifier'.format(value))'''
 
     def make_tokens(self):
         tokens = []
 
         while self.current_char != None:
-            #self.check_identifier(), if wanted to use another function to check for identifiers
-
             if self.current_char in ' \t':
                 self.advance()
             elif self.current_char in Numbers:
@@ -175,8 +156,6 @@ class Lexer:
                 tokens.append(Token(TOK_SEMICOLON, ";"))
                 self.advance()
 
-            #Not sure, but able to give error only if first input string starts w number
-                    #Then it will output the whole input string as an error
             elif self.text[0] in Numbers:
                 position_begin = self.pos.copy()
                 error = self.text
@@ -201,9 +180,6 @@ class Lexer:
                     self.advance()
 
                 if holder in Keywords:
-                    # when i do print(holder) to check string split, it outputs the keywords correctly
-                    # but if holder in Numbers, it does not identify it
-                    # if condition might need to change for holder to hold strings w numbers too??
                     tokens.append(Token(TOK_KEY, holder))
 
                 else:
