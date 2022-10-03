@@ -147,21 +147,28 @@ class Lexer:
                 tokens.append(Token(TOK_DIV, "/"))
                 self.advance()
             elif self.current_char == '=':
-                c = self.text.index(self.current_char)
+                for x in range(len(self.text)):
+                    if self.text[x] == self.current_char:
+                        count.append(x)
+                c = count[0]
+                #c = self.text.index(self.current_char)
                 if(self.text[c+1] == '>'):
                     tokens.append(Token(TOK_EQUALGTR, "=>"))
                     self.advance()
                     self.advance()
-                if(self.text[c+1] == '<'):
-                    tokens.append(Token(TOK_EQUALLESS, "=<"))
+                    count.remove(count[0])
+                elif(self.text[c+1] == ' '):
+                    tokens.append(Token(TOK_EQUALS, "="))
+                    self.advance()
+                    count.remove(count[0])
+            elif self.current_char == '<':
+                if(self.text[c+1] == '='):
+                    tokens.append(Token(TOK_EQUALLESS, "<="))
                     self.advance()
                     self.advance()
                 else:
-                    tokens.append(Token(TOK_EQUALS, "="))
+                    tokens.append(Token(TOK_LEFTARROW, "<"))
                     self.advance()
-            elif self.current_char == '<':
-                tokens.append(Token(TOK_LEFTARROW, "<"))
-                self.advance()
             elif self.current_char == '>':
                 tokens.append(Token(TOK_RIGHTARROW, ">"))
                 self.advance()
