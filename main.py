@@ -15,7 +15,25 @@ inputText = file.read()
 file.close()
 answer, oopsie = Lexical_Analyzer.run('<stdin>', inputText)
 #Prints out the test file tokens out to outputFile.txt which gets overwritten each time 
-f = open("outputFile.txt", "w")
+f = open("outputFile1.txt", "w")
+for item in answer:
+    f.write("%s\n" % item)
+f.close()
+
+file = open("testCase2.txt", "r")
+inputText = file.read()
+file.close()
+answer, oopsie = Lexical_Analyzer.run('<stdin>', inputText)
+f = open("outputFile2.txt", "w")
+for item in answer:
+    f.write("%s\n" % item)
+f.close()
+
+file = open("testCase3.txt", "r")
+inputText = file.read()
+file.close()
+answer, oopsie = Lexical_Analyzer.run('<stdin>', inputText)
+f = open("outputFile3.txt", "w")
 for item in answer:
     f.write("%s\n" % item)
 f.close()
