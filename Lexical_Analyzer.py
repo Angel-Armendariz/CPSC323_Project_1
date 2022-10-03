@@ -139,7 +139,6 @@ class Lexer:
                     self.advance()
                 else:
                     tokens.append(Token(TOK_DIV, "/"))
-                    self.advance()
             elif self.current_char in Numbers:
                 tokens.append(self.make_number())
             elif self.current_char == '+':
