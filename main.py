@@ -10,7 +10,7 @@ while True:
 """
 
 # change paramater of testFile.txt to whatever input file you want to test
-file = open("testFile.txt", "r")
+file = open("testCase1.txt", "r")
 inputText = file.read()
 file.close()
 answer, oopsie = Lexical_Analyzer.run('<stdin>', inputText)
