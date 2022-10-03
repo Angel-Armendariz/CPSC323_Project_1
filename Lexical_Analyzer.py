@@ -127,9 +127,8 @@ class Lexer:
             if self.current_char in ' \t \n':
                 self.advance()
             elif self.current_char == '/':
-                b= self.pos.index + 1
-                if self.text[b] == '*':
-                    self.advance()
+                self.advance()
+                if self.current_char == '*':
                     self.advance()
                     while self.current_char != '*':
                         self.advance()
@@ -159,16 +158,17 @@ class Lexer:
                     self.advance()
                     self.advance()
                     count.remove(count[0])
-                elif(self.text[c-1] == '<'):
-                    tokens.append(Token(TOK_EQUALLESS, "<="))
-                    self.advance()
-                    self.advance()
                 elif(self.text[c+1] == ' '):
                     tokens.append(Token(TOK_EQUALS, "="))
                     self.advance()
             elif self.current_char == '<':
-                tokens.append(Token(TOK_LEFTARROW, "<"))
-                self.advance()
+                if(self.text[c+1] == '='):
+                    tokens.append(Token(TOK_EQUALLESS, "<="))
+                    self.advance()
+                    self.advance()
+                else:
+                    tokens.append(Token(TOK_LEFTARROW, "<"))
+                    self.advance()
             elif self.current_char == '>':
                 tokens.append(Token(TOK_RIGHTARROW, ">"))
                 self.advance()
