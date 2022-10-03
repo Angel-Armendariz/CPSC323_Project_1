@@ -165,8 +165,13 @@ class Lexer:
                     tokens.append(Token(TOK_EQUALS, "="))
                     self.advance()
             elif self.current_char == '<':
-                tokens.append(Token(TOK_LEFTARROW, "<"))
-                self.advance()
+                if(self.text[c+1] == '='):
+                    tokens.append(Token(TOK_EQUALLESS, "<="))
+                    self.advance()
+                    self.advance()
+                else:
+                    tokens.append(Token(TOK_LEFTARROW, "<"))
+                    self.advance()
             elif self.current_char == '>':
                 tokens.append(Token(TOK_RIGHTARROW, ">"))
                 self.advance()
