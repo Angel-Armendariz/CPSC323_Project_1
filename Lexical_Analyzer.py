@@ -82,8 +82,10 @@ TOK_MUL      = 'OPERATOR'
 TOK_DIV      = 'OPERATOR'
 TOK_EQUALS = 'SEPARATOR'
 TOK_TWOEQUALS = 'OPERATOR'
+TOK_NOTEQUAL = 'OPERATOR'
 TOK_EQUALGTR = 'OPERATOR'
 TOK_EQUALLESS = 'OPERATOR'
+TOK_EQUALEQUAL= 'OPERATOR'
 TOK_LEFTARROW = 'OPERATOR'
 TOK_RIGHTARROW = 'OPERATOR'
 TOK_LPAREN   = 'SEPARATOR'
@@ -122,7 +124,9 @@ class Lexer:
 
     def make_tokens(self):
         tokens = []
-        count = []
+        count = []  # for relation operator counter =>
+        count2 = [] # for relation operator counter <=
+
         while self.current_char != None:
             if self.current_char in ' \t \n':
                 self.advance()
@@ -150,30 +154,45 @@ class Lexer:
             elif self.current_char == '/':
                 tokens.append(Token(TOK_DIV, "/"))
                 self.advance()
+
             elif self.current_char == '=':
                 for x in range(len(self.text)):
                     if self.text[x] == self.current_char:
                         count.append(x)
                 c = count[0]
-                #c = self.text.index(self.current_char)
                 if(self.text[c+1] == '>'):
                     tokens.append(Token(TOK_EQUALGTR, "=>"))
+                    self.advance()
+                    self.advance()
+                    count.remove(count[0])
+                elif(self.text[c+1] == '='):
+                    tokens.append(Token(TOK_EQUALEQUAL, "=="))
                     self.advance()
                     self.advance()
                     count.remove(count[0])
                 elif(self.text[c+1] == ' '):
                     tokens.append(Token(TOK_EQUALS, "="))
                     self.advance()
+
             elif self.current_char == '<':
+                for y in range(len(self.text)):
+                    if self.text[y] == self.current_char:
+                        count2.append(y)
+                c = count2[0]
                 if(self.text[c+1] == '='):
                     tokens.append(Token(TOK_EQUALLESS, "<="))
                     self.advance()
                     self.advance()
+                    count2.remove(count2[0])
                 else:
                     tokens.append(Token(TOK_LEFTARROW, "<"))
                     self.advance()
             elif self.current_char == '>':
                 tokens.append(Token(TOK_RIGHTARROW, ">"))
+                self.advance()
+            elif self.current_char == '!':
+                tokens.append(Token(TOK_NOTEQUAL, "!="))
+                self.advance()
                 self.advance()
             elif self.current_char == '(':
                 tokens.append(Token(TOK_LPAREN, "("))
