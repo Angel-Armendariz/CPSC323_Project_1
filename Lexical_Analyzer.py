@@ -126,8 +126,9 @@ class Lexer:
             if self.current_char in ' \t \n':
                 self.advance()
             elif self.current_char == '/':
-                self.advance()
-                if self.current_char == '*':
+                b= self.pos.index + 1
+                if self.text[b] == '*':
+                    self.advance()
                     self.advance()
                     while self.current_char != '*':
                         self.advance()
