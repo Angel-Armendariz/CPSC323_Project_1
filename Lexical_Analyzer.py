@@ -371,15 +371,15 @@ class Parser:
 			if res.error: return res
 			return res.success(UnaryOpNode(tok, factor))
 		
-		elif tok.type in (TOK_INT, TOK_REAL):
+		elif tok.type in (TOK_INT, TOK_FLOAT):
 			res.register(self.advance())
 			return res.success(NumberNode(tok))
 
-		elif tok.type == TOK_LPAREN:
+		elif tok.type == TT_LPAREN:
 			res.register(self.advance())
 			expr = res.register(self.expr())
 			if res.error: return res
-			if self.current_tok.type == TOK_RPAREN:
+			if self.current_tok.type == TT_RPAREN:
 				res.register(self.advance())
 				return res.success(expr)
 			else:
@@ -394,10 +394,10 @@ class Parser:
 		))
 
 	def term(self):
-		return self.bin_op(self.factor, (TOK_MUL, TOK_DIV))
+		return self.bin_op(self.factor, (TT_MUL, TT_DIV))
 
 	def expr(self):
-		return self.bin_op(self.term, (TOK_PLUS, TOK_MINUS))
+		return self.bin_op(self.term, (TT_PLUS, TT_MINUS))
 
 	###################################
 
