@@ -328,10 +328,8 @@ class NumberNode:
 		self.tok = tok
 
 	def __repr__(self):
-        # will return token in a string
 		return f'{self.tok}'
 
-#for operators
 class BinOpNode:
 	def __init__(self, left_node, op_tok, right_node):
 		self.left_node = left_node
@@ -377,7 +375,6 @@ class ParseResult:
 # PARSER
 #######################################
 
-# will take in list of tokens
 class Parser:
 	def __init__(self, tokens):
 		self.tokens = tokens
@@ -401,12 +398,10 @@ class Parser:
 
 	###################################
 
-    # will look for integer or float
 	def factor(self):
 		res = ParseResult()
 		tok = self.current_tok
 
-        # check token types
 		if tok.type in (TOK_PLUS, TOK_MINUS):
 			res.register(self.advance())
 			factor = res.register(self.factor())
