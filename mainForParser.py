@@ -5,14 +5,14 @@ inputText = parserFile.read()
 parserFile.close()
 answer, oopsie = Syntax_Analyzer.run('<stdin>', inputText)
 
-f = open("outputFile1.txt", "w")
+f = open("parserFile.txt", "w")
 for item in answer:
     f.write("%s\n" % item)
 f.close()
 
 if oopsie: 
     print(oopsie.convert_string())
-    f = open("outputFile.txt", "w")
+    f = open("parserFile.txt", "w")
     f.write(oopsie.convert_string())
     f.close()
 
