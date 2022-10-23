@@ -1,4 +1,9 @@
-
+#To do list 
+#rewrite the grammar with removed left recursion 
+#change the lexer so that is prints out token:followed by token and lememe
+#print out the production rules used 
+#handle the errors that come up with meaningful message
+#
 #################### CONSTANTS ####################
 
 from ast import Num
@@ -415,8 +420,4 @@ class Parser:
 def run(fn, text):
     lexer = Lexer(fn, text)
     tokens, oopsie = lexer.make_tokens()
-    if oopsie: return None, oopsie
-	# Generate AST
-    parser = Parser(tokens)
-    ast = parser.parse()
-    return ast.node, ast.oopsie
+    return tokens, oopsie
