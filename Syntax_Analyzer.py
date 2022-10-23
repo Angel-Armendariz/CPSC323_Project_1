@@ -31,34 +31,6 @@ Seperators = ',$(){};='
 #################### OPERATORS #######################
 Operators = ["==", "!=", ">", "<", "<=", "=>", "+", "-", "*", "/"]
 
-#################### String with arrows #######################
-def string_with_arrows(text, pos_start, pos_end):
-    result = ''
-
-    # Calculate indices
-    idx_start = max(text.rfind('\n', 0, pos_start.idx), 0)
-    idx_end = text.find('\n', idx_start + 1)
-    if idx_end < 0: idx_end = len(text)
-    
-    # Generate each line
-    line_count = pos_end.ln - pos_start.ln + 1
-    for i in range(line_count):
-        # Calculate line columns
-        line = text[idx_start:idx_end]
-        col_start = pos_start.col if i == 0 else 0
-        col_end = pos_end.col if i == line_count - 1 else len(line) - 1
-
-        # Append to result
-        result += line + '\n'
-        result += ' ' * col_start + '^' * (col_end - col_start)
-
-        # Re-calculate indices
-        idx_start = idx_end
-        idx_end = text.find('\n', idx_start + 1)
-        if idx_end < 0: idx_end = len(text)
-
-    return result.replace('\t', '')
-
 #################### FOR WHEN WE MAKE OOPSIE DAISISES/ERRORS ####################
 
 class Oopsie:
@@ -71,7 +43,6 @@ class Oopsie:
     def convert_string(self):
         answer  = f'{self.oopsie_name}: {self.details}\n'
         answer += f'File {self.position_begin.fn}, line {self.position_begin.line + 1}'
-        answer += '\n\n' + string_with_arrows(self.position_begin.ftxt, self.position_begin, self.position_end)
         return answer
 
 class IllegalCharOopsie(Oopsie):
@@ -98,7 +69,7 @@ class Position:
         self.fn = fn
         self.ftxt = ftxt
 
-    def advance(self, current_char=None):
+    def advance(self, current_char):
         self.index += 1
         self.column += 1
 
@@ -140,21 +111,13 @@ TOK_EOF = 'EOF'
 
 
 class Token:
-    def __init__(self, type_, value=None, position_begin=None, position_end=None):
-            self.type = type_
-            self.value = value
-
-            if position_begin:
-                self.position_begin = position_begin.copy()
-                self.position_end = position_begin.copy()
-                self.position_end.advance()
-
-            if position_end:
-                self.position_end = position_end
+    def __init__(self, type_, value=None):
+        self.type = type_
+        self.value = value
     
     def __repr__(self):
-            if self.value: return f'{self.type}:{self.value}'
-            return f'{self.type}'
+        if self.value: return f'{self.type}:{self.value}'
+        return f'{self.type}'
 
 #################### LEXER ####################
 
@@ -298,7 +261,7 @@ class Lexer:
                 self.advance()
                 return [], IllegalCharOopsie(position_begin, self.pos, "'" + char + "'")
 
-        tokens.append(Token(TOK_EOF, position_begin=self.pos))
+        tokens.append(Token(TOK_EOF, pos_start=self.pos))
         return tokens, None
 
     def make_number(self):
@@ -391,7 +354,7 @@ class Parser:
 		res = self.expr()
 		if not res.error and self.current_tok.type != TOK_EOF:
 			return res.failure(InvalidSyntaxError(
-				self.current_tok.postion_begin , self.current_tok.position_end,
+				self.current_tok.pos_start, self.current_tok.pos_end,
 				"Expected '+', '-', '*' or '/'"
 			))
 		return res
@@ -421,12 +384,12 @@ class Parser:
 				return res.success(expr)
 			else:
 				return res.failure(InvalidSyntaxError(
-					self.current_tok.position_begin, self.current_tok.position_end,
+					self.current_tok.pos_start, self.current_tok.pos_end,
 					"Expected ')'"
 				))
 
 		return res.failure(InvalidSyntaxError(
-			tok.position_begin, tok.position_end,
+			tok.pos_start, tok.pos_end,
 			"Expected int or float"
 		))
 
