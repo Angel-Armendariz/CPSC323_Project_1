@@ -1,6 +1,7 @@
 #to do list 
 #make the grammar rules with left recursion 
-#make the lexer change how it prints so it prints the token and the lexeme separate 
+#make the lexer change how it prints so it prints the token and the lexeme separate-Done by Angel
+#make the lexeme text in the output lined up like a fade 
 #print out the production rules with the parser 
 #handle syntax errors 
 #################### CONSTANTS ####################
