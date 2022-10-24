@@ -1,64 +1,64 @@
-OPERATOR:/
-KEYWORD:function
-IDENTIFIERS:findC
-SEPARATOR:(
-KEYWORD:real
-IDENTIFIERS:a
-SEPARATOR:,
-KEYWORD:real
-IDENTIFIERS:b
-SEPARATOR:)
-SEPARATOR:{
-KEYWORD:real
-IDENTIFIERS:c
-SEPARATOR:;
-IDENTIFIERS:c
-SEPARATOR:=
-SEPARATOR:(
-IDENTIFIERS:a
-OPERATOR:*
-IDENTIFIERS:a
-SEPARATOR:)
-OPERATOR:+
-SEPARATOR:(
-IDENTIFIERS:b
-OPERATOR:*
-IDENTIFIERS:b
-SEPARATOR:)
-SEPARATOR:;
-IDENTIFIERS:c
-SEPARATOR:=
-IDENTIFIERS:c
-OPERATOR:/
-INT:2
-SEPARATOR:;
-KEYWORD:return
-IDENTIFIERS:c
-SEPARATOR:;
-SEPARATOR:}
-SEPARATOR:$
-KEYWORD:real
-IDENTIFIERS:a
-SEPARATOR:,
-IDENTIFIERS:b
-SEPARATOR:;
-OPERATOR:/
-IDENTIFIERS:a
-SEPARATOR:=
-REAL:5.0
-SEPARATOR:;
-IDENTIFIERS:b
-SEPARATOR:=
-REAL:10.0
-SEPARATOR:;
-KEYWORD:get
-SEPARATOR:(
-IDENTIFIERS:findC
-SEPARATOR:(
-IDENTIFIERS:a
-SEPARATOR:,
-IDENTIFIERS:b
-SEPARATOR:)
-SEPARATOR:)
-SEPARATOR:;
-SEPARATOR:$
+Token:OPERATOR        Lexeme:/
+Token:KEYWORD        Lexeme:function
+Token:IDENTIFIERS        Lexeme:findC
+Token:SEPARATOR        Lexeme:(
+Token:KEYWORD        Lexeme:real
+Token:IDENTIFIERS        Lexeme:a
+Token:SEPARATOR        Lexeme:,
+Token:KEYWORD        Lexeme:real
+Token:IDENTIFIERS        Lexeme:b
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:{
+Token:KEYWORD        Lexeme:real
+Token:IDENTIFIERS        Lexeme:c
+Token:SEPARATOR        Lexeme:;
+Token:IDENTIFIERS        Lexeme:c
+Token:SEPARATOR        Lexeme:=
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:a
+Token:OPERATOR        Lexeme:*
+Token:IDENTIFIERS        Lexeme:a
+Token:SEPARATOR        Lexeme:)
+Token:OPERATOR        Lexeme:+
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:b
+Token:OPERATOR        Lexeme:*
+Token:IDENTIFIERS        Lexeme:b
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:;
+Token:IDENTIFIERS        Lexeme:c
+Token:SEPARATOR        Lexeme:=
+Token:IDENTIFIERS        Lexeme:c
+Token:OPERATOR        Lexeme:/
+Token:INT        Lexeme:2
+Token:SEPARATOR        Lexeme:;
+Token:KEYWORD        Lexeme:return
+Token:IDENTIFIERS        Lexeme:c
+Token:SEPARATOR        Lexeme:;
+Token:SEPARATOR        Lexeme:}
+Token:SEPARATOR        Lexeme:$
+Token:KEYWORD        Lexeme:real
+Token:IDENTIFIERS        Lexeme:a
+Token:SEPARATOR        Lexeme:,
+Token:IDENTIFIERS        Lexeme:b
+Token:SEPARATOR        Lexeme:;
+Token:OPERATOR        Lexeme:/
+Token:IDENTIFIERS        Lexeme:a
+Token:SEPARATOR        Lexeme:=
+Token:REAL        Lexeme:5.0
+Token:SEPARATOR        Lexeme:;
+Token:IDENTIFIERS        Lexeme:b
+Token:SEPARATOR        Lexeme:=
+Token:REAL        Lexeme:10.0
+Token:SEPARATOR        Lexeme:;
+Token:KEYWORD        Lexeme:get
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:findC
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:a
+Token:SEPARATOR        Lexeme:,
+Token:IDENTIFIERS        Lexeme:b
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:;
+Token:SEPARATOR        Lexeme:$

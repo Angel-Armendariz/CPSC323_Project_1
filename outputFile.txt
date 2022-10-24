@@ -1,14 +1,14 @@
-OPERATOR:/
-KEYWORD:while
-SEPARATOR:(
-IDENTIFIERS:fahr
-OPERATOR:=>
-IDENTIFIERS:upper
-SEPARATOR:)
-IDENTIFIERS:a
-SEPARATOR:=
-REAL:23.0
-SEPARATOR:;
-INT:1
-OPERATOR:/
-INT:2
+Token:OPERATOR        Lexeme:/
+Token:KEYWORD        Lexeme:while
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:fahr
+Token:OPERATOR        Lexeme:=>
+Token:IDENTIFIERS        Lexeme:upper
+Token:SEPARATOR        Lexeme:)
+Token:IDENTIFIERS        Lexeme:a
+Token:SEPARATOR        Lexeme:=
+Token:REAL        Lexeme:23.0
+Token:SEPARATOR        Lexeme:;
+Token:INT        Lexeme:1
+Token:OPERATOR        Lexeme:/
+Token:INT        Lexeme:2

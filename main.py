@@ -10,12 +10,12 @@ while True:
 """
 
 # change paramater of testFile.txt to whatever input file you want to test
-file = open("testCase1.txt", "r")
+file = open("testFile.txt", "r")
 inputText = file.read()
 file.close()
 answer, oopsie = Lexical_Analyzer.run('<stdin>', inputText)
 #Prints out the test file tokens out to outputFile.txt which gets overwritten each time 
-f = open("outputFile1.txt", "w")
+f = open("outputFile.txt", "w")
 for item in answer:
     f.write("%s\n" % item)
 f.close()

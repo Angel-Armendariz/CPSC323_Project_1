@@ -1,103 +1,103 @@
-OPERATOR:/
-KEYWORD:function
-IDENTIFIERS:bitsToBytes
-SEPARATOR:(
-KEYWORD:integer
-IDENTIFIERS:bits
-SEPARATOR:)
-SEPARATOR:{
-KEYWORD:return
-INT:8
-OPERATOR:*
-IDENTIFIERS:bits
-SEPARATOR:;
-SEPARATOR:}
-KEYWORD:function
-IDENTIFIERS:bytesToKB
-SEPARATOR:(
-KEYWORD:integer
-IDENTIFIERS:bytes
-SEPARATOR:)
-SEPARATOR:{
-KEYWORD:return
-INT:1024
-OPERATOR:*
-IDENTIFIERS:bytes
-SEPARATOR:;
-SEPARATOR:}
-KEYWORD:function
-IDENTIFIERS:KBtoMB
-SEPARATOR:(
-KEYWORD:integer
-IDENTIFIERS:KB
-SEPARATOR:)
-SEPARATOR:{
-KEYWORD:return
-INT:1024
-OPERATOR:*
-IDENTIFIERS:KB
-SEPARATOR:;
-SEPARATOR:}
-SEPARATOR:$
-KEYWORD:integer
-IDENTIFIERS:bits
-SEPARATOR:,
-IDENTIFIERS:bytes
-SEPARATOR:,
-IDENTIFIERS:KB
-SEPARATOR:;
-OPERATOR:/
-KEYWORD:get
-SEPARATOR:(
-IDENTIFIERS:bits
-SEPARATOR:,
-IDENTIFIERS:bytes
-SEPARATOR:,
-IDENTIFIERS:KB
-SEPARATOR:)
-SEPARATOR:;
-KEYWORD:if
-SEPARATOR:(
-IDENTIFIERS:bits
-OPERATOR:<
-INT
-SEPARATOR:)
-SEPARATOR:{
-KEYWORD:return
-KEYWORD:false
-SEPARATOR:;
-SEPARATOR:}
-KEYWORD:endif
-KEYWORD:while
-SEPARATOR:(
-IDENTIFIERS:bits
-OPERATOR:<
-IDENTIFIERS:KB
-SEPARATOR:)
-SEPARATOR:{
-KEYWORD:put
-SEPARATOR:(
-IDENTIFIERS:bitsToBytes
-SEPARATOR:(
-IDENTIFIERS:bits
-SEPARATOR:)
-SEPARATOR:)
-SEPARATOR:;
-KEYWORD:put
-SEPARATOR:(
-IDENTIFIERS:bytesToKB
-SEPARATOR:(
-IDENTIFIERS:bytes
-SEPARATOR:)
-SEPARATOR:)
-SEPARATOR:;
-KEYWORD:put
-SEPARATOR:(
-IDENTIFIERS:KBtoMB
-SEPARATOR:(
-IDENTIFIERS:KB
-SEPARATOR:)
-SEPARATOR:)
-SEPARATOR:;
-SEPARATOR:}
-SEPARATOR:$
+Token:OPERATOR        Lexeme:/
+Token:KEYWORD        Lexeme:function
+Token:IDENTIFIERS        Lexeme:bitsToBytes
+Token:SEPARATOR        Lexeme:(
+Token:KEYWORD        Lexeme:integer
+Token:IDENTIFIERS        Lexeme:bits
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:{
+Token:KEYWORD        Lexeme:return
+Token:INT        Lexeme:8
+Token:OPERATOR        Lexeme:*
+Token:IDENTIFIERS        Lexeme:bits
+Token:SEPARATOR        Lexeme:;
+Token:SEPARATOR        Lexeme:}
+Token:KEYWORD        Lexeme:function
+Token:IDENTIFIERS        Lexeme:bytesToKB
+Token:SEPARATOR        Lexeme:(
+Token:KEYWORD        Lexeme:integer
+Token:IDENTIFIERS        Lexeme:bytes
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:{
+Token:KEYWORD        Lexeme:return
+Token:INT        Lexeme:1024
+Token:OPERATOR        Lexeme:*
+Token:IDENTIFIERS        Lexeme:bytes
+Token:SEPARATOR        Lexeme:;
+Token:SEPARATOR        Lexeme:}
+Token:KEYWORD        Lexeme:function
+Token:IDENTIFIERS        Lexeme:KBtoMB
+Token:SEPARATOR        Lexeme:(
+Token:KEYWORD        Lexeme:integer
+Token:IDENTIFIERS        Lexeme:KB
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:{
+Token:KEYWORD        Lexeme:return
+Token:INT        Lexeme:1024
+Token:OPERATOR        Lexeme:*
+Token:IDENTIFIERS        Lexeme:KB
+Token:SEPARATOR        Lexeme:;
+Token:SEPARATOR        Lexeme:}
+Token:SEPARATOR        Lexeme:$
+Token:KEYWORD        Lexeme:integer
+Token:IDENTIFIERS        Lexeme:bits
+Token:SEPARATOR        Lexeme:,
+Token:IDENTIFIERS        Lexeme:bytes
+Token:SEPARATOR        Lexeme:,
+Token:IDENTIFIERS        Lexeme:KB
+Token:SEPARATOR        Lexeme:;
+Token:OPERATOR        Lexeme:/
+Token:KEYWORD        Lexeme:get
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:bits
+Token:SEPARATOR        Lexeme:,
+Token:IDENTIFIERS        Lexeme:bytes
+Token:SEPARATOR        Lexeme:,
+Token:IDENTIFIERS        Lexeme:KB
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:;
+Token:KEYWORD        Lexeme:if
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:bits
+Token:OPERATOR        Lexeme:<
+Token:INT        Lexeme
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:{
+Token:KEYWORD        Lexeme:return
+Token:KEYWORD        Lexeme:false
+Token:SEPARATOR        Lexeme:;
+Token:SEPARATOR        Lexeme:}
+Token:KEYWORD        Lexeme:endif
+Token:KEYWORD        Lexeme:while
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:bits
+Token:OPERATOR        Lexeme:<
+Token:IDENTIFIERS        Lexeme:KB
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:{
+Token:KEYWORD        Lexeme:put
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:bitsToBytes
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:bits
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:;
+Token:KEYWORD        Lexeme:put
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:bytesToKB
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:bytes
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:;
+Token:KEYWORD        Lexeme:put
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:KBtoMB
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:KB
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:)
+Token:SEPARATOR        Lexeme:;
+Token:SEPARATOR        Lexeme:}
+Token:SEPARATOR        Lexeme:$

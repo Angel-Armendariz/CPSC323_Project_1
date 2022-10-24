@@ -1,3 +1,8 @@
+#to do list 
+#make the grammar rules with left recursion 
+#make the lexer change how it prints so it prints the token and the lexeme separate 
+#print out the production rules with the parser 
+#handle syntax errors 
 #################### CONSTANTS ####################
 
 from ast import Num
@@ -74,29 +79,29 @@ class Position:
 
 #################### TOKENS ####################
 
-TOK_INT		= 'INT'
-TOK_REAL    = 'REAL'
-TOK_PLUS     = 'OPERATOR'
-TOK_MINUS    = 'OPERATOR'
-TOK_MUL      = 'OPERATOR'
-TOK_DIV      = 'OPERATOR'
-TOK_EQUALS = 'SEPARATOR'
-TOK_TWOEQUALS = 'OPERATOR'
-TOK_NOTEQUAL = 'OPERATOR'
-TOK_EQUALGTR = 'OPERATOR'
-TOK_EQUALLESS = 'OPERATOR'
-TOK_EQUALEQUAL= 'OPERATOR'
-TOK_LEFTARROW = 'OPERATOR'
-TOK_RIGHTARROW = 'OPERATOR'
-TOK_LPAREN   = 'SEPARATOR'
-TOK_RPAREN   = 'SEPARATOR'
-TOK_COMMA = 'SEPARATOR'
-TOK_SEMICOLON = 'SEPARATOR'
-TOK_DOLLAR = 'SEPARATOR'
-TOK_LBRACKET = 'SEPARATOR'
-TOK_RBRACKET = 'SEPARATOR'
-TOK_KEY = 'KEYWORD'
-TOK_ID = 'IDENTIFIERS'
+TOK_INT		= 'Token:INT        Lexeme'
+TOK_REAL    = 'Token:REAL        Lexeme'
+TOK_PLUS     = 'Token:OPERATOR        Lexeme'
+TOK_MINUS    = 'Token:OPERATOR        Lexeme'
+TOK_MUL      = 'Token:OPERATOR        Lexeme'
+TOK_DIV      = 'Token:OPERATOR        Lexeme'
+TOK_EQUALS = 'Token:SEPARATOR        Lexeme'
+TOK_TWOEQUALS = 'Token:Token:OPERATOR        Lexeme'
+TOK_NOTEQUAL = 'Token:OPERATOR        Lexeme'
+TOK_EQUALGTR = 'Token:OPERATOR        Lexeme'
+TOK_EQUALLESS = 'Token:OPERATOR        Lexeme'
+TOK_EQUALEQUAL= 'Token:OPERATOR        Lexeme'
+TOK_LEFTARROW = 'Token:OPERATOR        Lexeme'
+TOK_RIGHTARROW = 'Token:OPERATOR        Lexeme'
+TOK_LPAREN   = 'Token:SEPARATOR        Lexeme'
+TOK_RPAREN   = 'Token:SEPARATOR        Lexeme'
+TOK_COMMA = 'Token:SEPARATOR        Lexeme'
+TOK_SEMICOLON = 'Token:SEPARATOR        Lexeme'
+TOK_DOLLAR = 'Token:SEPARATOR        Lexeme'
+TOK_LBRACKET = 'Token:SEPARATOR        Lexeme'
+TOK_RBRACKET = 'Token:SEPARATOR        Lexeme'
+TOK_KEY = 'Token:KEYWORD        Lexeme'
+TOK_ID = 'Token:IDENTIFIERS        Lexeme'
 
 
 class Token:

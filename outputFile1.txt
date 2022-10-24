@@ -1,20 +1,14 @@
-SEPARATOR:$
-KEYWORD:if
-SEPARATOR:(
-INT:100
-OPERATOR:<
-INT:99
-SEPARATOR:)
-SEPARATOR:{
-KEYWORD:return
-IDENTIFIERS:True
-SEPARATOR:;
-SEPARATOR:}
-KEYWORD:endif
-KEYWORD:else
-SEPARATOR:{
-KEYWORD:return
-IDENTIFIERS:False
-SEPARATOR:;
-SEPARATOR:}
-SEPARATOR:$
+Token:OPERATOR        Lexeme:/
+Token:KEYWORD        Lexeme:while
+Token:SEPARATOR        Lexeme:(
+Token:IDENTIFIERS        Lexeme:fahr
+Token:OPERATOR        Lexeme:=>
+Token:IDENTIFIERS        Lexeme:upper
+Token:SEPARATOR        Lexeme:)
+Token:IDENTIFIERS        Lexeme:a
+Token:SEPARATOR        Lexeme:=
+Token:REAL        Lexeme:23.0
+Token:SEPARATOR        Lexeme:;
+Token:INT        Lexeme:1
+Token:OPERATOR        Lexeme:/
+Token:INT        Lexeme:2
