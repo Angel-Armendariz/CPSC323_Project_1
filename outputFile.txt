@@ -1,4 +1,4 @@
-Token:OPERATOR        Lexeme:/
+Token:SEPARATOR        Lexeme:$
 Token:KEYWORD        Lexeme:while
 Token:SEPARATOR        Lexeme:(
 Token:IDENTIFIERS        Lexeme:fahr
@@ -12,3 +12,5 @@ Token:SEPARATOR        Lexeme:;
 Token:INT        Lexeme:1
 Token:OPERATOR        Lexeme:/
 Token:INT        Lexeme:2
+Token:OPERATOR        Lexeme:/
+Token:SEPARATOR        Lexeme:$

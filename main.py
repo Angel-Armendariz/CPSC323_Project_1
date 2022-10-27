@@ -1,9 +1,7 @@
 import Lexical_Analyzer
-import Parser
+import Syntax_Analyzer
 
 # Uncomment the block below if you want to go back to testing through command line.
-# Then ident the rest of the code by one Tab Space because of Python's scope rules.
-# Lastly comment out lines 13-16
 """
 while True:
     text = input('Suffering > ')
@@ -15,7 +13,8 @@ file = open("testFile.txt", "r")
 inputText = file.read()
 file.close()
 answer, oopsie = Lexical_Analyzer.run('<stdin>', inputText)
-#Prints out the test file tokens out to outputFile.txt which gets overwritten each time 
+
+# Prints out the test file tokens out to outputFile.txt which gets overwritten each time 
 f = open("outputFile.txt", "w")
 for item in answer:
     f.write("%s\n" % item)
@@ -42,17 +41,19 @@ f.close()
 """
 
 lexerFile = open("outputFile.txt", "r")
-textToParse = lexerFile.read()
+parseFile = lexerFile.read()
 lexerFile.close()
-answer2 = Parser.parse(textToParse)
+newFile = Syntax_Analyzer.parse(parseFile)
 
-"""if oopsie: 
+"""
+if oopsie: 
     print(oopsie.convert_string())
     f = open("outputFile.txt", "w")
-    f.write(oopsie.convert_string())
+    f.write(oopsie.convert_string()
     f.close()
 
 else: 
     # print a token each row
     for x in range(len(answer)):
-        print(answer[x])"""
+        print(answer[x])
+"""
