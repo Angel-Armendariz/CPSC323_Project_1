@@ -56,4 +56,5 @@ def OptDeclarList():
 # Rule 14
 def StatementList():
     print("<Statement List> ::= <Statement> | <Statement><Statement List>")
+    print("<Statement List> ::= <Empty> | <Statement List>")
     print("gotta fix this left recursion")
