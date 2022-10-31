@@ -58,3 +58,106 @@ def StatementList():
     print("<Statement List> ::= <Statement> | <Statement><Statement List>")
     print("<Statement List> ::= <Empty> | <Statement List>")
     print("gotta fix this left recursion")
+
+# Rule 3
+def FunctionDef():
+    print("<Function Definitions> ::= <Function> | <Function> <Function Definitions>")
+
+# Rule 4
+def Func():
+    print("<Function> ::= function <identifer> (<Opt Parameter List>) <Opt Declaration List> <Body>")
+
+# Rule 5
+def OptParamList():
+    print("<Opt Parameter List ::= <Parameter List> | <Empty>")
+
+# Rule 6
+def ParamList():
+    print("<Parameter List> ::= <Parameter> | <Parameter>, <Parameter List>")
+
+# Rule 7
+def Param():
+    print("<Parameter> ::= <IDs> <Qualifier>")
+
+# Rule 8
+def Qualifier():
+    print("<Qualifier> ::= integer | boolean | real")
+
+# Rule 9
+def Body():
+    print("<Body> ::= { <Statement List> }")
+
+# Rule 11
+def DeclarationList():
+    print("<Declaration List> ::= <Declaration>; | <Declaration>; <Declaration List>")
+
+# Rule 12
+def Declaration():
+    print("<Declaration> ::= <Qualifier> <IDs>")
+
+# Rule 13
+def IDs():
+    print("<IDs> ::= <Identifier> | <Identifier>, <IDs>")
+
+# Rule 14
+def StatementList():
+    print("<Statement List> ::= <Statement> | <Statement> <Statement List>")
+
+# Rule 15
+def Statement():
+    print("<Statement> ::= <Compound> | <Assign> | <if> | <Return> | <Print> | <Scan> | <While>")
+
+# Rule 16
+def Compound():
+    print("<Compound> ::= { <Statement List> }")
+
+# Rule 17
+def Assign():
+    print("<Assign> ::= <Identifier> = <Expression>;")
+
+# Rule 18
+def If():
+    print("<If> ::= if(<Condition>) <Statement> endif | if(<Condition>) <Statement> else <Statement> endif")
+
+# Rule 19
+def Return():
+    print("<Return> ::= return; | return <Expression>;")
+# Rule 20 
+def Print():
+    print("<Print> ::= put(<Expression);")
+
+# Rule 21
+def Scan():
+    print("<Scan> ::= get( <IDs> );")
+
+# Rule 22
+def While():
+    print("<While> ::= while( <Condition> ) <Statement>")
+
+# Rule 23 
+def Condition():
+    print("<Condition> ::= <Expression> <Relop> <Expression>")
+
+# Rule 24
+def Relop():
+    print("<Relop> ::= == | != | > | < | <= | =>")
+
+# Rule 25
+def Expression():
+    print("<Expression> ::= <Expression> + <Term> | <Expression> - <Term> | <Term>")
+
+# Rule 26
+def Term():
+    print("<Term> ::= <Term> * <Factor> | <Term> / <Factor> | <Factor>")
+
+# Rule 27 
+def Factor():
+    print("<Factor> ::= -<Primary> | <Primary>")
+
+# Rule 28
+def Primary():
+    print("<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false")
+
+# Rule 29 
+def Empty():
+    print("<Empty> ::= Epsilon")
