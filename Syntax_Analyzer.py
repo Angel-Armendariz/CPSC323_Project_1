@@ -30,14 +30,21 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber):
             if currentLexeme == "$":             
                 OptDeclarList()                 # Rule 10
                 StatementList()                 # Rule 14
+            #beginning of what Kaitlin added
+            elif currentLexeme == "while":
+                if currentLexeme == "(":
+                    Condition()
+
+            elif currentLexeme == "-":
+                Factor()                        # Rule 27
+            #end of what Kaitlin added
+
+            #indented the else statement of the expected at line number, because it would stop iterating over the characters-- Kaitlin
                 if currentToken == "$":
                     exit()                      # end of code from lexer
-            else:
-                print("$ expected at line number " + str(lineNumber))
-                exit()
-
-
-
+                else:
+                    print("$ expected at line number " + str(lineNumber))
+                    exit()
 
               
         ################## End of Grammar rules ###################
@@ -96,12 +103,6 @@ def IDs():
 # Rule 14
 def StatementList():
     print("<Statement List> ::= <Statement> | <Statement> <Statement List>")
-'''
-# Rule 14
-def StatementList():
-    print("<Statement List> ::= <Statement> | <Statement><Statement List>")
-    print("<Statement List> ::= <Empty> | <Statement List>")
-'''
 
 # Rule 15
 def Statement():
@@ -122,10 +123,10 @@ def If():
 # Rule 19
 def Return():
     print("<Return> ::= return; | return <Expression>;")
-    
+
 # Rule 20 
 def Print():
-    print("<Print> ::= put(<Expression);")
+    print("<Print> ::= put(<Expression>);")
 
 # Rule 21
 def Scan():
@@ -152,7 +153,7 @@ def Term():
     print("<Term> ::= <Term> * <Factor> | <Term> / <Factor> | <Factor>")
 
 # Rule 27 
-def Factor():
+def Factor(list_of_lines, list_of_lexemes, lineNumber):
     print("<Factor> ::= -<Primary> | <Primary>")
 
 # Rule 28
@@ -162,3 +163,4 @@ def Primary():
 # Rule 29 
 def Empty():
     print("<Empty> ::= Epsilon")
+
