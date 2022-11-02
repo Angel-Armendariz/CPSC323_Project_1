@@ -49,16 +49,6 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber):
 def OptFuncDef():
     print("<Opt Function Definitions> ::= <Function Definitions> | <Empty>")
 
-# Rule 10
-def OptDeclarList():
-    print("<Opt Declaration List> ::= <Declaration List> | <Empty>")
-
-# Rule 14
-def StatementList():
-    print("<Statement List> ::= <Statement> | <Statement><Statement List>")
-    print("<Statement List> ::= <Empty> | <Statement List>")
-    print("gotta fix this left recursion")
-
 # Rule 3
 def FunctionDef():
     print("<Function Definitions> ::= <Function> | <Function> <Function Definitions>")
@@ -87,6 +77,10 @@ def Qualifier():
 def Body():
     print("<Body> ::= { <Statement List> }")
 
+# Rule 10
+def OptDeclarList():
+    print("<Opt Declaration List> ::= <Declaration List> | <Empty>")
+
 # Rule 11
 def DeclarationList():
     print("<Declaration List> ::= <Declaration>; | <Declaration>; <Declaration List>")
@@ -102,6 +96,12 @@ def IDs():
 # Rule 14
 def StatementList():
     print("<Statement List> ::= <Statement> | <Statement> <Statement List>")
+'''
+# Rule 14
+def StatementList():
+    print("<Statement List> ::= <Statement> | <Statement><Statement List>")
+    print("<Statement List> ::= <Empty> | <Statement List>")
+'''
 
 # Rule 15
 def Statement():
@@ -122,6 +122,7 @@ def If():
 # Rule 19
 def Return():
     print("<Return> ::= return; | return <Expression>;")
+    
 # Rule 20 
 def Print():
     print("<Print> ::= put(<Expression);")
