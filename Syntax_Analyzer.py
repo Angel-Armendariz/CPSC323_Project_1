@@ -30,11 +30,12 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber):
             if currentLexeme == "$":             
                 OptDeclarList()                 # Rule 10
                 StatementList()                 # Rule 14
+                
             #beginning of what Kaitlin added
-            elif currentLexeme == "while":
-                if currentLexeme == "(":
+            elif currentLexeme == "while (" or "while(":
                     Condition()
-
+                    if currentLexeme == ")":
+                        Statement()
             elif currentLexeme == "-":
                 Factor()                        # Rule 27
             #end of what Kaitlin added
