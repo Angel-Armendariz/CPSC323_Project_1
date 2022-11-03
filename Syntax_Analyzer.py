@@ -17,7 +17,7 @@ def parse(parseFile):
 
     rat22f(list_of_lines, list_of_lexemes, lineNumber)
 
-# Rule 1
+# Rule 1 (<Rat22F>  ::=   <Opt Function Definitions>   $  <Opt Declaration List>  <Statement List>  $)
 def rat22f(list_of_lines, list_of_lexemes, lineNumber):
     for line in list_of_lines:
 
@@ -30,17 +30,30 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber):
             if currentLexeme == "$":             
                 OptDeclarList()                 # Rule 10
                 StatementList()                 # Rule 14
+                
+            #beginning of what Kaitlin added
+            elif currentLexeme == "while (" or "while(":
+                    Condition()
+                    if currentLexeme == ")":
+                        Statement()
+            elif currentLexeme == "-":
+                Factor()                        # Rule 27
+            #end of what Kaitlin added
+
+            #indented the else statement of the expected at line number, because it would stop iterating over the characters-- Kaitlin
                 if currentToken == "$":
                     exit()                      # end of code from lexer
-            else:
-                print("$ expected at line number " + str(lineNumber))
-                exit()
+                else:
+                    print("$ expected at line number " + str(lineNumber))
+                    exit()
 
+              
         ################## End of Grammar rules ###################
+        
         lineNumber += 2                                   # Increment by 2 to get to the next token
         print("")                                         # line break
 
-# Rule 2
+# Rule 2 (<Opt Function Definitions> ::= <Function Definitions> 	|  <Empty>)
 def OptFuncDef(list_of_lines, list_of_lexemes, lineNumber):
     for line in list_of_lines:
 
@@ -49,19 +62,22 @@ def OptFuncDef(list_of_lines, list_of_lexemes, lineNumber):
     ###################### Grammar rules ######################
         if currentToken:
             FuncDef()       # Rule 3
+            
         else:
             Empty()         # Rule 29
     ################## End of Grammar rules ###################
         lineNumber += 2                                   # Increment by 2 to get to the next token
         print("")                                         # line break
 
-# Rule 3 (LR)
+# Rule 3 (<Function Definitions>  ::= <Function> (<Function Definitions PRIME>))
 def FuncDef(list_of_lines, list_of_lexemes, lineNumber):
     for line in list_of_lines:
         print("<Function Definitions>  ::=" + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
     ###################### Grammar rules ######################
-
+        if currentToken:
+            Func()          # Rule 4
+        elif 
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
@@ -353,7 +369,6 @@ def Empty(list_of_lines, list_of_lexemes, lineNumber):
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
     ###################### Grammar rules ######################
 
-# Rule 14
-def StatementList():
-    print("<Statement List> ::= <Statement> | <Statement><Statement List>")
-    print("gotta fix this left recursion")
+    ################## End of Grammar rules ###################
+    lineNumber += 2                                   # Increment by 2 to get to the next token
+    print("")                                         # line break
