@@ -24,9 +24,9 @@ def parse(parseFile):
 # Rule 1 (<Rat22F>  ::=   <Opt Function Definitions>   $  <Opt Declaration List>  <Statement List>  $)
 def rat22f(list_of_lines, list_of_lexemes, lineNumber):
 
-    print("<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $\n")  # only needs to be printed once
+    print("<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $")  # only needs to be printed once
 
-    print(list_of_lines[lineNumber])                                 # this will print out the Token:___ Lexeme:
+    print("\n" + list_of_lines[lineNumber-1])                                 # this will print out the Token:___ Lexeme:
     global currentLexeme
     global currentToken
     currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes) # get the first token and lexeme
@@ -46,13 +46,11 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber):
         print("$ expected at line number " + str(lineNumber))
         exit()
     ################## End of Grammar rules ###################        
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
 
 # Rule 2 (<Opt Function Definitions> ::= <Function Definitions> 	|  <Empty>)
 def OptFuncDef():
 
-    print("<Opt Function Definitions> ::= <Function Definitions> | <Empty>\n")
+    print("<Opt Function Definitions> ::= <Function Definitions> | <Empty>")
     ###################### Grammar rules ######################
     if currentLexeme == "function":
         FuncDef()       # Rule 3
@@ -62,7 +60,7 @@ def OptFuncDef():
 
 # Rule 3 (<Function Definitions>  ::= <Function> (<Function Definitions PRIME>))
 def FuncDef():
-    print("<Function Definitions>  ::= <Function> (<Function Definitions PRIME>)\n")
+    print("<Function Definitions>  ::= <Function> (<Function Definitions Prime>)")
     ###################### Grammar rules ######################
     Func()
     FuncDefPrime()
@@ -70,7 +68,7 @@ def FuncDef():
 
 # Rule 3A
 def FuncDefPrime():
-    print("<Function Definition Prime> ::= Epilson | <Function Definitions>\n")
+    print("<Function Definition Prime> ::= Epilson | <Function Definitions>")
     if currentLexeme != "function":
         Empty()
     else:
@@ -78,12 +76,14 @@ def FuncDefPrime():
 
 # Rule 4
 def Func():
-    print("<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>\n")
+    print("<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>")
 
     global lineNumber
     lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global currentLexeme
+    global currentToken
     currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    print(list_of_lines[lineNumber])                                 # this will print out the Token:___ Lexeme:
+    print("\n" + list_of_lines[lineNumber-2])                                 # this will print out the Token:___ Lexeme:
 
     ###################### Grammar rules ######################
     OptParaList()
@@ -93,10 +93,12 @@ def Func():
 
 # Rule 5
 def OptParaList():
-    print("<Opt Parameter List> ::= <Parameter List> | <Empty>\n")
+    print("<Opt Parameter List> ::= <Parameter List> | <Empty>")
 
     global lineNumber
-    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    lineNumber += 2                                                 # Increment by 2 to get to the next token & lexeme
+    global currentLexeme
+    global currentToken
     currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
 
     ###################### Grammar rules ######################
@@ -109,12 +111,14 @@ def OptParaList():
 
 # Rule 6 (LR)
 def ParaList():
-    print("<Parameter List> ::= <Parameter> ( <Parameter List Prime> )\n")
+    print("<Parameter List> ::= <Parameter> ( <Parameter List Prime> )")
 
     global lineNumber
     lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global currentLexeme
+    global currentToken
     currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    print(list_of_lines[lineNumber])                                 # this will print out the Token:___ Lexeme:
+    print("\n" + list_of_lines[lineNumber-4])                                 # this will print out the Token:___ Lexeme:
 
     ###################### Grammar rules ######################
     Para()
@@ -138,7 +142,7 @@ def ParaListPrime():
 
 # Rule 7
 def Para():
-    print("<Parameter> ::= <IDs> <Qualifier>\n")
+    print("<Parameter> ::= <IDs> <Qualifier>")
     ###################### Grammar rules ######################
     IDs()
     Qual()
@@ -146,7 +150,7 @@ def Para():
 
 # Rule 8
 def Qual():
-    print("<Qualifier> ::= integer | boolean | real\n")
+    print("<Qualifier> ::= integer | boolean | real")
     ###################### Grammar rules ######################
     if currentToken == "INT":
         print("integer")
@@ -160,7 +164,7 @@ def Qual():
 # Rule 9
 def Body():
 
-    print("<Body>  ::= { <Statement List> }\n")
+    print("<Body>  ::= { <Statement List> }")
     ###################### Grammar rules ######################
     if currentLexeme == "{":
         StatementList()
@@ -171,7 +175,7 @@ def Body():
 
 # Rule 10
 def OptDeclarList():
-    print("<Opt Declaration List> ::= <Declaration List> | <Empty> \n")
+    print("<Opt Declaration List> ::= <Declaration List> | <Empty>")
 
     ###################### Grammar rules ######################
     if currentToken == "INT" or "BOOL" or "REAL":
@@ -184,7 +188,7 @@ def OptDeclarList():
 # Rule 11(LR)
 def DeclarList():
 
-    print("<Declaration List> ::= <Declaration> ; (<Declaration List Prime>) \n")
+    print("<Declaration List> ::= <Declaration> ; (<Declaration List Prime>)")
 
     ###################### Grammar rules ######################
     Declar()
@@ -200,7 +204,7 @@ def DeclarListPrime():
 
 # Rule 12
 def Declar():
-    print("<Declaration> ::= <Qualifier> <IDs>\n")
+    print("<Declaration> ::= <Qualifier> <IDs>")
     ###################### Grammar rules ######################
     Qual()
     IDs()
@@ -209,10 +213,12 @@ def Declar():
 
 # Rule 13(LR)
 def IDs():
-    print("<IDs> ::= <Identifier><IDs Prime>\n")
+    print("<IDs> ::= <Identifier><IDs Prime>")
 
     global lineNumber
     lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global currentLexeme
+    global currentToken
     currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
 
     ###################### Grammar rules ######################
@@ -227,12 +233,11 @@ def IDsPrime():
         Empty()
     else:
         IDs()
-        print(list_of_lines[lineNumber])                                 # this will print out the Token:___ Lexeme:
-
+        print("\n" + list_of_lines[lineNumber-6])                                 # this will print out the Token:___ Lexeme:
 
 # Rule 14(LR)
 def StatementList():
-    print("<Statement List> ::= <Statement> <Statement List Prime>\n")
+    print("<Statement List> ::= <Statement> <Statement List Prime>")
 
     ###################### Grammar rules ######################
 
@@ -394,4 +399,4 @@ def Primary():
 """
 # Rule 29
 def Empty():
-    print("<Empty> ::= \n")
+    print("<Empty> ::= ")
