@@ -59,7 +59,11 @@ def OptFuncDef():
 
 # Rule 3
 def FunctionDef():
-    print("<Function Definitions> ::= <Function> | <Function> <Function Definitions>")
+    print("<Function Definitions>  ::= <Function> (<Function Definitions PRIME>)")
+
+# Rule 3A
+def FunctionDefPrime():
+    print("<Function Definitions PRIME> ::= ε | <Function Definitions>")
 
 # Rule 4
 def Func():
@@ -71,7 +75,11 @@ def OptParamList():
 
 # Rule 6
 def ParamList():
-    print("<Parameter List> ::= <Parameter> | <Parameter>, <Parameter List>")
+    print("<Parameter List>  ::=  <Parameter> ( <Parameter List PRIME> )")
+
+# Rule 6A
+def ParamListPrime():
+    print("<Parameter List PRIME> ::= ε | , <Parameter List>")
 
 # Rule 7
 def Param():
@@ -91,7 +99,11 @@ def OptDeclarList():
 
 # Rule 11
 def DeclarationList():
-    print("<Declaration List> ::= <Declaration>; | <Declaration>; <Declaration List>")
+    print("<Declaration List>  := <Declaration> ; (<Declaration List PRIME>)")
+
+# Rule 11A
+def DeclarationListPrime():
+    print("<Declaration List PRIME> :=  ε |  <Declaration List>")
 
 # Rule 12
 def Declaration():
@@ -99,11 +111,19 @@ def Declaration():
 
 # Rule 13
 def IDs():
-    print("<IDs> ::= <Identifier> | <Identifier>, <IDs>")
+    print("<IDs> ::= <Identifier> <IDs PRIME>")
+
+# Rule 13A
+def IDsPrime():
+    print("<IDs PRIME> ::= ε | , <IDs>")
 
 # Rule 14
 def StatementList():
-    print("<Statement List> ::= <Statement> | <Statement> <Statement List>")
+    print("<Statement List> ::= <Statement> <Statement List PRIME>")
+
+# Rule 14A
+def StatementListPrime():
+    print("<Statement List PRIME> ::= ε | <Statement List>")
 
 # Rule 15
 def Statement():
@@ -119,11 +139,19 @@ def Assign():
 
 # Rule 18
 def If():
-    print("<If> ::= if(<Condition>) <Statement> endif | if(<Condition>) <Statement> else <Statement> endif")
+    print("<If> ::= if (<Condition>) <Statement> <If PRIME>")
+
+# Rule 18A
+def IfPrime():
+    print("<If PRIME> ::= endif | else  <Statement>  endif")
 
 # Rule 19
 def Return():
-    print("<Return> ::= return; | return <Expression>;")
+    print("<Return> ::=  return <Expression PRIME>")
+
+# Rule 19A
+def ReturnPrime():
+    print("<Expression PRIME> ::= (; | <Expression> ;)")
 
 # Rule 20 
 def Print():
@@ -147,11 +175,19 @@ def Relop():
 
 # Rule 25
 def Expression():
-    print("<Expression> ::= <Expression> + <Term> | <Expression> - <Term> | <Term>")
+    print("<Expression>  ::= <Term> <Expression PRIME>")
+
+# Rule 25A
+def ExpressionPrime():
+    print("<Expression PRIME>::= + <Term> <Expression PRIME> | - <Term> <Expression PRIME> | ε")
 
 # Rule 26
 def Term():
-    print("<Term> ::= <Term> * <Factor> | <Term> / <Factor> | <Factor>")
+    print("<Term> ::= <Factor> <Term PRIME>")
+
+# Rule 26A
+def TermPrime():
+    print("<Term PRIME> ::= * <Factor> <Term PRIME> | / <Factor> <Term PRIME> | ε")
 
 # Rule 27 
 def Factor(list_of_lines, list_of_lexemes, lineNumber):
