@@ -335,6 +335,7 @@ def Relop():
     print("")                                         # line break
 # Rule 25(LR)
 def Expression():
+    print('<Expression> ::= <Term> <Expression PRIME>')
     for line in list_of_lines:
         print("<Expression> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -344,6 +345,7 @@ def Expression():
     print("")                                         # line break
 # Rule 26(LR)
 def Term():
+    print('<Term> ::= <Factor> <Term PRIME>')
     for line in list_of_lines:
         print("<Term> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
