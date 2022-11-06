@@ -125,7 +125,7 @@ def OptParaList():
     ################## End of Grammar rules ###################
 
 
-# Rule 6 (LR)
+# Rule 6 (Back-Tracking)
 def ParaList():
     file.append('<Parameter List> ::= <Parameter> ( <Parameter List Prime> )')
 
@@ -265,7 +265,7 @@ def Declar():
     ################## End of Grammar rules ###################
 
 
-# Rule 13(LR)
+# Rule 13(Back-Tracking)
 def IDs():
     file.append('<IDs> ::= <Identifier> <IDs Prime>')                              
     ###################### Grammar rules ######################
@@ -287,7 +287,7 @@ def IDsPrime():
     else:
         IDs()
 
-# Rule 14(LR)
+# Rule 14(Back-Tracking)
 def StatementList():
     file.append('<Statement List> ::= <Statement> <Statement List Prime>')
 
@@ -328,7 +328,7 @@ def Assign():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     file.append("")                                         # line break
 
-# Rule 18(LR)
+# Rule 18(Back-Tracking)
 def If():
     for line in list_of_lines:
         file.append("<If> ::= " + line + "\n")
@@ -339,7 +339,7 @@ def If():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     file.append("")                                         # line break
 
-# Rule 19(LR)
+# Rule 19(Back-Tracking)
 def Return():
     for line in list_of_lines:
         file.append("<Return> ::= " + line + "\n")
@@ -351,38 +351,92 @@ def Return():
     file.append("")                                         # line break
 
 # Rule 20
-def file.append():
-    for line in list_of_lines:
-        file.append("<file.append> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
+def Print():
+    print("put ( <Expression>);")
 
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                
+
+    if currentLexeme != "(":
+        print("( SEPARATOR expected on line " + str(lineNumber))
+        exit()
+    ###################### Grammar rules ######################
+    Expression()                                      # Rule 25
+
+    if currentLexeme != ")":
+        print("expected ), on line number " + str(lineNumber))
+        exit()
+    
+    if currentLexeme != ";":
+        print("expected ;, on line number " + str(lineNumber))
+        exit()
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     file.append("")                                         # line break
 
 # Rule 21
 def Scan():
-    for line in list_of_lines:
-        file.append("<Scan> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
+    print("<Scan> ::=    get ( <IDs> );")
 
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                
+
+    if currentLexeme != "(":
+        print("( SEPARATOR expected on line " + str(lineNumber))
+        exit()
+    ###################### Grammar rules ######################
+    IDs()                                             # Rule 13
+
+    if currentLexeme != ")":
+        print("expected ), on line number " + str(lineNumber))
+        exit()
+    
+    if currentLexeme != ";":
+        print("expected ;, on line number " + str(lineNumber))
+        exit()
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     file.append("")                                         # line break
 
 # Rule 22
 def While():
-    for line in list_of_lines:
-        file.append("<While> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
+    print("<While> ::=  while ( <Condition>  )  <Statement>")
 
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                
+
+    if currentLexeme != "(":
+        print("( SEPARATOR expected on line " + str(lineNumber))
+        exit()
+    ###################### Grammar rules ######################
+    Condition()                                       # Rule 23
+
+    if currentLexeme != ")":
+        print("expected ), on line number " + str(lineNumber))
+        exit()
+    
+    Statement()
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
-
+    print("")                                         # line break
 # Rule 23
 def Condition():
     for line in list_of_lines:
@@ -405,7 +459,7 @@ def Relop():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     file.append("")                                         # line break
 
-# Rule 25(LR)
+# Rule 25(Left Recursion)
 def Expression():
     for line in list_of_lines:
         file.append("<Expression> ::= " + line + "\n")
@@ -416,7 +470,7 @@ def Expression():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     file.append("")                                         # line break
 
-# Rule 26(LR)
+# Rule 26(Left Recursion)
 def Term():
     for line in list_of_lines:
         file.append("<Term> ::= " + line + "\n")
