@@ -1,4 +1,8 @@
-$ while (fahr => upper) a = 23.00;
-1/2
-/* !hello */
+function calculate (a 2, b 3);
+
+function calculate (a 2, b 3)
+    { return a + b; }
+$ 
+    while (fahr => upper) a = 23.00;
+    /* !hello */
 $
