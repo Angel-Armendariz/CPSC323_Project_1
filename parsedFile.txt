@@ -14,26 +14,28 @@ Token:SEPARATOR        Lexeme:(
 <Opt Parameter List> ::= <Parameter List> | <Empty>
 <Parameter List> ::= <Parameter> ( <Parameter List Prime> )
 
-Token:IDENTIFIERS        Lexeme:a
+Token:IDENTIFIERS        Lexeme:eggs
 <Parameter> ::= <IDs> <Qualifier>
 <IDs> ::= <Identifier> <IDs Prime>
 <IDs Prime> ::= Epilson | , <IDs>
 <Empty> ::= Epilson
 
 Token:INT        Lexeme:2
+<Qualifier> ::= int | boolean | real
 <Qualifier> ::= integer
 
 Token:SEPARATOR        Lexeme:,
 <Parameter List Prime> ::= Episilon | ,<Parameter List>
 <Parameter List> ::= <Parameter> ( <Parameter List Prime> )
 
-Token:IDENTIFIERS        Lexeme:b
+Token:IDENTIFIERS        Lexeme:bacon
 <Parameter> ::= <IDs> <Qualifier>
 <IDs> ::= <Identifier> <IDs Prime>
 <IDs Prime> ::= Epilson | , <IDs>
 <Empty> ::= Epilson
 
 Token:INT        Lexeme:3
+<Qualifier> ::= int | boolean | real
 <Qualifier> ::= integer
 
 Token:SEPARATOR        Lexeme:)
@@ -44,6 +46,7 @@ Token:SEPARATOR        Lexeme:;
 <Opt Declaration List> ::= <Declaration List> | <Empty>
 <Declaration List> ::= <Declaration> ; (<Declaration List Prime>)
 <Declaration> ::= <Qualifier> <IDs>
+<Qualifier> ::= int | boolean | real
 <IDs> ::= <Identifier> <IDs Prime>
 <IDs Prime> ::= Epilson | , <IDs>
 <Empty> ::= Epilson
