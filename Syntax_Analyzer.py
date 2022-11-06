@@ -29,7 +29,7 @@ def parse(parseFile):
     line = -1                                        # keeps track of the amount of "Token: _____ Lexeme:______"
 
     rat22f(list_of_lines, list_of_lexemes, lineNumber, line)
-
+   
     return file
 
 # Rule 1 
@@ -216,6 +216,42 @@ def Body():
         exit()
     ################## End of Grammar rules ###################
 
+# Rule 3
+def FunctionDef():
+    print("<Function Definitions>  ::= <Function> (<Function Definitions PRIME>)")
+
+# Rule 3A
+def FunctionDefPrime():
+    print("<Function Definitions PRIME> ::= ε | <Function Definitions>")
+
+# Rule 4
+def Func():
+    print("<Function> ::= function <identifer> (<Opt Parameter List>) <Opt Declaration List> <Body>")
+
+# Rule 5
+def OptParamList():
+    print("<Opt Parameter List ::= <Parameter List> | <Empty>")
+
+# Rule 6
+def ParamList():
+    print("<Parameter List>  ::=  <Parameter> ( <Parameter List PRIME> )")
+
+# Rule 6A
+def ParamListPrime():
+    print("<Parameter List PRIME> ::= ε | , <Parameter List>")
+
+# Rule 7
+def Param():
+    print("<Parameter> ::= <IDs> <Qualifier>")
+
+# Rule 8
+def Qualifier():
+    print("<Qualifier> ::= integer | boolean | real")
+
+# Rule 9
+def Body():
+    print("<Body> ::= { <Statement List> }")
+
 # Rule 10
 def OptDeclarList():
     global currentLexeme
@@ -282,7 +318,7 @@ def IDsPrime():
         global lineNumber
         global currentToken
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-
+        
         file.append('\n' + list_of_lines[line])   
     else:
         IDs()
