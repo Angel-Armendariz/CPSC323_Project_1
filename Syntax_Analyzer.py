@@ -288,11 +288,22 @@ def IDsPrime():
 # Rule 14(Back-Tracking)
 def StatementList():
     print("<Statement List> ::= <Statement> <Statement List Prime>")
-
+    global lineNumber
+    lineNumber += 2                                                  
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])    
     ###################### Grammar rules ######################
-
+    if Statement():
+        Statement()
+    else:
+        exit()
     ################## End of Grammar rules ###################
-"""
+
+
 # Rule 15
 def Statement():
     for line in list_of_lines:
@@ -302,6 +313,40 @@ def Statement():
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
+
+"""
+# Rule 18(Back-Tracking)
+def If():
+    print("<If> ::= if (<Condition>) <Statement> <If PRIME>")
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                 # should print out the identifier _____
+   
+    if currentLexeme == 'if':
+        global lineNumber
+        lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+        global line
+        line += 1
+        if currentLexeme == "(":
+            Condition()
+            if currentLexeme == ")":
+                Statement()
+                IfPrime()
+            else:
+                print("expected ), on line number " + str(lineNumber))
+                exit()
+
+    ###################### Grammar rules ######################
+    ################## End of Grammar rules ###################
+    lineNumber += 2                                   # Increment by 2 to get to the next token
+    print("")                                         # line break
+"""
+"""
 # Rule 16
 def Compound():
     for line in list_of_lines:
@@ -322,6 +367,8 @@ def Assign():
     print("")                                         # line break
 # Rule 18(Back-Tracking)
 def If():
+    print("<If> ::= if (<Condition>) <Statement> <If PRIME>")
+    if currentLexeme
     for line in list_of_lines:
         print("<If> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -469,6 +516,7 @@ def Primary():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
 """
+
 # Rule 29
 def Empty():
     print("<Empty> ::= Epilson")
