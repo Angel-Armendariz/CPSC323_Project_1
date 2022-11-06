@@ -324,7 +324,7 @@ def Assign():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
 
-# Rule 18(LR)
+# Rule 18(Back-Tracking)
 def If():
     for line in list_of_lines:
         print("<If> ::= " + line + "\n")
@@ -455,7 +455,7 @@ def Relop():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
 
-# Rule 25(LR)
+# Rule 25(Left Recursion)
 def Expression():
     for line in list_of_lines:
         print("<Expression> ::= " + line + "\n")
@@ -466,7 +466,7 @@ def Expression():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
 
-# Rule 26(LR)
+# Rule 26(Left Recursion)
 def Term():
     for line in list_of_lines:
         print("<Term> ::= " + line + "\n")
