@@ -201,23 +201,21 @@ def Body():
 
 # Rule 10
 def OptDeclarList():
-    print("<Opt Declaration List> ::= <Declaration List> | <Empty>")
-
+    global currentLexeme
     global lineNumber
     lineNumber += 2                                                  
     global line
     line += 1
-    global currentLexeme
     global currentToken
     currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
     print("\n" + list_of_lines[line]) 
 
-    ###################### Grammar rules ######################
     if currentLexeme == ";":
+        print("<Opt Declaration List> ::= <Declaration List> | <Empty>")
         DeclarList()
     else:
         Empty()
-    ################## End of Grammar rules ###################
+
 
 
 # Rule 11(LR)
