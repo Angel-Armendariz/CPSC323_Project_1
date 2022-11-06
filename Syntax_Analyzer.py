@@ -11,205 +11,301 @@ def lexer(lineNumber, list_of_lexemes):
 def parse(parseFile):
     """Will take the inputted file and parse based on grammar rules."""
 
-    list_of_lines = parseFile.splitlines()
-    list_of_lexemes = parseFile.split()
-    lineNumber = 1
+    global list_of_lines
+    global list_of_lexemes
+    global lineNumber
+    global line
 
-    rat22f(list_of_lines, list_of_lexemes, lineNumber)
+    list_of_lines = parseFile.splitlines()          # each line here is "Token: _____ Lexeme:______"
+    list_of_lexemes = parseFile.split()             # each lexeme here is "Lexeme:______"
+    lineNumber = 1                                  # keeps track of the amount of "Lexeme:______"
+    line = 0                                        # keeps track of the amount of "Token: _____ Lexeme:______"
+
+    rat22f(list_of_lines, list_of_lexemes, lineNumber, line)
 
 # Rule 1 (<Rat22F>  ::=   <Opt Function Definitions>   $  <Opt Declaration List>  <Statement List>  $)
-def rat22f(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
+def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
 
-        print("<Rat22F> ::= " + line + "\n")                                       # will print the Token:___ Lexeme:___
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $")  # only needs to be printed once
 
-        ###################### Grammar rules ######################
-        if currentToken:
-            OptFuncDef()                        # Rule 2
-            if currentLexeme == "$":             
-                OptDeclarList()                 # Rule 10
-                StatementList()                 # Rule 14
-                
-            #beginning of what Kaitlin added
-            elif currentLexeme == "while (" or "while(":
-                    Condition()
-                    if currentLexeme == ")":
-                        Statement()
-            elif currentLexeme == "-":
-                Factor()                        # Rule 27
-            #end of what Kaitlin added
+    print("\n" + list_of_lines[line])                                 # this will print out the Token:___ Lexeme:
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes) # get the first token and lexeme
 
-            #indented the else statement of the expected at line number, because it would stop iterating over the characters-- Kaitlin
-                if currentToken == "$":
-                    exit()                      # end of code from lexer
-                else:
-                    print("$ expected at line number " + str(lineNumber))
-                    exit()
-
-              
-        ################## End of Grammar rules ###################
-        
-        lineNumber += 2                                   # Increment by 2 to get to the next token
-        print("")                                         # line break
+    ###################### Grammar rules ######################
+    if currentLexeme == "function":                        
+        OptFuncDef()                    # Rule 2 - for declaring functions before the main body of code
+    elif currentLexeme == "$":          # signifies the start of the main body of code
+        OptDeclarList()                 # Rule 10 - list for declaring variables & etc
+        StatementList()                 # Rule 14 - list for intializing variables into statements             
+        if currentLexeme == "$":        # signifies the end of the main body of code
+            exit()                      # end of code from lexer
+        else:
+            print("$ expected at line number " + str(lineNumber))
+            exit()
+    else:
+        print("$ expected at line number " + str(lineNumber))
+        exit()
+    ################## End of Grammar rules ###################        
 
 # Rule 2 (<Opt Function Definitions> ::= <Function Definitions> 	|  <Empty>)
-def OptFuncDef(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
+def OptFuncDef():
 
-        print("<Opt Function Definitions> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("<Opt Function Definitions> ::= <Function Definitions> | <Empty>")
     ###################### Grammar rules ######################
-        if currentToken:
-            FuncDef()       # Rule 3
-            
-        else:
-            Empty()         # Rule 29
+    if currentLexeme == "function":
+        FuncDef()       # Rule 3
+    else:
+        Empty()         # Rule 29
     ################## End of Grammar rules ###################
-        lineNumber += 2                                   # Increment by 2 to get to the next token
-        print("")                                         # line break
 
 # Rule 3 (<Function Definitions>  ::= <Function> (<Function Definitions PRIME>))
-def FuncDef(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Function Definitions>  ::=" + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+def FuncDef():
+    print("<Function Definitions>  ::= <Function> (<Function Definitions Prime>)")
     ###################### Grammar rules ######################
-        if currentToken:
-            Func()          # Rule 4
-        elif 
+    Func()
+    FuncDefPrime()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+
+# Rule 3A
+def FuncDefPrime():
+    print("<Function Definition Prime> ::= Epilson | <Function Definitions>")
+    if currentLexeme != "function":
+        Empty()
+    else:
+        FuncDef()
+
 # Rule 4
-def Func(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
+def Func():
+    print("<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>")
 
-        print("<Function> ::=" + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                 # should print out the identifier _____
+    if currentToken != "IDENTIFIERS":
+        print("IDENTIFIER expected on line " + str(lineNumber))
+        exit()
+
+    # now get the next token which should be "("
+    lineNumber += 2
+    line += 1
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                
+
+    if currentLexeme != "(":
+        print("( SEPARATOR expected on line " + str(lineNumber))
+        exit()
+
     ###################### Grammar rules ######################
-
+    OptParaList()
+    OptDeclarList()
+    Body()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
 
 # Rule 5
-def OptParaList(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
+def OptParaList():
+    print("<Opt Parameter List> ::= <Parameter List> | <Empty>")
 
-        print("<Opt Parameter List> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
     ###################### Grammar rules ######################
-
+    if currentLexeme == "(":
+        ParaList()
+    else:
+        Empty()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+
 
 # Rule 6 (LR)
-def ParaList(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
+def ParaList():
+    print("<Parameter List> ::= <Parameter> ( <Parameter List Prime> )")
 
-        print("<Parameter List> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                 # this will print out the Token:___ Lexeme:
+
+    if currentToken != "IDENTIFIERS":
+        print("Identifier token expected at line " + str(lineNumber))
+        exit()
+
     ###################### Grammar rules ######################
+    Para()
+    ParaListPrime()
 
+    if currentLexeme != ")":
+        print("expected ), on line number " + str(lineNumber))
+        exit()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+
+# Rule 6A
+def ParaListPrime():
+
+    global lineNumber
+    lineNumber += 2                                                  
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line]) 
+
+    print("<Parameter List Prime> ::= Episilon | ,<Parameter List>")
+
+    ###################### Grammar rules ######################
+    if currentLexeme != ",":
+        Empty()
+    else:
+        ParaList()
+    ################## End of Grammar rules ###################
 
 # Rule 7
-def Para(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-
-        print("<Parameter> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+def Para():
+    print("<Parameter> ::= <IDs> <Qualifier>")
     ###################### Grammar rules ######################
-
+    IDs()
+    Qual()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
 
 # Rule 8
-def Qual(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-
-        print("<Qualifier> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+def Qual():
     ###################### Grammar rules ######################
-
+    if currentToken == "INT":
+        print("<Qualifier> ::= integer")
+    elif currentToken == "BOOL":
+        print("<Qualifier> ::= boolean")
+    elif currentToken == "REAL":
+        print("<Qualifier> ::= real")
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+
 
 # Rule 9
-def Body(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
+def Body():
 
-        print("<Body>  ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("<Body>  ::= { <Statement List> }")
     ###################### Grammar rules ######################
-
+    if currentLexeme == "{":
+        StatementList()
+    else:
+        print("{ expected, error in line " + str(lineNumber))
+        exit()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
 
 # Rule 10
-def OptDeclarList(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Opt Declaration List> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
+def OptDeclarList():
+    global currentLexeme
+    global lineNumber
+    lineNumber += 2                                                  
+    global line
+    line += 1
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line]) 
 
-    ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+    if currentLexeme == ";":
+        print("<Opt Declaration List> ::= <Declaration List> | <Empty>")
+        DeclarList()
+    else:
+        Empty()
+
+
 
 # Rule 11(LR)
-def DeclarList(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Declaration List> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
+def DeclarList():
 
+    print("<Declaration List> ::= <Declaration> ; (<Declaration List Prime>)")
+
+    global lineNumber
+    lineNumber += 2                                                  
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line]) 
+
+    ###################### Grammar rules ######################
+    if currentLexeme == "function":
+        Declar()
+    else:
+        DeclarListPrime()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+
+# Rule 11A
+def DeclarListPrime():
+    print("<Declaration List Prime> ::= Epilson | <Declaration List>")
+    if currentLexeme != ";":
+        Empty()
+    else:
+        DeclarList()
 
 # Rule 12
-def Declar(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Declaration> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+def Declar():
+    print("<Declaration> ::= <Qualifier> <IDs>")
     ###################### Grammar rules ######################
-
+    Qual()
+    IDs()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
 
-# Rule 13(LR)
-def IDs(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<IDs> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+
+# Rule 13(BT)
+def IDs():
+    print("<IDs> ::= <Identifier> <IDs Prime>")
+
+    global lineNumber
+    lineNumber += 2                                                  
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                 
+
     ###################### Grammar rules ######################
-
+    IDsPrime()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
 
-# Rule 14(LR)
-def StatementList(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Statement List> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+# Rule 13A
+def IDsPrime():
+    print("<IDs Prime> ::= Epilson | , <IDs>")
+    global currentLexeme
+    
+    if currentLexeme != ",":
+        Empty()
+    else:
+        IDs()
+
+# Rule 14(BT)
+def StatementList():
+    print("<Statement List> ::= <Statement> <Statement List Prime>")
+
+    global lineNumber
+    lineNumber += 2                                                  
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])  
+
     ###################### Grammar rules ######################
-
+   
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+
+# Rule 14A
+def StatementListPrime():
+    print("<Statement List PRIME> ::= Epsilon | <Statement List>")
 
 # Rule 15
-def Statement(list_of_lines, list_of_lexemes, lineNumber):
+def Statement():
     for line in list_of_lines:
         print("<Statement> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -220,7 +316,7 @@ def Statement(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 16
-def Compound(list_of_lines, list_of_lexemes, lineNumber):
+def Compound():
     for line in list_of_lines:
         print("<Compound> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -231,7 +327,7 @@ def Compound(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 17
-def Assign(list_of_lines, list_of_lexemes, lineNumber):
+def Assign():
     for line in list_of_lines:
         print("<Assign> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -242,7 +338,7 @@ def Assign(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 18(LR)
-def If(list_of_lines, list_of_lexemes, lineNumber):
+def If():
     for line in list_of_lines:
         print("<If> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -253,51 +349,132 @@ def If(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 19(LR)
-def Return(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Return> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+def Return():
+    print("<Return> ::= return <Expression Prime>")
+ 
     ###################### Grammar rules ######################
+    ExpressionPrime()
+    ################## End of Grammar rules ###################
 
+# Rule 19A
+def ExpressionPrime():
+    print("<Expression Prime> ::= (; | <Expression> ;)")
+
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])  
+
+    if currentLexeme != "(":
+        print("( SEPARATOR expected on line " + str(lineNumber))
+        exit() 
+    ###################### Grammar rules ######################
+    if currentLexeme == ";":
+        exit()
+    
+    Expression()
+    if currentLexeme != ";":
+        print("expected ;, on line number " + str(lineNumber))
+        exit() 
+    
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
 
 # Rule 20
-def Print(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Print> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
+def Print():
+    print("put (<Expression>);")
 
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                
+
+    if currentLexeme != "(":
+        print("( SEPARATOR expected on line " + str(lineNumber))
+        exit()
+    ###################### Grammar rules ######################
+    Expression()                                      # Rule 25
+
+    if currentLexeme != ")":
+        print("expected ), on line number " + str(lineNumber))
+        exit()
+    
+    if currentLexeme != ";":
+        print("expected ;, on line number " + str(lineNumber))
+        exit()
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
 
 # Rule 21
-def Scan(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Scan> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
+def Scan():
+    print("<Scan> ::=    get ( <IDs> );")
 
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                
+
+    if currentLexeme != "(":
+        print("( SEPARATOR expected on line " + str(lineNumber))
+        exit()
+    ###################### Grammar rules ######################
+    IDs()                                             # Rule 13
+
+    if currentLexeme != ")":
+        print("expected ), on line number " + str(lineNumber))
+        exit()
+    
+    if currentLexeme != ";":
+        print("expected ;, on line number " + str(lineNumber))
+        exit()
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
 
 # Rule 22
-def While(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<While> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
+def While():
+    print("<While> ::=  while ( <Condition>  )  <Statement>")
 
+    global lineNumber
+    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+    global line
+    line += 1
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    print("\n" + list_of_lines[line])                                
+
+    if currentLexeme != "(":
+        print("( SEPARATOR expected on line " + str(lineNumber))
+        exit()
+    ###################### Grammar rules ######################
+    Condition()                                       # Rule 23
+
+    if currentLexeme != ")":
+        print("expected ), on line number " + str(lineNumber))
+        exit()
+    
+    Statement()
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
 
 # Rule 23
-def Condition(list_of_lines, list_of_lexemes, lineNumber):
+def Condition():
     for line in list_of_lines:
         print("<Condition> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -308,7 +485,7 @@ def Condition(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 24
-def Relop(list_of_lines, list_of_lexemes, lineNumber):
+def Relop():
     for line in list_of_lines:
         print("<Relop> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -319,7 +496,7 @@ def Relop(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 25(LR)
-def Expression(list_of_lines, list_of_lexemes, lineNumber):
+def Expression():
     for line in list_of_lines:
         print("<Expression> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -330,7 +507,7 @@ def Expression(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 26(LR)
-def Term(list_of_lines, list_of_lexemes, lineNumber):
+def Term():
     for line in list_of_lines:
         print("<Term> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -341,7 +518,7 @@ def Term(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 27
-def Factor(list_of_lines, list_of_lexemes, lineNumber):
+def Factor():
     for line in list_of_lines:
         print("<Factor> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -352,7 +529,7 @@ def Factor(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 28
-def Primary(list_of_lines, list_of_lexemes, lineNumber):
+def Primary():
     for line in list_of_lines:
         print("<Primary> ::= " + line + "\n")
         currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
@@ -363,12 +540,5 @@ def Primary(list_of_lines, list_of_lexemes, lineNumber):
     print("")                                         # line break
 
 # Rule 29
-def Empty(list_of_lines, list_of_lexemes, lineNumber):
-    for line in list_of_lines:
-        print("<Empty> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
-
-    ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+def Empty():
+    print("<Empty> ::= Epilson")
