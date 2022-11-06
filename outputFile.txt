@@ -8,15 +8,6 @@ Token:IDENTIFIERS        Lexeme:b
 Token:INT        Lexeme:3
 Token:SEPARATOR        Lexeme:)
 Token:SEPARATOR        Lexeme:;
-Token:KEYWORD        Lexeme:function
-Token:IDENTIFIERS        Lexeme:calculate
-Token:SEPARATOR        Lexeme:(
-Token:IDENTIFIERS        Lexeme:a
-Token:INT        Lexeme:2
-Token:SEPARATOR        Lexeme:,
-Token:IDENTIFIERS        Lexeme:b
-Token:INT        Lexeme:3
-Token:SEPARATOR        Lexeme:)
 Token:SEPARATOR        Lexeme:{
 Token:KEYWORD        Lexeme:return
 Token:IDENTIFIERS        Lexeme:a
