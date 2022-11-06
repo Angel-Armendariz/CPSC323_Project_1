@@ -304,17 +304,6 @@ def StatementList():
     ################## End of Grammar rules ###################
 
 
-# Rule 15
-def Statement():
-    for line in list_of_lines:
-        print("<Statement> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
-    ###################### Grammar rules ######################
-    ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
-
-"""
 # Rule 18(Back-Tracking)
 def If():
     print("<If> ::= if (<Condition>) <Statement> <If PRIME>")
@@ -345,8 +334,42 @@ def If():
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
+
+# Rule 19(Back-Tracking)
+def Return():
+    print("<Return> ::= return <Return PRIME>")
+    if currentLexeme == "return":
+        Expression()
+        if currentLexeme == ";":
+            global lineNumber
+            lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
+            global line
+            line += 1
+            global currentLexeme
+            global currentToken
+            currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+            print("\n" + list_of_lines[line])   
+        else:
+            print("expected ; on line number " + str(lineNumber))
+            exit()
+    else:
+        exit()
+
+
+
+
+
 """
-"""
+# Rule 15
+def Statement():
+    for line in list_of_lines:
+        print("<Statement> ::= " + line + "\n")
+        currentLexeme, currentToken = lexer(lineNumber, list_of_lexemes)
+    ###################### Grammar rules ######################
+    ################## End of Grammar rules ###################
+    lineNumber += 2                                   # Increment by 2 to get to the next token
+    print("")                                         # line break
+
 # Rule 16
 def Compound():
     for line in list_of_lines:
