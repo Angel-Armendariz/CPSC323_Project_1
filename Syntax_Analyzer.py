@@ -531,21 +531,11 @@ def Condition():
     global currentToken
     global lineNumber
     ###################### Grammar rules ######################
-    if Expression():
-        if Relop():
-            if Expression():
-                return True
-            else:
-                file.append('Expected <Expression> on line str(lineNumber)')
-        else:
-            file.append('Expected <Relop> on line str(lineNumber)')
-    else:
-        file.append('Expected <Expression> on line str(lineNumber)')
-        return False
-        #exit()
+    Expression()
+    Relop()
+    ExpressionPrime()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+
     
 # Rule 24
 def Relop():
@@ -553,7 +543,7 @@ def Relop():
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
-    if currentLexeme == '==' or currentLexeme == '!=' or currentLexeme == '>' or currentLexeme == '<' or currentLexeme == '<=' or currentLexeme == '=>':
+    if currentLexeme == "==" or currentLexeme == "=" or currentLexeme == ">" or currentLexeme == "<" or currentLexeme == "<=" or currentLexeme == "=>":
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
     #else:

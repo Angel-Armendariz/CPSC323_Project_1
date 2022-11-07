@@ -113,7 +113,11 @@ Token:OPERATOR        Lexeme:=>
 <Empty> ::= Epsilon
 <Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 <Empty> ::= Epsilon
-Expected <Expression> on line str(lineNumber)
-) expected for while statement, at line number 45, instead of Token:OPERATOR        Lexeme:=>
+<Relop> ::= == | != |  > | < | <= | =>
+
+Token:IDENTIFIERS        Lexeme:upper
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Empty> ::= Epsilon
+) expected for while statement, at line number 47, instead of Token:IDENTIFIERS        Lexeme:upper
 <Empty> ::= Epsilon
 $ expected at line number -1
