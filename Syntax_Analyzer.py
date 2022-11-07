@@ -155,7 +155,7 @@ def ParaListPrime():
 
     file.append('\n' + list_of_lines[line]) 
 
-    file.append('<Parameter List Prime> ::= Episilon | ,<Parameter List>')
+    file.append('<Parameter List Prime> ::= Epsilon | ,<Parameter List>')
 
     ###################### Grammar rules ######################
     if currentLexeme != ",":
@@ -266,7 +266,7 @@ def IDs():
 
 # Rule 13A
 def IDsPrime():
-    file.append('<IDs Prime> ::= Epilson | , <IDs>')
+    file.append('<IDs Prime> ::= Epsilon | , <IDs>')
     global currentLexeme
     if currentLexeme != ",":
         Empty()
@@ -597,7 +597,7 @@ def TermPrime():
 
 # Rule 27
 def Factor():
-    file.append('<Factor> ::= - <Priamry> | <Primary>')
+    file.append('<Factor> ::= - <Primary> | <Primary>')
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
@@ -660,4 +660,4 @@ def Primary():
     ################## End of Grammar rules ###################
 # Rule 29
 def Empty():
-    file.append('<Empty> ::= Epilson')
+    file.append('<Empty> ::= Epsilon')
