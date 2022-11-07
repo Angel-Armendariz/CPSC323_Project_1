@@ -90,8 +90,7 @@ def FuncDefPrime():
 def Func():
     file.append('<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>')
 
-    global lineNumber                                                   # use these next four lines whenever
-    global currentLexeme                                                # you want to the next token and lexeme
+    global currentLexeme                                              
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
 
@@ -129,7 +128,6 @@ def OptParaList():
 def ParaList():
     file.append('<Parameter List> ::= <Parameter> ( <Parameter List Prime> )')
 
-    global lineNumber
     global currentLexeme
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
@@ -151,8 +149,6 @@ def ParaList():
 
 # Rule 6A
 def ParaListPrime():
-
-    global lineNumber
     global currentLexeme
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
@@ -196,7 +192,6 @@ def Body():
     file.append('<Body>  ::= { <Statement List> }')
     ###################### Grammar rules ######################
     if currentLexeme == "{":
-        global lineNumber
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
 
@@ -219,7 +214,6 @@ def Body():
 # Rule 10
 def OptDeclarList():
     global currentLexeme
-    global lineNumber
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
 
@@ -235,11 +229,9 @@ def OptDeclarList():
 def DeclarList():
     file.append('<Declaration List> ::= <Declaration> ; (<Declaration List Prime>)')
     Declar()
-    
     global currentLexeme
     ###################### Grammar rules ######################
     if currentLexeme == ";":
-        global lineNumber
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
 
@@ -276,10 +268,8 @@ def IDs():
 def IDsPrime():
     file.append('<IDs Prime> ::= Epilson | , <IDs>')
     global currentLexeme
-    
     if currentLexeme != ",":
         Empty()
-        global lineNumber
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
         
@@ -505,4 +495,4 @@ def Primary():
 """
 # Rule 29
 def Empty():
-    file.append("<Empty> ::= Epilson")
+    file.append('<Empty> ::= Epilson')
