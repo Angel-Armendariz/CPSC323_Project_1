@@ -300,7 +300,7 @@ def Statement():
     ###################### Grammar rules ######################
     if currentLexeme == "compound":
         Compound()
-    elif currentLexeme == "assign":
+    elif currentToken == "IDENTIFIERS":
         Assign()
     elif currentLexeme == "if":
         If()

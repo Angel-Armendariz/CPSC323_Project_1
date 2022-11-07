@@ -123,5 +123,22 @@ Token:SEPARATOR        Lexeme:)
 
 Token:IDENTIFIERS        Lexeme:a
 <Statement>::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While>
+<Assign> ::= <Identifier> = <Expression>;
+
+Token:SEPARATOR        Lexeme:=
+
+Token:REAL        Lexeme:23.0
+<Expression> ::= <Term> <Expression Prime>
+<Term> ::= <Factor> <Term Prime>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+
+Token:SEPARATOR        Lexeme:;
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epsilon
+<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Empty> ::= Epsilon
+
+Token:OPERATOR        Lexeme:/
 <Empty> ::= Epsilon
 $ expected at line number -1
