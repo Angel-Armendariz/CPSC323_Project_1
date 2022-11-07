@@ -43,8 +43,8 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
     currentLexeme, currentToken = lexer(list_of_lexemes) # get the first token and lexeme
 
     ###################### Grammar rules ######################
-    if currentLexeme == "function":                        
-        OptFuncDef()                    # Rule 2 - for declaring functions before the main body of code
+    #if currentLexeme == "function":                        
+    OptFuncDef()                    # Rule 2 - for declaring functions before the main body of code
     if currentLexeme == "$":          # signifies the start of the main body of code
         OptDeclarList()                 # Rule 10 - list for declaring variables & etc
         StatementList()                 # Rule 14 - list for intializing variables into statements             
@@ -508,11 +508,12 @@ def ourWhile():
             currentLexeme, currentToken = lexer(list_of_lexemes)
             file.append('\n' + list_of_lines[line])
             Condition()
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
             if currentLexeme == ")":
                 currentLexeme, currentToken = lexer(list_of_lexemes)
                 file.append('\n' + list_of_lines[line])
                 Statement()
-                return
             else:
                 file.append(') expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
                 #exit()
@@ -561,7 +562,7 @@ def Expression():
 
 #Rule 25A
 def ExpressionPrime():
-    file.append('<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>')
+    file.append('<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>')
     global currentLexeme
     global currentToken
     if currentLexeme == "+" or currentLexeme == "-":

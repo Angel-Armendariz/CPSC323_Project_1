@@ -67,7 +67,7 @@ Token:IDENTIFIERS        Lexeme:eggs
 Token:OPERATOR        Lexeme:+
 <Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
 <Empty> ::= Epsilon
-<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 
 Token:IDENTIFIERS        Lexeme:bacon
 <Term> ::= <Factor> <Term Prime>
@@ -77,13 +77,13 @@ Token:IDENTIFIERS        Lexeme:bacon
 Token:SEPARATOR        Lexeme:)
 <Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
 <Empty> ::= Epsilon
-<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 <Empty> ::= Epsilon
 
 Token:SEPARATOR        Lexeme:;
 <Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
 <Empty> ::= Epsilon
-<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 <Empty> ::= Epsilon
 
 Token:SEPARATOR        Lexeme:}
@@ -111,13 +111,17 @@ Token:IDENTIFIERS        Lexeme:fahr
 Token:OPERATOR        Lexeme:=>
 <Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
 <Empty> ::= Epsilon
-<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 <Empty> ::= Epsilon
 <Relop> ::= == | != |  > | < | <= | =>
 
 Token:IDENTIFIERS        Lexeme:upper
-<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 <Empty> ::= Epsilon
-) expected for while statement, at line number 47, instead of Token:IDENTIFIERS        Lexeme:upper
+
+Token:SEPARATOR        Lexeme:)
+
+Token:IDENTIFIERS        Lexeme:a
+<Statement>::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While>
 <Empty> ::= Epsilon
 $ expected at line number -1
