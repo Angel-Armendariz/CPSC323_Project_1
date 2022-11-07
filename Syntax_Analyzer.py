@@ -205,9 +205,9 @@ def Body():
             return
         else:
             file.append('}} expected at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            
+            exit()
     else:
-        file.append('{ expected, error in line ' + str(lineNumber) + ' , instead of ' + list_of_lines[line])
+        file.append('{{} expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
         exit()
     ################## End of Grammar rules ###################
 
@@ -365,12 +365,12 @@ def ReturnPrime():
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])   
         Expression()
-        if currentLexeme == ";":
+        if currentLexeme != ";":
+            file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+        else:
             currentLexeme, currentToken = lexer(list_of_lexemes)
             file.append('\n' + list_of_lines[line])   
-        else:
-            file.append('; expected, error in line ' + str(lineNumber) + ' , instead of ' + list_of_lines[line])
-
 """
 # Rule 20
 def ourPrint():
@@ -501,7 +501,8 @@ def ExpressionPrime():
         if Term():
             ExpressionPrime()
         else:
-            file.append('+  or - expected, error in line ' + str(lineNumber) + ' , instead of ' + list_of_lines[line])
+            file.append('+  or - expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
     else:
         Empty()
 
@@ -543,12 +544,52 @@ def Factor():
 # Rule 28
 def Primary():
     file.append('<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false')
-
+    global currentLexeme
+    global currentToken
     ###################### Grammar rules ######################
-
+    if currentToken == "INT" or currentToken == "REAL":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+    elif currentToken == "IDENTIFIERS":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        if currentLexeme == "(":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            IDs()
+            if currentLexeme == ")":
+                currentLexeme, currentToken = lexer(list_of_lexemes)
+                file.append('\n' + list_of_lines[line])
+                return
+            else:
+                file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                exit()
+        else:
+            file.append('( expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    elif currentLexeme == "(":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        Expression()
+        if currentLexeme == ")":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            return
+        else:
+            file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    elif currentLexeme == "true":
+        file.append('<Primary> ::= true')
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+    elif currentLexeme == "false":
+        file.append('<Primary> ::= false')
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+    else:  
+        file.append('Error at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        exit()
     ################## End of Grammar rules ###################
-
-
 # Rule 29
 def Empty():
     file.append('<Empty> ::= Epilson')
