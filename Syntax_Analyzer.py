@@ -314,41 +314,101 @@ def Statement():
         ourWhile()
     ################## End of Grammar rules ###################
 
-"""
 # Rule 16
 def Compound():
-    for line in list_of_lines:
-        file.append("<Compound> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Compound> ::= { <Statement List> }')
+    global currentLexeme
+    global currentToken
     ###################### Grammar rules ######################
-
+    if currentLexeme == "{":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])   
+        StatementList()
+        if currentLexeme == "}":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            return
+        else:
+            file.append('}} expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    else:
+        file.append('{{ expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        exit()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
 # Rule 17
 def Assign():
-    for line in list_of_lines:
-        file.append("<Assign> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Assign> ::= <Identifier> = <Expression>;')
+    global currentLexeme
+    global currentToken
     ###################### Grammar rules ######################
-
+    if currentToken == "IDENTIFIERS":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])   
+        if currentLexeme == "=":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            Expression()
+            if currentLexeme == ";":
+                currentLexeme, currentToken = lexer(list_of_lexemes)
+                file.append('\n' + list_of_lines[line])
+                return
+            else:
+                file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                exit()
+        else:
+            file.append('= expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    else:
+        file.append('IDENTIFIER expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        exit()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
 # Rule 18(Back-Tracking)
 def If():
-    for line in list_of_lines:
-        file.append("<If> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<If> ::= if ( <Condition> ) <Statement> <If Prime>')
+    global currentLexeme
+    global currentToken
     ###################### Grammar rules ######################
+    if currentLexeme == "if":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line]) 
+        if currentLexeme == "(":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            Condition()
+            if currentLexeme == ")":
+                currentLexeme, currentToken = lexer(list_of_lexemes)
+                file.append('\n' + list_of_lines[line])
+                Statement()
+                if currentLexeme == "endif" or currentLexeme == "else":
+                    IfPrime()
+                    return
+                else:
+                    file.append('endif expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                    exit()
+            else:
+                file.append(') expected for end of Statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                exit()
+        else:
+            file.append('( expected for condition, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    else:
+        file.append('if expected for if statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        exit()
 
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
-"""
+def IfPrime():
+    file.append('<If Prime> ::= endif | else <Statement> endif')
+    global currentLexeme
+    global currentToken
+    currentLexeme, currentToken = lexer(list_of_lexemes)
+    file.append('\n' + list_of_lines[line])
+    if currentLexeme == "else":
+        Statement()
+        IfPrime()
+
 # Rule 19(Back-Tracking)
 def Return():
     file.append('<Return> ::= return <Return Prime>')
