@@ -7,8 +7,8 @@ Token:KEYWORD        Lexeme:function
 
 Token:IDENTIFIERS        Lexeme:calculate
 <IDs> ::= <Identifier> <IDs Prime>
-<IDs Prime> ::= Epilson | , <IDs>
-<Empty> ::= Epilson
+<IDs Prime> ::= Epsilon | , <IDs>
+<Empty> ::= Epsilon
 
 Token:SEPARATOR        Lexeme:(
 <Opt Parameter List> ::= <Parameter List> | <Empty>
@@ -17,33 +17,33 @@ Token:SEPARATOR        Lexeme:(
 Token:IDENTIFIERS        Lexeme:eggs
 <Parameter> ::= <IDs> <Qualifier>
 <IDs> ::= <Identifier> <IDs Prime>
-<IDs Prime> ::= Epilson | , <IDs>
-<Empty> ::= Epilson
+<IDs Prime> ::= Epsilon | , <IDs>
+<Empty> ::= Epsilon
 
 Token:INT        Lexeme:2
 <Qualifier> ::= int | boolean | real
 <Qualifier> ::= integer
 
 Token:SEPARATOR        Lexeme:,
-<Parameter List Prime> ::= Episilon | ,<Parameter List>
+<Parameter List Prime> ::= Epsilon | ,<Parameter List>
 <Parameter List> ::= <Parameter> ( <Parameter List Prime> )
 
 Token:IDENTIFIERS        Lexeme:bacon
 <Parameter> ::= <IDs> <Qualifier>
 <IDs> ::= <Identifier> <IDs Prime>
-<IDs Prime> ::= Epilson | , <IDs>
-<Empty> ::= Epilson
+<IDs Prime> ::= Epsilon | , <IDs>
+<Empty> ::= Epsilon
 
 Token:INT        Lexeme:3
 <Qualifier> ::= int | boolean | real
 <Qualifier> ::= integer
 
 Token:SEPARATOR        Lexeme:)
-<Parameter List Prime> ::= Episilon | ,<Parameter List>
-<Empty> ::= Epilson
+<Parameter List Prime> ::= Epsilon | ,<Parameter List>
+<Empty> ::= Epsilon
 
 Token:SEPARATOR        Lexeme:{
-<Empty> ::= Epilson
+<Empty> ::= Epsilon
 <Body>  ::= { <Statement List> }
 
 Token:KEYWORD        Lexeme:return
@@ -55,39 +55,65 @@ Token:KEYWORD        Lexeme:return
 Token:SEPARATOR        Lexeme:(
 <Expression> ::= <Term> <Expression Prime>
 <Term> ::= <Factor> <Term Prime>
-<Factor> ::= - <Priamry> | <Primary>
+<Factor> ::= - <Primary> | <Primary>
 <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
 
 Token:IDENTIFIERS        Lexeme:eggs
 <Expression> ::= <Term> <Expression Prime>
 <Term> ::= <Factor> <Term Prime>
-<Factor> ::= - <Priamry> | <Primary>
+<Factor> ::= - <Primary> | <Primary>
 <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
 
 Token:OPERATOR        Lexeme:+
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epsilon
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 
 Token:IDENTIFIERS        Lexeme:bacon
-<IDs> ::= <Identifier> <IDs Prime>
-<IDs Prime> ::= Epilson | , <IDs>
-<Empty> ::= Epilson
+<Term> ::= <Factor> <Term Prime>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
 
 Token:SEPARATOR        Lexeme:)
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epsilon
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Empty> ::= Epsilon
 
 Token:SEPARATOR        Lexeme:;
 <Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
-<Empty> ::= Epilson
+<Empty> ::= Epsilon
 <Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
-<Empty> ::= Epilson
+<Empty> ::= Epsilon
 
 Token:SEPARATOR        Lexeme:}
-<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
-<Empty> ::= Epilson
-<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
-<Empty> ::= Epilson
+<Empty> ::= Epsilon
 
 Token:SEPARATOR        Lexeme:$
-<Empty> ::= Epilson
+<Function Definition Prime> ::= Epilson | <Function Definitions>
+<Empty> ::= Epsilon
 
 Token:KEYWORD        Lexeme:while
-<Function Definition Prime> ::= Epilson | <Function Definitions>
-<Empty> ::= Epilson
+<Empty> ::= Epsilon
+<Statement List> ::= <Statement> <Statement List Prime>
+<Statement>::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While>
+<While> ::=  while ( <Condition>  ) <Statement>
+
+Token:SEPARATOR        Lexeme:(
+
+Token:IDENTIFIERS        Lexeme:fahr
+<Condition> ::= <Expression>  <Relop>   <Expression>
+<Expression> ::= <Term> <Expression Prime>
+<Term> ::= <Factor> <Term Prime>
+<Factor> ::= - <Primary> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+
+Token:OPERATOR        Lexeme:=>
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epsilon
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Empty> ::= Epsilon
+Expected <Expression> on line str(lineNumber)
+) expected for while statement, at line number 45, instead of Token:OPERATOR        Lexeme:=>
+<Empty> ::= Epsilon
+$ expected at line number -1
