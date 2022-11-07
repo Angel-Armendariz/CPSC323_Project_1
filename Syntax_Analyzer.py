@@ -431,94 +431,99 @@ def ReturnPrime():
         else:
             currentLexeme, currentToken = lexer(list_of_lexemes)
             file.append('\n' + list_of_lines[line])   
-"""
+
 # Rule 20
 def ourPrint():
-    print("put ( <Expression>);")
-
-    global lineNumber
-    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
-    global line
-    line += 1
+    file.append('<Print> ::= put ( <Expression>);')
     global currentLexeme
     global currentToken
-    currentLexeme, currentToken = lexer(  list_of_lexemes)
-    print("\n" + list_of_lines[line])                                
-
-    if currentLexeme != "(":
-        print("( SEPARATOR expected on line " + str(lineNumber))
+    if currentLexeme == "put":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        if currentLexeme == "(":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            Expression()
+            if currentLexeme == ")":
+                currentLexeme, currentToken = lexer(list_of_lexemes)
+                file.append('\n' + list_of_lines[line])
+                if currentLexeme == ";":
+                    currentLexeme, currentToken = lexer(list_of_lexemes)
+                    file.append('\n' + list_of_lines[line])
+                    return
+                else:
+                    file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                    exit()
+            else:
+                file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                exit()
+        else:
+            file.append('( expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    else:
+        file.append('put expected for print statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
         exit()
-    ###################### Grammar rules ######################
-    Expression()                                      # Rule 25
-
-    if currentLexeme != ")":
-        print("expected ), on line number " + str(lineNumber))
-        exit()
-    
-    if currentLexeme != ";":
-        print("expected ;, on line number " + str(lineNumber))
-        exit()
-    ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
 # Rule 21
 def Scan():
-    print("<Scan> ::=    get ( <IDs> );")
-
-    global lineNumber
-    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
-    global line
-    line += 1
+    file.append('<Scan> ::= get ( <IDs> );')
     global currentLexeme
     global currentToken
-    currentLexeme, currentToken = lexer(  list_of_lexemes)
-    print("\n" + list_of_lines[line])                                
-
-    if currentLexeme != "(":
-        print("( SEPARATOR expected on line " + str(lineNumber))
+    if currentLexeme == "get":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        if currentLexeme == "(":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            IDs()
+            if currentLexeme == ")":
+                currentLexeme, currentToken = lexer(list_of_lexemes)
+                file.append('\n' + list_of_lines[line])
+                if currentLexeme == ";":
+                    currentLexeme, currentToken = lexer(list_of_lexemes)
+                    file.append('\n' + list_of_lines[line])
+                    return
+                else:
+                    file.append('; expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                    exit()
+            else:
+                file.append(') expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                exit()
+        else:
+            file.append('( expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    else:
+        file.append('"get" expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
         exit()
-    ###################### Grammar rules ######################
-    IDs()                                             # Rule 13
-
-    if currentLexeme != ")":
-        print("expected ), on line number " + str(lineNumber))
-        exit()
-    
-    if currentLexeme != ";":
-        print("expected ;, on line number " + str(lineNumber))
-        exit()
-    ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
 # Rule 22
 def ourWhile():
-    print("<While> ::=  while ( <Condition>  )  <Statement>")
-
-    global lineNumber
-    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
-    global line
-    line += 1
+    file.append('<While> ::=  while ( <Condition>  ) <Statement>')
     global currentLexeme
     global currentToken
-    currentLexeme, currentToken = lexer(  list_of_lexemes)
-    print("\n" + list_of_lines[line])                                
-
-    if currentLexeme != "(":
-        print("( SEPARATOR expected on line " + str(lineNumber))
+    if currentLexeme == "while":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        if currentLexeme == "(":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            Condition()
+            if currentLexeme == ")":
+                currentLexeme, currentToken = lexer(list_of_lexemes)
+                file.append('\n' + list_of_lines[line])
+                Statement()
+                return
+            else:
+                file.append(') expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                exit()
+        else:
+            file.append('( expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    else:
+        file.append('while expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
         exit()
-    ###################### Grammar rules ######################
-    Condition()                                       # Rule 23
 
-    if currentLexeme != ")":
-        print("expected ), on line number " + str(lineNumber))
-        exit()
-    
-    Statement()
-    ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+"""
 # Rule 23
 def Condition():
     for line in list_of_lines:
