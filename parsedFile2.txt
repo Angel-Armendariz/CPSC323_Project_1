@@ -145,3 +145,9 @@ Token:OPERATOR        Lexeme:/
 Token:SEPARATOR        Lexeme:$
 
  All done parsing.
+<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
+
+Token:OPERATOR        Lexeme:/
+<Opt Function Definitions> ::= <Function Definitions> | <Empty>
+<Empty> ::= Epsilon
+$ expected at line number -1
