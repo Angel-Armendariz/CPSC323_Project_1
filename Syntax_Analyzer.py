@@ -601,7 +601,6 @@ def Factor():
     if currentLexeme == "-":
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
-        Primary()
     else:
         Primary()
     ################## End of Grammar rules ###################
@@ -615,6 +614,25 @@ def Primary():
     if currentToken == "INT" or currentToken == "REAL":
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
+    elif currentLexeme == "true":
+        file.append('<Primary> ::= true')
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+    elif currentLexeme == "false":
+        file.append('<Primary> ::= false')
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+    elif currentLexeme == "(":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        Expression()
+        if currentLexeme == ")":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            return
+        else:
+            file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
     elif currentToken == "IDENTIFIERS":
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
@@ -632,25 +650,6 @@ def Primary():
         else:
             file.append('( expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
             exit()
-    elif currentLexeme == "(":
-        currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
-        Expression()
-        if currentLexeme == ")":
-            currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
-            return
-        else:
-            file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
-    elif currentLexeme == "true":
-        file.append('<Primary> ::= true')
-        currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
-    elif currentLexeme == "false":
-        file.append('<Primary> ::= false')
-        currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
     else:  
         file.append('Error at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
         exit()
