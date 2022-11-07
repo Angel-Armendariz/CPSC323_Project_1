@@ -58,6 +58,21 @@ Token:SEPARATOR        Lexeme:{
 
 Token:KEYWORD        Lexeme:return
 <Statement List> ::= <Statement> <Statement List Prime>
-} expected at line number 23, instead of Token:KEYWORD        Lexeme:return
+<Statement>::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While>
+<Return> ::= return <Return Prime>
+<Return Prime> ::= ; | <Expression> ;
+
+Token:IDENTIFIERS        Lexeme:eggs
+<Expression> ::= <Term> <Expression Prime>
+<Term> ::= <Factor> <Term Prime>
+<Factor> ::= - <Priamry> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epilson
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Empty> ::= Epilson
+; expected, error in line 25 , instead of Token:IDENTIFIERS        Lexeme:eggs
+<Empty> ::= Epilson
+} expected at line number 25, instead of Token:IDENTIFIERS        Lexeme:eggs
 <Function Definition Prime> ::= Epilson | <Function Definitions>
 <Empty> ::= Epilson

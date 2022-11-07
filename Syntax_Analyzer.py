@@ -272,7 +272,6 @@ def IDsPrime():
         Empty()
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        
         file.append('\n' + list_of_lines[line])   
     else:
         IDs()
@@ -280,22 +279,42 @@ def IDsPrime():
 # Rule 14(Back-Tracking)
 def StatementList():
     file.append('<Statement List> ::= <Statement> <Statement List Prime>')
-
+    global currentToken
     ###################### Grammar rules ######################
-
+    Statement()
+    StatementListPrime()
     ################## End of Grammar rules ###################
-"""
+
+# Rule 14A
+def StatementListPrime():
+    global currentToken
+    if currentToken != "KEYWORD":
+        Empty()
+    else:
+        StatementList()
+
 # Rule 15
 def Statement():
-    for line in list_of_lines:
-        file.append("<Statement> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Statement>::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While>')
+    global currentLexeme
     ###################### Grammar rules ######################
-
+    if currentLexeme == "compound":
+        Compound()
+    elif currentLexeme == "assign":
+        Assign()
+    elif currentLexeme == "if":
+        If()
+    elif currentLexeme == "return":
+        Return()
+    elif currentLexeme == "print":
+        ourPrint()
+    elif currentLexeme == "scan":
+        Scan()
+    elif currentLexeme == "while":
+        ourWhile()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
+"""
 # Rule 16
 def Compound():
     for line in list_of_lines:
@@ -329,19 +348,32 @@ def If():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     file.append("")                                         # line break
 
+"""
 # Rule 19(Back-Tracking)
 def Return():
-    for line in list_of_lines:
-        file.append("<Return> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Return> ::= return <Return Prime>')
     ###################### Grammar rules ######################
-
+    ReturnPrime()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
+# Rule 19A
+def ReturnPrime():
+    file.append('<Return Prime> ::= ; | <Expression> ;')
+    global currentLexeme
+    if currentLexeme == "return":
+        global currentToken
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])   
+        Expression()
+        if currentLexeme == ";":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])   
+        else:
+            file.append('; expected, error in line ' + str(lineNumber) + ' , instead of ' + list_of_lines[line])
+
+"""
 # Rule 20
-def Print():
+def ourPrint():
     print("put ( <Expression>);")
 
     global lineNumber
@@ -401,7 +433,7 @@ def Scan():
     file.append("")                                         # line break
 
 # Rule 22
-def While():
+def ourWhile():
     print("<While> ::=  while ( <Condition>  )  <Statement>")
 
     global lineNumber
@@ -449,50 +481,74 @@ def Relop():
     lineNumber += 2                                   # Increment by 2 to get to the next token
     file.append("")                                         # line break
 
+"""
 # Rule 25(Left Recursion)
 def Expression():
-    for line in list_of_lines:
-        file.append("<Expression> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Expression> ::= <Term> <Expression Prime>')
     ###################### Grammar rules ######################
-
+    Term()
+    ExpressionPrime()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
+
+#Rule 25A
+def ExpressionPrime():
+    file.append('<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>')
+    global currentLexeme
+    global currentToken
+    if currentLexeme == "+" or currentLexeme == "-":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])   
+        if Term():
+            ExpressionPrime()
+        else:
+            file.append('+  or - expected, error in line ' + str(lineNumber) + ' , instead of ' + list_of_lines[line])
+    else:
+        Empty()
 
 # Rule 26(Left Recursion)
 def Term():
-    for line in list_of_lines:
-        file.append("<Term> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Term> ::= <Factor> <Term Prime>')
     ###################### Grammar rules ######################
-
+    Factor()
+    TermPrime()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
+
+# Rule 26A
+def TermPrime():
+    file.append('<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>')
+    global currentLexeme
+    global currentToken
+    if currentLexeme == "*" or currentLexeme == "/":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        Factor()
+        TermPrime()
+    else:
+        Empty()
 
 # Rule 27
 def Factor():
-    for line in list_of_lines:
-        file.append("<Factor> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Factor> ::= - <Priamry> | <Primary>')
+    global currentLexeme
+    global currentToken
     ###################### Grammar rules ######################
-
+    if currentLexeme == "-":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        Primary()
+    else:
+        Primary()
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
 # Rule 28
 def Primary():
-    for line in list_of_lines:
-        file.append("<Primary> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false')
+
     ###################### Grammar rules ######################
 
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
-"""
+
+
 # Rule 29
 def Empty():
     file.append('<Empty> ::= Epilson')
