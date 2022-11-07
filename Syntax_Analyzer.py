@@ -495,35 +495,35 @@ def Scan():
     else:
         file.append('"get" expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
         exit()
-"""
 
 # Rule 22
 def ourWhile():
-    print("<While> ::=  while ( <Condition>  )  <Statement>")
-
-    global lineNumber
-    lineNumber += 2                                                  # Increment by 2 to get to the next token & lexeme
-    global line
-    line += 1
+    file.append('<While> ::=  while ( <Condition>  ) <Statement>')
     global currentLexeme
     global currentToken
-    currentLexeme, currentToken = lexer(  list_of_lexemes)
-    print("\n" + list_of_lines[line])                                
-
-    if currentLexeme != "(":
-        print("( SEPARATOR expected on line " + str(lineNumber))
+    if currentLexeme == "while":
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
+        if currentLexeme == "(":
+            currentLexeme, currentToken = lexer(list_of_lexemes)
+            file.append('\n' + list_of_lines[line])
+            Condition()
+            if currentLexeme == ")":
+                currentLexeme, currentToken = lexer(list_of_lexemes)
+                file.append('\n' + list_of_lines[line])
+                Statement()
+                return
+            else:
+                file.append(') expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                exit()
+        else:
+            file.append('( expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            exit()
+    else:
+        file.append('while expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
         exit()
-    ###################### Grammar rules ######################
-    Condition()                                       # Rule 23
 
-    if currentLexeme != ")":
-        print("expected ), on line number " + str(lineNumber))
-        exit()
-    
-    Statement()
-    ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    print("")                                         # line break
+"""
 # Rule 23
 def Condition():
     for line in list_of_lines:
