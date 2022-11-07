@@ -15,12 +15,12 @@ file.close()
 answer, oopsie = Lexical_Analyzer.run('<stdin>', inputText)
 
 # Prints out the test file tokens out to outputFile.txt which gets overwritten each time 
-f = open("outputFile.txt", "w")
+f = open("outputFile1.txt", "w")
 for item in answer:
     f.write("%s\n" % item)
 f.close()
 
-lexerFile = open("outputFile.txt", "r")
+lexerFile = open("outputFile1.txt", "r")
 parseFile = lexerFile.read()
 lexerFile.close()
 newFile = Syntax_Analyzer.parse(parseFile)
