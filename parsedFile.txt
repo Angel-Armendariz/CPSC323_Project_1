@@ -42,17 +42,7 @@ Token:SEPARATOR        Lexeme:)
 <Parameter List Prime> ::= Episilon | ,<Parameter List>
 <Empty> ::= Epilson
 
-Token:SEPARATOR        Lexeme:;
-<Opt Declaration List> ::= <Declaration List> | <Empty>
-<Declaration List> ::= <Declaration> ; (<Declaration List Prime>)
-<Declaration> ::= <Qualifier> <IDs>
-<Qualifier> ::= int | boolean | real
-<IDs> ::= <Identifier> <IDs Prime>
-<IDs Prime> ::= Epilson | , <IDs>
-<Empty> ::= Epilson
-
 Token:SEPARATOR        Lexeme:{
-<Declaration List Prime> ::= <Empty> | <Declaration List>
 <Empty> ::= Epilson
 <Body>  ::= { <Statement List> }
 
@@ -62,17 +52,42 @@ Token:KEYWORD        Lexeme:return
 <Return> ::= return <Return Prime>
 <Return Prime> ::= ; | <Expression> ;
 
+Token:SEPARATOR        Lexeme:(
+<Expression> ::= <Term> <Expression Prime>
+<Term> ::= <Factor> <Term Prime>
+<Factor> ::= - <Priamry> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+
 Token:IDENTIFIERS        Lexeme:eggs
 <Expression> ::= <Term> <Expression Prime>
 <Term> ::= <Factor> <Term Prime>
 <Factor> ::= - <Priamry> | <Primary>
 <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+
+Token:OPERATOR        Lexeme:+
+
+Token:IDENTIFIERS        Lexeme:bacon
+<IDs> ::= <Identifier> <IDs Prime>
+<IDs Prime> ::= Epilson | , <IDs>
+<Empty> ::= Epilson
+
+Token:SEPARATOR        Lexeme:)
+
+Token:SEPARATOR        Lexeme:;
 <Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
 <Empty> ::= Epilson
 <Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 <Empty> ::= Epilson
-; expected, error in line 25 , instead of Token:IDENTIFIERS        Lexeme:eggs
+
+Token:SEPARATOR        Lexeme:}
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
 <Empty> ::= Epilson
-} expected at line number 25, instead of Token:IDENTIFIERS        Lexeme:eggs
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Empty> ::= Epilson
+
+Token:SEPARATOR        Lexeme:$
+<Empty> ::= Epilson
+
+Token:KEYWORD        Lexeme:while
 <Function Definition Prime> ::= Epilson | <Function Definitions>
 <Empty> ::= Epilson

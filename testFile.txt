@@ -1,5 +1,5 @@
-function calculate (eggs 2, bacon 3);
-    { return eggs + bacon; }
+function calculate (eggs 2, bacon 3)
+    { return (eggs + bacon); }
 $ 
     while (fahr => upper) a = 23.00;
     /* !hello */
