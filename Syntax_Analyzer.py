@@ -1,5 +1,4 @@
-file = []                                                     # this file will be returned to main.py for it be tured into "parsedFile.txt"
-
+file = open("parsedFile.txt", "w")                                                    # this file will be returned to main.py for it be tured into "parsedFile.txt"
 def lexer(list_of_lexemes):
     """Will return the token based on the line number."""
 
@@ -35,9 +34,9 @@ def parse(parseFile):
 # Rule 1 
 def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
 
-    file.append('<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $')
+    file.write('\n <Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $')
 
-    file.append('\n' + list_of_lines[line+1])                          # this will file.append out the Token:___ Lexeme:
+    file.write('\n' + list_of_lines[line+1])                          # this will file.write out the Token:___ Lexeme:
     global currentLexeme
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes) # get the first token and lexeme
@@ -49,20 +48,23 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
         OptDeclarList()                 # Rule 10 - list for declaring variables & etc
         StatementList()                 # Rule 14 - list for intializing variables into statements             
         if currentLexeme == "$":        # signifies the end of the main body of code
-            file.append('\n All done parsing.')
-            exit()                      # end of code from lexer
+            file.write('\n All done parsing.')
+            file.close 
+                                   # end of code from lexer
         else:
-            file.append('$ expected at line number {}'.format(str(lineNumber)))
-            exit()
+            file.write('\n $ expected at line number {}'.format(str(lineNumber)))
+            file.close 
+             
     else:
-        file.append('$ expected at line number {}'.format(str(lineNumber)))
-        exit()
+        file.write('\n $ expected at line number {}'.format(str(lineNumber)))
+        file.close 
+         
     ################## End of Grammar rules ###################        
 
 # Rule 2 
 def OptFuncDef():
 
-    file.append('<Opt Function Definitions> ::= <Function Definitions> | <Empty>')
+    file.write('\n <Opt Function Definitions> ::= <Function Definitions> | <Empty>')
     ###################### Grammar rules ######################
     if currentLexeme == "function":
         FuncDef()       # Rule 3
@@ -72,7 +74,7 @@ def OptFuncDef():
 
 # Rule 3
 def FuncDef():
-    file.append('<Function Definitions>  ::= <Function> (<Function Definitions Prime>)')
+    file.write('\n <Function Definitions>  ::= <Function> (<Function Definitions Prime>)')
     ###################### Grammar rules ######################
     Func()
     FuncDefPrime()
@@ -80,7 +82,7 @@ def FuncDef():
 
 # Rule 3A
 def FuncDefPrime():
-    file.append('<Function Definition Prime> ::= Epilson | <Function Definitions>')
+    file.write('\n <Function Definition Prime> ::= Epilson | <Function Definitions>')
     if currentLexeme != "function":
         Empty()
     else:
@@ -88,23 +90,25 @@ def FuncDefPrime():
 
 # Rule 4
 def Func():
-    file.append('<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>')
+    file.write('\n <Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>')
 
     global currentLexeme                                              
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
 
-    file.append('\n' + list_of_lines[line])          
+    file.write('\n' + list_of_lines[line])          
 
     if currentToken != "IDENTIFIERS":
-        file.append('IDENTIFIER expected at line number {}'.format(str(lineNumber)))
-        exit()
+        file.write('\n IDENTIFIER expected at line number {}'.format(str(lineNumber)))
+        file.close
+         
     
     IDs()
 
     if currentLexeme != "(":
-        file.append('( SEPARATOR expected at line number {}'.format(str(lineNumber)))
-        exit()
+        file.write('\n ( SEPARATOR expected at line number {}'.format(str(lineNumber)))
+        file.close 
+         
 
     ###################### Grammar rules ######################
     OptParaList()
@@ -114,7 +118,7 @@ def Func():
 
 # Rule 5
 def OptParaList():
-    file.append('<Opt Parameter List> ::= <Parameter List> | <Empty>')
+    file.write('\n<Opt Parameter List> ::= <Parameter List> | <Empty>')
 
     ###################### Grammar rules ######################
     if currentLexeme == "(":
@@ -126,25 +130,27 @@ def OptParaList():
 
 # Rule 6 (Back-Tracking)
 def ParaList():
-    file.append('<Parameter List> ::= <Parameter> ( <Parameter List Prime> )')
+    file.write('\n<Parameter List> ::= <Parameter> ( <Parameter List Prime> )')
 
     global currentLexeme
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
 
-    file.append('\n' + list_of_lines[line])                                 
+    file.write('\n' + list_of_lines[line])                                 
 
     if currentToken != "IDENTIFIERS":
-        file.append('Identifier token expected at line number {}'.format(str(lineNumber)))
-        exit()
+        file.write('\nIdentifier token expected at line number {}'.format(str(lineNumber)))
+        file.close 
+         
 
     ###################### Grammar rules ######################
     Para()
     ParaListPrime()
 
     if currentLexeme != ")":
-        file.append('expected ), at line number {}'.format(str(lineNumber)))
-        exit()
+        file.write('\nexpected ), at line number {}'.format(str(lineNumber)))
+        file.close 
+         
     ################## End of Grammar rules ###################
 
 # Rule 6A
@@ -153,9 +159,9 @@ def ParaListPrime():
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
 
-    file.append('\n' + list_of_lines[line]) 
+    file.write('\n' + list_of_lines[line]) 
 
-    file.append('<Parameter List Prime> ::= Episilon | ,<Parameter List>')
+    file.write('\n<Parameter List Prime> ::= Epsilon | ,<Parameter List>')
 
     ###################### Grammar rules ######################
     if currentLexeme != ",":
@@ -166,7 +172,7 @@ def ParaListPrime():
 
 # Rule 7
 def Para():
-    file.append('<Parameter> ::= <IDs> <Qualifier>')
+    file.write('\n<Parameter> ::= <IDs> <Qualifier>')
     ###################### Grammar rules ######################
     IDs()
     Qual()
@@ -174,41 +180,43 @@ def Para():
 
 # Rule 8
 def Qual():
-    file.append('<Qualifier> ::= int | boolean | real')
+    file.write('\n<Qualifier> ::= int | boolean | real')
     global currentToken
     ###################### Grammar rules ######################
     if currentToken == "INT":
-        file.append('<Qualifier> ::= integer')
+        file.write('\n<Qualifier> ::= integer')
     elif currentToken == "BOOL":
-        file.append('<Qualifier> ::= boolean')
+        file.write('\n<Qualifier> ::= boolean')
     elif currentToken == "REAL":
-        file.append('<Qualifier> ::= real')
+        file.write('\n<Qualifier> ::= real')
     ################## End of Grammar rules ###################
 
 
 # Rule 9
 def Body():
     global currentLexeme
-    file.append('<Body>  ::= { <Statement List> }')
+    file.write('\n<Body>  ::= { <Statement List> }')
     ###################### Grammar rules ######################
     if currentLexeme == "{":
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
 
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
 
         StatementList()
 
         if currentLexeme == "}":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             return
         else:
-            file.append('}} expected at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n}} expected at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:
-        file.append('{{} expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        exit()
+        file.write('\n{{} expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        file.close 
+         
     ################## End of Grammar rules ###################
 
 # Rule 10
@@ -217,17 +225,17 @@ def OptDeclarList():
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
 
-    file.append('\n' + list_of_lines[line]) 
+    file.write('\n' + list_of_lines[line]) 
 
     if currentLexeme == ";":
-        file.append('<Opt Declaration List> ::= <Declaration List> | <Empty>')
+        file.write('\n<Opt Declaration List> ::= <Declaration List> | <Empty>')
         DeclarList()
     else:
         Empty()
 
 # Rule 11(LR)
 def DeclarList():
-    file.append('<Declaration List> ::= <Declaration> ; (<Declaration List Prime>)')
+    file.write('\n<Declaration List> ::= <Declaration> ; (<Declaration List Prime>)')
     Declar()
     global currentLexeme
     ###################### Grammar rules ######################
@@ -235,14 +243,14 @@ def DeclarList():
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
 
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
     else:
         DeclarListPrime()
     ################## End of Grammar rules ###################
 
 # Rule 11A
 def DeclarListPrime():
-    file.append('<Declaration List Prime> ::= <Empty> | <Declaration List>')
+    file.write('\n<Declaration List Prime> ::= <Empty> | <Declaration List>')
     if currentLexeme != ";":
         Empty()
     else:
@@ -250,7 +258,7 @@ def DeclarListPrime():
 
 # Rule 12
 def Declar():
-    file.append('<Declaration> ::= <Qualifier> <IDs>')
+    file.write('\n<Declaration> ::= <Qualifier> <IDs>')
     ###################### Grammar rules ######################
     Qual()
     IDs()
@@ -259,26 +267,26 @@ def Declar():
 
 # Rule 13(Back-Tracking)
 def IDs():
-    file.append('<IDs> ::= <Identifier> <IDs Prime>')                              
+    file.write('\n<IDs> ::= <Identifier> <IDs Prime>')                              
     ###################### Grammar rules ######################
     IDsPrime()
     ################## End of Grammar rules ###################
 
 # Rule 13A
 def IDsPrime():
-    file.append('<IDs Prime> ::= Epilson | , <IDs>')
+    file.write('\n<IDs Prime> ::= Epsilon | , <IDs>')
     global currentLexeme
     if currentLexeme != ",":
         Empty()
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])   
+        file.write('\n' + list_of_lines[line])   
     else:
         IDs()
 
 # Rule 14(Back-Tracking)
 def StatementList():
-    file.append('<Statement List> ::= <Statement> <Statement List Prime>')
+    file.write('\n<Statement List> ::= <Statement> <Statement List Prime>')
     global currentToken
     ###################### Grammar rules ######################
     Statement()
@@ -295,7 +303,7 @@ def StatementListPrime():
 
 # Rule 15
 def Statement():
-    file.append('<Statement>::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While>')
+    file.write('\n<Statement>::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While>')
     global currentLexeme
     ###################### Grammar rules ######################
     if currentLexeme == "compound":
@@ -316,217 +324,238 @@ def Statement():
 
 # Rule 16
 def Compound():
-    file.append('<Compound> ::= { <Statement List> }')
+    file.write('\n<Compound> ::= { <Statement List> }')
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
     if currentLexeme == "{":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])   
+        file.write('\n' + list_of_lines[line])   
         StatementList()
         if currentLexeme == "}":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             return
         else:
-            file.append('}} expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n}} expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:
-        file.append('{{ expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        exit()
+        file.write('\n{{ expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        file.close 
+         
     ################## End of Grammar rules ###################
 
 # Rule 17
 def Assign():
-    file.append('<Assign> ::= <Identifier> = <Expression>;')
+    file.write('\n<Assign> ::= <Identifier> = <Expression>;')
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
     if currentToken == "IDENTIFIERS":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])   
+        file.write('\n' + list_of_lines[line])   
         if currentLexeme == "=":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             Expression()
             if currentLexeme == ";":
                 currentLexeme, currentToken = lexer(list_of_lexemes)
-                file.append('\n' + list_of_lines[line])
+                file.write('\n' + list_of_lines[line])
                 return
             else:
-                file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                exit()
+                file.write('\n; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                file.close 
+                 
         else:
-            file.append('= expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n= expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:
-        file.append('IDENTIFIER expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        exit()
+        file.write('\nIDENTIFIER expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        file.close 
+         
     ################## End of Grammar rules ###################
 
 # Rule 18(Back-Tracking)
 def If():
-    file.append('<If> ::= if ( <Condition> ) <Statement> <If Prime>')
+    file.write('\n<If> ::= if ( <Condition> ) <Statement> <If Prime>')
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
     if currentLexeme == "if":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line]) 
+        file.write('\n' + list_of_lines[line]) 
         if currentLexeme == "(":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             Condition()
             if currentLexeme == ")":
                 currentLexeme, currentToken = lexer(list_of_lexemes)
-                file.append('\n' + list_of_lines[line])
+                file.write('\n' + list_of_lines[line])
                 Statement()
                 if currentLexeme == "endif" or currentLexeme == "else":
                     IfPrime()
                     return
                 else:
-                    file.append('endif expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                    exit()
+                    file.write('\nendif expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                    file.close 
+                     
             else:
-                file.append(') expected for end of Statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                exit()
+                file.write('\n) expected for end of Statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                file.close 
+                 
         else:
-            file.append('( expected for condition, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n( expected for condition, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:
-        file.append('if expected for if statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        exit()
+        file.write('\nif expected for if statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        file.close 
+         
 
     ################## End of Grammar rules ###################
 
 def IfPrime():
-    file.append('<If Prime> ::= endif | else <Statement> endif')
+    file.write('\n<If Prime> ::= endif | else <Statement> endif')
     global currentLexeme
     global currentToken
     currentLexeme, currentToken = lexer(list_of_lexemes)
-    file.append('\n' + list_of_lines[line])
+    file.write('\n' + list_of_lines[line])
     if currentLexeme == "else":
         Statement()
         IfPrime()
 
 # Rule 19(Back-Tracking)
 def Return():
-    file.append('<Return> ::= return <Return Prime>')
+    file.write('\n<Return> ::= return <Return Prime>')
     ###################### Grammar rules ######################
     ReturnPrime()
     ################## End of Grammar rules ###################
 
 # Rule 19A
 def ReturnPrime():
-    file.append('<Return Prime> ::= ; | <Expression> ;')
+    file.write('\n<Return Prime> ::= ; | <Expression> ;')
     global currentLexeme
     if currentLexeme == "return":
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])   
+        file.write('\n' + list_of_lines[line])   
         Expression()
         if currentLexeme != ";":
-            file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
         else:
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])   
+            file.write('\n' + list_of_lines[line])   
 
 # Rule 20
 def ourPrint():
-    file.append('<Print> ::= put ( <Expression>);')
+    file.write('\n<Print> ::= put ( <Expression>);')
     global currentLexeme
     global currentToken
     if currentLexeme == "put":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
         if currentLexeme == "(":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             Expression()
             if currentLexeme == ")":
                 currentLexeme, currentToken = lexer(list_of_lexemes)
-                file.append('\n' + list_of_lines[line])
+                file.write('\n' + list_of_lines[line])
                 if currentLexeme == ";":
                     currentLexeme, currentToken = lexer(list_of_lexemes)
-                    file.append('\n' + list_of_lines[line])
+                    file.write('\n' + list_of_lines[line])
                     return
                 else:
-                    file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                    exit()
+                    file.write('\n; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                    file.close 
+                     
             else:
-                file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                exit()
+                file.write('\n) expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                file.close 
+                 
         else:
-            file.append('( expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n( expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:
-        file.append('put expected for print statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        exit()
+        file.write('\nput expected for print statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        file.close 
+         
 
 # Rule 21
 def Scan():
-    file.append('<Scan> ::= get ( <IDs> );')
+    file.write('\n<Scan> ::= get ( <IDs> );')
     global currentLexeme
     global currentToken
     if currentLexeme == "get":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
         if currentLexeme == "(":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             IDs()
             if currentLexeme == ")":
                 currentLexeme, currentToken = lexer(list_of_lexemes)
-                file.append('\n' + list_of_lines[line])
+                file.write('\n' + list_of_lines[line])
                 if currentLexeme == ";":
                     currentLexeme, currentToken = lexer(list_of_lexemes)
-                    file.append('\n' + list_of_lines[line])
+                    file.write('\n' + list_of_lines[line])
                     return
                 else:
-                    file.append('; expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                    exit()
+                    file.write('\n; expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                    file.close 
+                     
             else:
-                file.append(') expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                exit()
+                file.write('\n) expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                file.close 
+                 
         else:
-            file.append('( expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n( expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:
-        file.append('"get" expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        exit()
+        file.write('\n"get" expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        file.close 
+         
 
 # Rule 22
 def ourWhile():
-    file.append('<While> ::=  while ( <Condition>  ) <Statement>')
+    file.write('\n<While> ::=  while ( <Condition>  ) <Statement>')
     global currentLexeme
     global currentToken
     if currentLexeme == "while":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
         if currentLexeme == "(":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             Condition()
             if currentLexeme == ")":
                 currentLexeme, currentToken = lexer(list_of_lexemes)
-                file.append('\n' + list_of_lines[line])
+                file.write('\n' + list_of_lines[line])
                 Statement()
                 return
             else:
-                file.append(') expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                exit()
+                file.write('\n) expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                file.close 
+                 
         else:
-            file.append('( expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n( expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:
-        file.append('while expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        exit()
+        file.write('\nwhile expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        file.close
+         
 
 """
 # Rule 23
 def Condition():
-    file.append('<Condition> ::= <Expression>  <Relop>   <Expression>')
+    file.write('\n<Condition> ::= <Expression>  <Relop>   <Expression>')
     global currentLexeme
     global currentToken
     global lineNumber
@@ -536,35 +565,34 @@ def Condition():
             if Expression():
                 return True
             else:
-                file.append('Expected <Expression> on line str(lineNumber)')
+                file.write('\nExpected <Expression> on line str(lineNumber)')
         else:
-            file.append('Expected <Relop> on line str(lineNumber)')
+            file.write('\nExpected <Relop> on line str(lineNumber)')
     else:
-        file.append('Expected <Expression> on line str(lineNumber)')
+        file.write('\nExpected <Expression> on line str(lineNumber)')
         return False
-        exit()
+        file.close  
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
     print("")                                         # line break
-
+    
 # Rule 24
 def Relop():
-    file.append('<Relop> ::= == | != |  > | < | <= | =>')
+    file.write('\n<Relop> ::= == | != |  > | < | <= | =>')
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
     if currentLexeme == '==' or currentLexeme == '!=' or currentLexeme == '>' or currentLexeme == '<' or currentLexeme == '<=' or currentLexeme == '=>':
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
-
+        file.write('\n' + list_of_lines[line])
     else:
-        exit()  
+        file.close    
     ################## End of Grammar rules ###################
-
 """
+
 # Rule 25(Left Recursion)
 def Expression():
-    file.append('<Expression> ::= <Term> <Expression Prime>')
+    file.write('\n<Expression> ::= <Term> <Expression Prime>')
     ###################### Grammar rules ######################
     Term()
     ExpressionPrime()
@@ -572,23 +600,24 @@ def Expression():
 
 #Rule 25A
 def ExpressionPrime():
-    file.append('<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>')
+    file.write('\n<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>')
     global currentLexeme
     global currentToken
     if currentLexeme == "+" or currentLexeme == "-":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])   
+        file.write('\n' + list_of_lines[line])   
         if Term():
             ExpressionPrime()
         else:
-            file.append('+  or - expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n+  or - expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:
         Empty()
 
 # Rule 26(Left Recursion)
 def Term():
-    file.append('<Term> ::= <Factor> <Term Prime>')
+    file.write('\n<Term> ::= <Factor> <Term Prime>')
     ###################### Grammar rules ######################
     Factor()
     TermPrime()
@@ -596,12 +625,12 @@ def Term():
 
 # Rule 26A
 def TermPrime():
-    file.append('<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>')
+    file.write('\n<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>')
     global currentLexeme
     global currentToken
     if currentLexeme == "*" or currentLexeme == "/":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
         Factor()
         TermPrime()
     else:
@@ -609,66 +638,70 @@ def TermPrime():
 
 # Rule 27
 def Factor():
-    file.append('<Factor> ::= - <Priamry> | <Primary>')
+    file.write('\n<Factor> ::= - <Primary> | <Primary>')
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
     if currentLexeme == "-":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
     else:
         Primary()
     ################## End of Grammar rules ###################
 
 # Rule 28
 def Primary():
-    file.append('<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false')
+    file.write('\n<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false')
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
     if currentToken == "INT" or currentToken == "REAL":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
     elif currentLexeme == "true":
-        file.append('<Primary> ::= true')
+        file.write('\n<Primary> ::= true')
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
     elif currentLexeme == "false":
-        file.append('<Primary> ::= false')
+        file.write('\n<Primary> ::= false')
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
     elif currentLexeme == "(":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
         Expression()
         if currentLexeme == ")":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             return
         else:
-            file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n) expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     elif currentToken == "IDENTIFIERS":
         currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])
+        file.write('\n' + list_of_lines[line])
         if currentLexeme == "(":
             currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\n' + list_of_lines[line])
+            file.write('\n' + list_of_lines[line])
             IDs()
             if currentLexeme == ")":
                 currentLexeme, currentToken = lexer(list_of_lexemes)
-                file.append('\n' + list_of_lines[line])
+                file.write('\n' + list_of_lines[line])
                 return
             else:
-                file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                exit()
+                file.write('\n) expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+                file.close 
+                 
         else:
-            file.append('( expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            exit()
+            file.write('\n( expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+            file.close 
+             
     else:  
-        file.append('Error at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        exit()
+        file.write('\nError at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
+        file.close 
+         
     ################## End of Grammar rules ###################
 # Rule 29
 def Empty():
-    file.append('<Empty> ::= Epilson')
+    file.write('\n<Empty> ::= Epsilon')

@@ -44,12 +44,12 @@ lexerFile = open("outputFile.txt", "r")
 parseFile = lexerFile.read()
 lexerFile.close()
 newFile = Syntax_Analyzer.parse(parseFile)
-
+"""
 f = open("parsedFile.txt", "w")
 for item in newFile:
     f.write("%s\n" % item)
 f.close()
-
+"""
 """
 if oopsie: 
     print(oopsie.convert_string())
