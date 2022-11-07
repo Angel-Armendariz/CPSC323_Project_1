@@ -50,13 +50,13 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
         StatementList()                 # Rule 14 - list for intializing variables into statements             
         if currentLexeme == "$":        # signifies the end of the main body of code
             file.append('\n All done parsing.')
-            #exit()                      # end of code from lexer
+                                  # end of code from lexer
         else:
             file.append('$ expected at line number {}'.format(str(lineNumber)))
-            #exit()
+            
     else:
         file.append('$ expected at line number {}'.format(str(lineNumber)))
-        #exit()
+        
     ################## End of Grammar rules ###################        
 
 # Rule 2 
@@ -98,13 +98,13 @@ def Func():
 
     if currentToken != "IDENTIFIERS":
         file.append('IDENTIFIER expected at line number {}'.format(str(lineNumber)))
-        #exit()
+        
     
     IDs()
 
     if currentLexeme != "(":
         file.append('( SEPARATOR expected at line number {}'.format(str(lineNumber)))
-        #exit()
+        
 
     ###################### Grammar rules ######################
     OptParaList()
@@ -136,7 +136,7 @@ def ParaList():
 
     if currentToken != "IDENTIFIERS":
         file.append('Identifier token expected at line number {}'.format(str(lineNumber)))
-        #exit()
+        
 
     ###################### Grammar rules ######################
     Para()
@@ -144,7 +144,7 @@ def ParaList():
 
     if currentLexeme != ")":
         file.append('expected ), at line number {}'.format(str(lineNumber)))
-        #exit()
+        
     ################## End of Grammar rules ###################
 
 # Rule 6A
@@ -205,10 +205,10 @@ def Body():
             return
         else:
             file.append('}} expected at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
     else:
         file.append('{{} expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        #exit()
+        
     ################## End of Grammar rules ###################
 
 # Rule 10
@@ -330,10 +330,10 @@ def Compound():
             return
         else:
             file.append('}} expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
     else:
         file.append('{{ expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        #exit()
+        
     ################## End of Grammar rules ###################
 
 # Rule 17
@@ -355,13 +355,13 @@ def Assign():
                 return
             else:
                 file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                #exit()
+                
         else:
             file.append('= expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
     else:
         file.append('IDENTIFIER expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        #exit()
+        
     ################## End of Grammar rules ###################
 
 # Rule 18(Back-Tracking)
@@ -386,16 +386,16 @@ def If():
                     return
                 else:
                     file.append('endif expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                    #exit()
+                    
             else:
                 file.append(') expected for end of Statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                #exit()
+                
         else:
             file.append('( expected for condition, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
     else:
         file.append('if expected for if statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        #exit()
+        
 
     ################## End of Grammar rules ###################
 
@@ -427,7 +427,7 @@ def ReturnPrime():
         Expression()
         if currentLexeme != ";":
             file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
         else:
             currentLexeme, currentToken = lexer(list_of_lexemes)
             file.append('\n' + list_of_lines[line])   
@@ -453,16 +453,16 @@ def ourPrint():
                     return
                 else:
                     file.append('; expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                    #exit()
+                    
             else:
                 file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                #exit()
+                
         else:
             file.append('( expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
     else:
         file.append('put expected for print statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        #exit()
+        
 
 # Rule 21
 def Scan():
@@ -485,16 +485,16 @@ def Scan():
                     return
                 else:
                     file.append('; expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                    #exit()
+                    
             else:
                 file.append(') expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                #exit()
+                
         else:
             file.append('( expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
     else:
         file.append('"get" expected for scan statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        #exit()
+        
 
 # Rule 22
 def ourWhile():
@@ -516,13 +516,13 @@ def ourWhile():
                 Statement()
             else:
                 file.append(') expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                #exit()
+                
         else:
             file.append('( expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
     else:
         file.append('while expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        #exit()
+        
 
 
 # Rule 23
@@ -548,7 +548,7 @@ def Relop():
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
     #else:
-        #exit()  
+          
     ################## End of Grammar rules ###################
 
 
@@ -633,7 +633,7 @@ def Primary():
             file.append('\n' + list_of_lines[line])
         else:
             file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-            #exit()
+            
     elif currentToken == "IDENTIFIERS":
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
@@ -646,10 +646,10 @@ def Primary():
                 file.append('\n' + list_of_lines[line])
             else:
                 file.append(') expected, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-                #exit()
+                
     else:  
         file.append('Error at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
-        #exit()
+        
     ################## End of Grammar rules ###################
 # Rule 29
 def Empty():
