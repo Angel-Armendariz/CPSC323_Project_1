@@ -532,14 +532,17 @@ def Condition():
 
 # Rule 24
 def Relop():
-    for line in list_of_lines:
-        file.append("<Relop> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Relop> ::= == | != |  > | < | <= | =>')
+    global currentLexeme
+    global currentToken
     ###################### Grammar rules ######################
+    if currentLexeme == '==' or currentLexeme == '!=' or currentLexeme == '>' or currentLexeme == '<' or currentLexeme == '<=' or currentLexeme == '=>':
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\n' + list_of_lines[line])
 
+    else:
+        exit()  
     ################## End of Grammar rules ###################
-    lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
 
 """
 # Rule 25(Left Recursion)
