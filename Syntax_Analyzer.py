@@ -526,15 +526,27 @@ def ourWhile():
 """
 # Rule 23
 def Condition():
-    for line in list_of_lines:
-        file.append("<Condition> ::= " + line + "\n")
-        currentLexeme, currentToken = lexer(  list_of_lexemes)
+    file.append('<Condition> ::= <Expression>  <Relop>   <Expression>')
+    global currentLexeme
+    global currentToken
+    global lineNumber
     ###################### Grammar rules ######################
-
+    if Expression():
+        if Relop():
+            if Expression():
+                return True
+            else:
+                file.append('Expected <Expression> on line str(lineNumber)')
+        else:
+            file.append('Expected <Relop> on line str(lineNumber)')
+    else:
+        file.append('Expected <Expression> on line str(lineNumber)')
+        return False
+        exit()
     ################## End of Grammar rules ###################
     lineNumber += 2                                   # Increment by 2 to get to the next token
-    file.append("")                                         # line break
-
+    print("")                                         # line break
+    
 # Rule 24
 def Relop():
     file.append('<Relop> ::= == | != |  > | < | <= | =>')
@@ -544,12 +556,11 @@ def Relop():
     if currentLexeme == '==' or currentLexeme == '!=' or currentLexeme == '>' or currentLexeme == '<' or currentLexeme == '<=' or currentLexeme == '=>':
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
-
     else:
         exit()  
     ################## End of Grammar rules ###################
-
 """
+
 # Rule 25(Left Recursion)
 def Expression():
     file.append('<Expression> ::= <Term> <Expression Prime>')
