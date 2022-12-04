@@ -30,7 +30,7 @@ for item in newFile:
     f.write("%s\n" % item)
 f.close()
 
-
+"""
 file = open("testCase2.txt", "r")
 inputText = file.read()
 file.close()
@@ -69,7 +69,7 @@ f = open("parsedFile3.txt", "w")
 for item in newFile:
     f.write("%s\n" % item)
 f.close()
-
+"""
 
 
 """

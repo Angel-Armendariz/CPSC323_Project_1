@@ -48,9 +48,8 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
     if currentLexeme == "$":          # signifies the start of the main body of code
         OptDeclarList()                 # Rule 10 - list for declaring variables & etc
         StatementList()                 # Rule 14 - list for intializing variables into statements             
-        if currentLexeme == "/":
-            currentLexeme, currentToken = lexer(list_of_lexemes)
-            file.append('\nToken:SEPARATOR        Lexeme:$')                         
+        currentLexeme, currentToken = lexer(list_of_lexemes)
+        file.append('\nToken:SEPARATOR        Lexeme:$')                         
         if currentLexeme == "$":        # signifies the end of the main body of code
             file.append('\n All done parsing.')
                                   # end of code from lexer
