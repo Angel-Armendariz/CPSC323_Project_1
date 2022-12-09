@@ -586,7 +586,7 @@ def Compound():
     ################## End of Grammar rules ###################
 
 # Rule 17
-def Assign():
+def Assign(lexer_table, i):
     file.append('<Assign> ::= <Identifier> = <Expression>;')
     global currentLexeme
     global currentToken
@@ -595,7 +595,7 @@ def Assign():
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line]) 
 
-        line_number, token, lexeme, i = next_lexeme(lexer_table, i + 1)
+        line_number, currentToken, currentLexeme, i = next_lexeme(lexer_table, i + 1)
 
         if currentLexeme == "=":
             currentLexeme, currentToken = lexer(list_of_lexemes)
