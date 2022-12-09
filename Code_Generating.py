@@ -1,4 +1,19 @@
+import Lexical_Analyzer
+from Stack import Stack
+
 file = []                                                     # this file will be returned to main.py for it be tured into "parsedFile.txt"
+Jump_Stack = Stack()
+
+memory_address = 5000
+input_filename = ''
+
+Instruction_Table_Address_Array = []
+Instruction_Table_Operation_Array = []
+Instruction_Table_Operand_Array = []
+
+Identifier_Array = []
+Memory_Address_Array = []
+TypeArray = []
 
 def lexer(list_of_lexemes):
     """Will return the token based on the line number."""
@@ -57,14 +72,178 @@ def getAddress(self, identifier):
     pass
 
 # if identifier is in table, return what's in the symbol table that's holding the identifier[2]
-def typeMatch(self, indentifier):
+def typeMatch(self, identifier):
     pass
 
 def backPatch(self, jumpAddress):
     # pop from stack
+    global Instruction_Table_Address_Array
+    address = Jump_Stack.pop()
+    Instruction_Table_Operand_Array[address] = jumpAddress + 1
     # get jump address from code list
     # create label
     pass
+
+def print_assembly_code():
+    assembly_output_file = open(input_filename + "_assembly_code" + ".txt", "w")
+
+    i = 0
+    while i < len(Instruction_Table_Address_Array):
+        if Instruction_Table_Operand_Array[i] == None:
+            assembly_output_file.write(
+                str(Instruction_Table_Address_Array[i] + 1) + ". " + Instruction_Table_Operation_Array[i] + '\n')
+        else:
+            assembly_output_file.write(
+                str(Instruction_Table_Address_Array[i] + 1) + ". " + Instruction_Table_Operation_Array[i] + " " + str(
+                    Instruction_Table_Operand_Array[i]) + '\n')
+        i += 1
+
+def next_lexeme(lexer_table, i):
+    j = -1
+    token = ""
+    lexeme = ""
+    line_number = ""
+
+    if (i < len(lexer_table)):
+        while j < len(lexer_table[i]):
+            while (True):
+                j += 1
+                if line_number == "":
+                    if lexer_table[i][j] == "" or lexer_table[i][j] == "\t":
+                        continue
+                    elif lexer_table[i][j].isdigit():
+                        line_number += str(lexer_table[i][j])
+                else:
+                    if lexer_table[i][j] == " " or lexer_table[i][j] == "\t":
+                        break
+                    else:
+                        line_number += lexer_table[i][j]
+
+            while (True):
+                j += 1
+                if token == "":
+                    if lexer_table[i][j] == " " or lexer_table[i][j] == "\t":
+                        continue
+                    elif lexer_table[i][j].isalpha():
+                        token += lexer_table[i][j]
+                else:
+                    if lexer_table[i][j] == " " or lexer_table[i][j] == "\t":
+                        break
+                    else:
+                        token += lexer_table[i][j]
+
+            while (True):
+                j += 1
+                if lexer_table[i][j] == " " or lexer_table[i][j] == "\t":
+                    continue
+                elif lexer_table[i][j] == "\n":
+                    break
+                else:
+                    lexeme += lexer_table[i][j]
+            break
+
+        return line_number, token, lexeme, i
+    else:
+        print('\n\n*****    Parsing finished    *****')
+        # Print Assembly Code
+        print_assembly_code()
+        exit()
+
+def create_symbol_table(input_filename):
+    global Identifier_Array, Memory_Address_Array, TypeArray, memory_address
+
+    # read from lexer.py output file
+    lexer_output_file = open(input_filename + "_lexer_output" + ".txt", "r")
+    lexer_table = lexer_output_file.readlines()
+    output_file = open(input_filename + "_symbol_table" + ".txt", "w")
+
+    i = 2
+    while i < len(lexer_table) - 1:
+        line_number, token, lexeme, i = next_lexeme(lexer_table, i)
+        if (lexeme == "int") or (lexeme == "boolean"):
+            tempType = lexeme
+            line_number, token, lexeme, i = next_lexeme(lexer_table, i)
+            while (lexeme != ";"):
+                line_number, token, lexeme, i = next_lexeme(lexer_table, i)
+                if (lexeme == ",") or (lexeme == ";") or (lexeme == tempType):
+                    i += 1
+                else:
+                    if (lexeme in Identifier_Array):
+                        print(lexeme + " has already been declared")
+                        exit()
+                    else:
+                        Identifier_Array.append(lexeme)
+                        Memory_Address_Array.append(memory_address)
+                        memory_address += 1
+                        TypeArray.append(tempType)
+                        i += 1
+
+def generate_assembly_instruction(operation_instr, operation):
+    global Instruction_Table_Address_Array, Instruction_Table_Operation_Array, Instruction_Table_Operand_Array, instruction_table_address
+
+    Instruction_Table_Address_Array.append(instruction_table_address)
+    Instruction_Table_Operation_Array.append(operation_instr)
+    Instruction_Table_Operand_Array.append(operation)
+
+    instruction_table_address += 1
+
+def get_memory_address(save):
+    identifierPosition = 0
+    if save in Identifier_Array:
+        identifierPosition = Identifier_Array.index(save)
+
+    return Memory_Address_Array[identifierPosition]
+
+def next_lexeme(lexer_table, i):
+    j = -1
+    token = ""
+    lexeme = ""
+    line_number = ""
+
+    if (i < len(lexer_table)):
+        while j < len(lexer_table[i]):
+            while (True):
+                j += 1
+                if line_number == "":
+                    if lexer_table[i][j] == "" or lexer_table[i][j] == "\t":
+                        continue
+                    elif lexer_table[i][j].isdigit():
+                        line_number += str(lexer_table[i][j])
+                else:
+                    if lexer_table[i][j] == " " or lexer_table[i][j] == "\t":
+                        break
+                    else:
+                        line_number += lexer_table[i][j]
+
+            while (True):
+                j += 1
+                if token == "":
+                    if lexer_table[i][j] == " " or lexer_table[i][j] == "\t":
+                        continue
+                    elif lexer_table[i][j].isalpha():
+                        token += lexer_table[i][j]
+                else:
+                    if lexer_table[i][j] == " " or lexer_table[i][j] == "\t":
+                        break
+                    else:
+                        token += lexer_table[i][j]
+
+            while (True):
+                j += 1
+                if lexer_table[i][j] == " " or lexer_table[i][j] == "\t":
+                    continue
+                elif lexer_table[i][j] == "\n":
+                    break
+                else:
+                    lexeme += lexer_table[i][j]
+            break
+
+        return line_number, token, lexeme, i
+    else:
+        print('\n\n*****    Parsing finished    *****')
+        # Print Assembly Code
+        print_assembly_code()
+        exit()
 
 def parse(parseFile):
     """Will take the inputted file and parse based on grammar rules."""
