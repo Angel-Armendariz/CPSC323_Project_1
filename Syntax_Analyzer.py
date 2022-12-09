@@ -43,15 +43,13 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
     currentLexeme, currentToken = lexer(list_of_lexemes) # get the first token and lexeme
 
     ###################### Grammar rules ######################
-    OptFuncDef()                    # Rule 2 - for declaring functions before the main body of code
-    if currentLexeme == "$":          # signifies the start of the main body of code
+    OptFuncDef()                    
+    if currentLexeme == "$":          
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])          
-        OptDeclarList()                 # Rule 10 - list for declaring variables & etc
-        StatementList()                 # Rule 14 - list for intializing variables into statements             
-        currentLexeme, currentToken = lexer(list_of_lexemes)
-        file.append('\n' + list_of_lines[line])          
-        if currentLexeme == "$":        # signifies the end of the main body of code
+        OptDeclarList()                 
+        StatementList()                                        
+        if currentLexeme == "$":        
             file.append('\n All done parsing.')
         else:
             file.append('$ expected at line number {} for rat22f'.format(str(lineNumber)))
@@ -65,8 +63,8 @@ def OptFuncDef():
 
     file.append('<Opt Function Definitions> ::= <Function Definitions> | <Empty>')
     ###################### Grammar rules ######################
-    FuncDef()       # Rule 3
-    Empty()         # Rule 29
+    FuncDef()       
+    Empty()         
     ################## End of Grammar rules ###################
 
 # Rule 3
@@ -260,10 +258,8 @@ def IDsPrime():
     if currentLexeme == ",":
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
-        if currentToken == "IDENTIFIERS":
-            IDs()
-        else:
-            return   
+        IDs()
+        return   
     else:
         Empty()
 
@@ -281,7 +277,7 @@ def StatementListPrime():
     file.append('<Statement List Prime> ::= <Empty> | <Statement List>')
     global currentToken
     global currentLexeme
-    if currentToken == "KEYWORD":
+    if currentToken == "KEYWORD" or currentLexeme == "{" or currentToken == "IDENTIFIERS":
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])  
         StatementList()
@@ -294,7 +290,7 @@ def Statement():
     global currentLexeme
     global currentToken
     ###################### Grammar rules ######################
-    if currentLexeme == "compound":
+    if currentLexeme == "{":
         Compound()
     elif currentToken == "IDENTIFIERS":
         Assign()
@@ -302,9 +298,9 @@ def Statement():
         If()
     elif currentLexeme == "return":
         Return()
-    elif currentLexeme == "print":
+    elif currentLexeme == "put":
         ourPrint()
-    elif currentLexeme == "scan":
+    elif currentLexeme == "get":
         Scan()
     elif currentLexeme == "while":
         ourWhile()
@@ -402,9 +398,7 @@ def IfPrime():
 # Rule 19(Back-Tracking)
 def Return():
     file.append('<Return> ::= return <Return Prime>')
-    ###################### Grammar rules ######################
     ReturnPrime()
-    ################## End of Grammar rules ###################
 
 # Rule 19A
 def ReturnPrime():
@@ -578,14 +572,12 @@ def TermPrime():
 def Factor():
     file.append('<Factor> ::= - <Primary> | <Primary>')
     global currentLexeme
-    ###################### Grammar rules ######################
     if currentLexeme == "-":
         global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
     Primary()
     return
-    ################## End of Grammar rules ###################
 
 # Rule 28
 def Primary():

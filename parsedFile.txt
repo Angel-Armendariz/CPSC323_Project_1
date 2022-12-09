@@ -344,6 +344,32 @@ Token:KEYWORD        Lexeme:get
 <Empty> ::= Epsilon
 <Statement List> ::= <Statement> <Statement List Prime>
 <Statement>::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+<Scan> ::= get ( <IDs> );
+
+Token:SEPARATOR        Lexeme:(
+
+Token:IDENTIFIERS        Lexeme:low
+<IDs> ::= <Identifier> <IDs Prime>
+
+Token:SEPARATOR        Lexeme:,
+<IDs Prime> ::= Epsilon | , <IDs>
+
+Token:IDENTIFIERS        Lexeme:high
+<IDs> ::= <Identifier> <IDs Prime>
+
+Token:SEPARATOR        Lexeme:,
+<IDs Prime> ::= Epsilon | , <IDs>
+
+Token:IDENTIFIERS        Lexeme:step
+<IDs> ::= <Identifier> <IDs Prime>
+
+Token:SEPARATOR        Lexeme:)
+<IDs Prime> ::= Epsilon | , <IDs>
+<Empty> ::= Epsilon
+
+Token:SEPARATOR        Lexeme:;
+
+Token:KEYWORD        Lexeme:while
 <Statement List Prime> ::= <Empty> | <Statement List>
 
 Token:SEPARATOR        Lexeme:(
@@ -351,6 +377,4 @@ Token:SEPARATOR        Lexeme:(
 <Statement>::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 <Statement List Prime> ::= <Empty> | <Statement List>
 <Empty> ::= Epsilon
-
-Token:SEPARATOR        Lexeme:$
 $ expected at line number -1 for rat22f
