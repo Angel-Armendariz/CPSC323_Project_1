@@ -1,8 +1,5 @@
 file = []                                                     # this file will be returned to main.py for it be tured into "parsedFile.txt"
 
-"""
-Initializing what's needed? --kaitlin
-"""
 symbolTable = [] # must hold: lexeme and memory address where identifier is in the table
 jump_addr = []
 jumpStack = []
