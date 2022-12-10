@@ -1,6 +1,30 @@
-function calculate (eggs 2, bacon 3)
-    { return (eggs + bacon); }
-$ 
-    while (fahr => upper) a = 23.00;
-    /* !hello */
+function convert (fahr integer)
+{
+           return 5(fahr -32)/9;
+}
+
+function convertx (x real, y boolean)
+boolean  k, z;
+real     x;
+{ 
+    if (x > y) 
+       x = false;
+    endif
+    if ( y  != z) 
+       x = true;
+    else y = 123.45;
+    endif
+    return;
+}
+
+
+$
+     integer    low, high, step;
+
+     get (low, high, step);
+     while (low  <=  high)
+        {  put (convertx(low) );
+           low = low + step;
+        } 
+
 $
