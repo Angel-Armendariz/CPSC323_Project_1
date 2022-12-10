@@ -1,6 +1,93 @@
 <Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
 
-Token:OPERATOR        Lexeme:/
+Token:KEYWORD        Lexeme:function
 <Opt Function Definitions> ::= <Function Definitions> | <Empty>
-<Empty> ::= Epsilon
-$ expected at line number -1
+<Function Definitions>  ::= <Function> (<Function Definitions Prime>)
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+
+Token:IDENTIFIERS        Lexeme:calculate
+<IDs> ::= <Identifier> <IDs Prime>
+<IDs Prime> ::= Epilson | , <IDs>
+<Empty> ::= Epilson
+
+Token:SEPARATOR        Lexeme:(
+<Opt Parameter List> ::= <Parameter List> | <Empty>
+<Parameter List> ::= <Parameter> ( <Parameter List Prime> )
+
+Token:IDENTIFIERS        Lexeme:eggs
+<Parameter> ::= <IDs> <Qualifier>
+<IDs> ::= <Identifier> <IDs Prime>
+<IDs Prime> ::= Epilson | , <IDs>
+<Empty> ::= Epilson
+
+Token:INT        Lexeme:2
+<Qualifier> ::= int | boolean | real
+<Qualifier> ::= integer
+
+Token:SEPARATOR        Lexeme:,
+<Parameter List Prime> ::= Episilon | ,<Parameter List>
+<Parameter List> ::= <Parameter> ( <Parameter List Prime> )
+
+Token:IDENTIFIERS        Lexeme:bacon
+<Parameter> ::= <IDs> <Qualifier>
+<IDs> ::= <Identifier> <IDs Prime>
+<IDs Prime> ::= Epilson | , <IDs>
+<Empty> ::= Epilson
+
+Token:INT        Lexeme:3
+<Qualifier> ::= int | boolean | real
+<Qualifier> ::= integer
+
+Token:SEPARATOR        Lexeme:)
+<Parameter List Prime> ::= Episilon | ,<Parameter List>
+<Empty> ::= Epilson
+
+Token:SEPARATOR        Lexeme:{
+<Empty> ::= Epilson
+<Body>  ::= { <Statement List> }
+
+Token:KEYWORD        Lexeme:return
+<Statement List> ::= <Statement> <Statement List Prime>
+<Statement>::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While>
+<Return> ::= return <Return Prime>
+<Return Prime> ::= ; | <Expression> ;
+
+Token:SEPARATOR        Lexeme:(
+<Expression> ::= <Term> <Expression Prime>
+<Term> ::= <Factor> <Term Prime>
+<Factor> ::= - <Priamry> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+
+Token:IDENTIFIERS        Lexeme:eggs
+<Expression> ::= <Term> <Expression Prime>
+<Term> ::= <Factor> <Term Prime>
+<Factor> ::= - <Priamry> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
+
+Token:OPERATOR        Lexeme:+
+
+Token:IDENTIFIERS        Lexeme:bacon
+<IDs> ::= <Identifier> <IDs Prime>
+<IDs Prime> ::= Epilson | , <IDs>
+<Empty> ::= Epilson
+
+Token:SEPARATOR        Lexeme:)
+
+Token:SEPARATOR        Lexeme:;
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epilson
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Empty> ::= Epilson
+
+Token:SEPARATOR        Lexeme:}
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epilson
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
+<Empty> ::= Epilson
+
+Token:SEPARATOR        Lexeme:$
+<Empty> ::= Epilson
+
+Token:KEYWORD        Lexeme:while
+<Function Definition Prime> ::= Epilson | <Function Definitions>
+<Empty> ::= Epilson
