@@ -523,7 +523,7 @@ def ourWhile():
         file.append('while expected for while statement, at line number {}, instead of {}'.format(str(lineNumber), list_of_lines[line]))
         exit()
 
-"""
+
 # Rule 23
 def Condition():
     file.append('<Condition> ::= <Expression>  <Relop>   <Expression>')
@@ -561,7 +561,7 @@ def Relop():
         exit()  
     ################## End of Grammar rules ###################
 
-"""
+
 # Rule 25(Left Recursion)
 def Expression():
     file.append('<Expression> ::= <Term> <Expression Prime>')
