@@ -1,5 +1,15 @@
 file = []                                                     # this file will be returned to main.py for it be tured into "parsedFile.txt"
 
+"""
+Initializing what's needed? --kaitlin
+"""
+symbolTable = [] # must hold: lexeme and memory address where identifier is in the table
+jump_addr = []
+jumpStack = []
+code = []
+startingAddress = 5000 # set memory address to 5000, says in the document
+declaration_type = None
+
 def lexer(list_of_lexemes):
     """Will return the token based on the line number."""
 
@@ -15,6 +25,49 @@ def lexer(list_of_lexemes):
     token = longToken[6:]                                     # token  = the part after the colon ":" from the file 
 
     return lexeme, token
+
+def gen_instr(operation, operand):
+    code.append({
+        "address": len(code) + 1, # increment by 1 when new identifier is declared and placed into the table
+        "operation": operation,
+        "operand": operand
+    })
+
+# Insert identifer into table
+def insertToTable(identifier):
+    symbolTable.append([identifier, len(symbolTable) + startingAddress, declaration_type])
+
+# To check if particular identiifer is already in the table
+def inTable(identifier):
+    return identifier in [row[0] for row in symbolTable]
+
+# increment address by 1 when new identifier is declared and placed into the table
+def instructionAddress():
+    return len(code) + 1
+
+# if identifier is in table, return what's in the symbol table that's holding the identifier[1]
+def getAddress(identifier):
+    if inTable(identifier):
+        return symbolTable[[row[0] for row in symbolTable].index(identifier)][1]
+    else:
+        file.append('{} is not defined for rat22f for getAddress() of code generating'.format(identifier))
+
+# if identifier is in table, return what's in the symbol table that's holding the identifier[2]
+def typeMatch(identifier):
+    if inTable(identifier):
+        return symbolTable[[row[0] for row in symbolTable].index(identifier)][2]
+    else:
+        file.append('{} is not defined for rat22f for typeMatch() of code generating'.format(identifier))
+
+
+def back_patch(jump_addr):
+    # pop from stack
+    # get jump address from code list
+    # create label
+    addr = jumpStack.pop()
+    code[addr - 1]['operand'] = jump_addr
+    gen_instr("LABEL", None)
+
 
 def parse(parseFile):
     """Will take the inputted file and parse based on grammar rules."""
@@ -35,11 +88,11 @@ def parse(parseFile):
 # Rule 1 
 def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
 
-    file.append('<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $')
-
-    file.append('\n' + list_of_lines[line+1])                          # this will file.append out the Token:___ Lexeme:
     global currentLexeme
     global currentToken
+    file.append('<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $')
+
+    file.append('\n' + list_of_lines[line+1])            # this will file.append out the Token:___ Lexeme:___
     currentLexeme, currentToken = lexer(list_of_lexemes) # get the first token and lexeme
 
     ###################### Grammar rules ######################
@@ -51,10 +104,11 @@ def rat22f(list_of_lines, list_of_lexemes, lineNumber, line):
         StatementList()                                        
         if currentLexeme == "$":        
             file.append('\n All done parsing.')
+            return
         else:
             file.append('$ expected at line number {} for rat22f'.format(str(lineNumber)))
     else:
-        file.append('$ expected at line number {} for rat22f'.format(str(lineNumber)))
+        file.append('dollar symbol $ expected at line number {} for rat22f'.format(str(lineNumber)))
         
     ################## End of Grammar rules ###################        
 
@@ -243,6 +297,8 @@ def IDs():
     global currentLexeme
     global currentToken
     if currentToken == "IDENTIFIERS":
+        gen_instr("STDIN", None)
+        gen_instr("POPM", getAddress(currentLexeme))
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
         IDsPrime()
@@ -256,8 +312,7 @@ def IDsPrime():
     if currentLexeme == ",":
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
-        IDs()
-        return   
+        IDs()   
     else:
         Empty()
 
@@ -332,6 +387,7 @@ def Assign():
     global currentToken
     ###################### Grammar rules ######################
     if currentToken == "IDENTIFIERS":
+        save = currentLexeme
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])   
         if currentLexeme == "=":
@@ -339,6 +395,7 @@ def Assign():
             file.append('\n' + list_of_lines[line])
             Expression()
             if currentLexeme == ";":
+                gen_instr('POPM', getAddress(save))
                 currentLexeme, currentToken = lexer(list_of_lexemes)
                 file.append('\n' + list_of_lines[line])
                 return
@@ -357,6 +414,7 @@ def If():
     global currentToken
     ###################### Grammar rules ######################
     if currentLexeme == "if":
+        address = instructionAddress()
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line]) 
         if currentLexeme == "(":
@@ -367,6 +425,7 @@ def If():
                 currentLexeme, currentToken = lexer(list_of_lexemes)
                 file.append('\n' + list_of_lines[line])
                 Statement()
+                back_patch(instructionAddress())
                 if currentLexeme == "endif" or currentLexeme == "else":
                     IfPrime()
                     return
@@ -429,6 +488,7 @@ def ourPrint():
                 currentLexeme, currentToken = lexer(list_of_lexemes)
                 file.append('\n' + list_of_lines[line])
                 if currentLexeme == ";":
+                    gen_instr("STDOUT", None)
                     currentLexeme, currentToken = lexer(list_of_lexemes)
                     file.append('\n' + list_of_lines[line])
                     return
@@ -476,6 +536,8 @@ def ourWhile():
     global currentLexeme
     global currentToken
     if currentLexeme == "while":
+        address = instructionAddress()
+        gen_instr("LABEL", None)
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
         if currentLexeme == "(":
@@ -486,6 +548,8 @@ def ourWhile():
                 currentLexeme, currentToken = lexer(list_of_lexemes)
                 file.append('\n' + list_of_lines[line])
                 Statement()
+                gen_instr("JUMP", address)
+                back_patch(instructionAddress())
                 currentLexeme, currentToken = lexer(list_of_lexemes)
                 file.append('\n' + list_of_lines[line])
                 return
@@ -504,9 +568,24 @@ def Condition():
     ###################### Grammar rules ######################
     Expression()
     Relop()
+    operation = currentLexeme
     currentLexeme, currentToken = lexer(list_of_lexemes)
     file.append('\n' + list_of_lines[line])
     ExpressionPrime()
+    if operation == "<":
+        gen_instr("LES", None)
+    elif operation == ">":
+        gen_instr("GRT", None)
+    elif operation == "==":
+        gen_instr("EQU", None)
+    elif operation == "!=":
+        gen_instr("NEQ", None)
+    elif operation == "=>":
+        gen_instr("GEQ", None)
+    elif operation == "<=":
+        gen_instr("LEQ", None)
+    jumpStack.append(instructionAddress())
+    gen_instr("JUMPZ", None)
     ################## End of Grammar rules ###################
     
 # Rule 24
@@ -528,7 +607,6 @@ def Expression():
     ###################### Grammar rules ######################
     Term()
     ExpressionPrime()
-    return
     ################## End of Grammar rules ###################
 
 #Rule 25A
@@ -537,9 +615,14 @@ def ExpressionPrime():
     global currentLexeme
     global currentToken
     if currentLexeme == "+" or currentLexeme == "-":
+        operation = currentLexeme
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])   
         Term()
+        if operation == "+":
+            gen_instr("ADD", None)
+        if operation == "-":
+            gen_instr("SUB", None)
         ExpressionPrime()
     else:
         Empty()
@@ -550,7 +633,6 @@ def Term():
     ###################### Grammar rules ######################
     Factor()
     TermPrime()
-    return
     ################## End of Grammar rules ###################
 
 # Rule 26A
@@ -559,9 +641,14 @@ def TermPrime():
     global currentLexeme
     global currentToken
     if currentLexeme == "*" or currentLexeme == "/":
+        operation = currentLexeme
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
         Factor()
+        if operation == "*":
+            gen_instr("MUL", None)
+        if operation == "/":
+            gen_instr("DIV", None)
         TermPrime()
     else:
         Empty()
@@ -570,12 +657,11 @@ def TermPrime():
 def Factor():
     file.append('<Factor> ::= - <Primary> | <Primary>')
     global currentLexeme
+    global currentToken
     if currentLexeme == "-":
-        global currentToken
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
     Primary()
-    return
 
 # Rule 28
 def Primary():
@@ -588,10 +674,12 @@ def Primary():
 
     ###################### Grammar rules ######################
     if currentToken == "INT" or currentLexeme == "real" or currentLexeme == "true" or currentLexeme == "false":
+        gen_instr("PUSHI", currentLexeme)
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
         return   
     elif currentToken == "IDENTIFIERS":
+        gen_instr("PUSHM", getAddress(currentLexeme))
         currentLexeme, currentToken = lexer(list_of_lexemes)
         file.append('\n' + list_of_lines[line])
         if currentLexeme == "(":

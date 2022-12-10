@@ -8,6 +8,7 @@ Token:KEYWORD        Lexeme:function
 Token:IDENTIFIERS        Lexeme:convert
 
 Token:SEPARATOR        Lexeme:(
+<IDs> ::= <Identifier> <IDs Prime>
 
 Token:IDENTIFIERS        Lexeme:fahr
 <Opt Parameter List> ::= <Parameter List> | <Empty>
@@ -37,9 +38,9 @@ Token:KEYWORD        Lexeme:return
 <Statement List> ::= <Statement> <Statement List Prime>
 <Statement>::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 <Return> ::= return <Return Prime>
-<Return Prime> ::= ; | <Expression> ;
 
 Token:INT        Lexeme:5
+<Return Prime> ::= ; | <Expression> ;
 <Expression> ::= <Term> <Expression Prime>
 <Term> ::= <Factor> <Term Prime>
 <Factor> ::= - <Primary> | <Primary>
@@ -94,6 +95,7 @@ Token:KEYWORD        Lexeme:function
 Token:IDENTIFIERS        Lexeme:convertx
 
 Token:SEPARATOR        Lexeme:(
+<IDs> ::= <Identifier> <IDs Prime>
 
 Token:IDENTIFIERS        Lexeme:x
 <Opt Parameter List> ::= <Parameter List> | <Empty>
@@ -287,9 +289,9 @@ Token:KEYWORD        Lexeme:return
 <Statement List> ::= <Statement> <Statement List Prime>
 <Statement>::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 <Return> ::= return <Return Prime>
-<Return Prime> ::= ; | <Expression> ;
 
 Token:SEPARATOR        Lexeme:;
+<Return Prime> ::= ; | <Expression> ;
 <Expression> ::= <Term> <Expression Prime>
 <Term> ::= <Factor> <Term Prime>
 <Factor> ::= - <Primary> | <Primary>
@@ -300,7 +302,6 @@ Token:SEPARATOR        Lexeme:}
 <Empty> ::= Epsilon
 <Expression Prime> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 <Empty> ::= Epsilon
-; expected, at line number 131, instead of Token:SEPARATOR        Lexeme:} for ReturnPrime()
 <Statement List Prime> ::= <Empty> | <Statement List>
 <Empty> ::= Epsilon
 
