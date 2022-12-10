@@ -1,6 +1,6 @@
 import Lexical_Analyzer
 import Syntax_Analyzer
-
+import Code_Generating
 # Uncomment the block below if you want to go back to testing through command line.
 """
 while True:
@@ -62,3 +62,14 @@ else:
     for x in range(len(answer)):
         print(answer[x])
 """
+#run the Code_Generating.py file
+generateFile = open("parsedFile.txt", "r")
+generatedFile = generateFile.read()
+generateFile.close()
+newFile = Code_Generating.genInstruction(generatedFile)
+
+f = open("generatedFile.txt", "w")
+for item in newFile:
+    f.write("%s\n" % item)
+f.close()
+
