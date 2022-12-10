@@ -67,8 +67,6 @@ for item in newFile:
     f.write("%s\n" % item)
 f.close()
 
-
-
 lexerFile = open("parsedFile1.txt", "r")
 parseFile = lexerFile.read()
 lexerFile.close()
