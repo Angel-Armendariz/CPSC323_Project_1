@@ -65,13 +65,21 @@ Token:IDENTIFIERS        Lexeme:eggs
 <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
 
 Token:OPERATOR        Lexeme:+
+( expected, at line number 27, instead of Token:OPERATOR        Lexeme:+
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epilson
+<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 
 Token:IDENTIFIERS        Lexeme:bacon
-<IDs> ::= <Identifier> <IDs Prime>
-<IDs Prime> ::= Epilson | , <IDs>
-<Empty> ::= Epilson
+<Term> ::= <Factor> <Term Prime>
+<Factor> ::= - <Priamry> | <Primary>
+<Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDs> ) | ( <Expression> ) | <Real> | true | false
 
 Token:SEPARATOR        Lexeme:)
+( expected, at line number 31, instead of Token:SEPARATOR        Lexeme:)
+<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
+<Empty> ::= Epilson
++  or - expected, at line number 31, instead of Token:SEPARATOR        Lexeme:)
 
 Token:SEPARATOR        Lexeme:;
 <Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
@@ -80,14 +88,8 @@ Token:SEPARATOR        Lexeme:;
 <Empty> ::= Epilson
 
 Token:SEPARATOR        Lexeme:}
-<Term Prime> ::= * <Factor> <Term Prime> | / <Factor> <Term Prime> | <Empty>
-<Empty> ::= Epilson
-<Expression> ::= + <Term> <Expression Prime> | - <Term> <Expression Prime> | <Empty>
 <Empty> ::= Epilson
 
 Token:SEPARATOR        Lexeme:$
-<Empty> ::= Epilson
-
-Token:KEYWORD        Lexeme:while
 <Function Definition Prime> ::= Epilson | <Function Definitions>
 <Empty> ::= Epilson

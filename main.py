@@ -44,11 +44,13 @@ lexerFile = open("outputFile.txt", "r")
 parseFile = lexerFile.read()
 lexerFile.close()
 newFile = Syntax_Analyzer.parse(parseFile)
-
 f = open("parsedFile.txt", "w")
 for item in newFile:
     f.write("%s\n" % item)
 f.close()
+
+
+
 
 """
 if oopsie: 
@@ -62,14 +64,16 @@ else:
     for x in range(len(answer)):
         print(answer[x])
 """
-#run the Code_Generating.py file
-generateFile = open("parsedFile.txt", "r")
-generatedFile = generateFile.read()
-generateFile.close()
-newFile = Code_Generating.genInstruction(generatedFile)
+"""
+#prints gen_instr
+parserFile = open("parsedFile.txt", "r")
+codeFile = parserFile.read()
+parserFile.close()
+newFile2 = Code_Generating.gen_instr(codeFile)
 
 f = open("generatedFile.txt", "w")
-for item in newFile:
+for item in newFile2:
     f.write("%s\n" % item)
 f.close()
 
+"""
