@@ -1,0 +1,20 @@
+<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
+
+<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
+<Opt Function Definitions> ::= <Function Definitions> | <Empty>
+<Function Definitions>  ::= <Function> (<Function Definitions Prime>)
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+<Function Definition Prime> ::= <Empty> | <Function Definitions>
+<Empty> ::= Epsilon
+<Empty> ::= Epsilon
+dollar symbol $ expected at line number -1 for rat22f
+<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
+
+<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
+<Opt Function Definitions> ::= <Function Definitions> | <Empty>
+<Function Definitions>  ::= <Function> (<Function Definitions Prime>)
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+<Function Definition Prime> ::= <Empty> | <Function Definitions>
+<Empty> ::= Epsilon
+<Empty> ::= Epsilon
+dollar symbol $ expected at line number -1 for rat22f

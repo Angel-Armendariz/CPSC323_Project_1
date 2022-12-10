@@ -1,0 +1,12 @@
+<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
+
+Token:OPERATOR        Lexeme:/
+$ expected at line number -1
+<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
+
+Token:OPERATOR        Lexeme:/
+$ expected at line number -1
+<Rat22F> ::= <Opt Function Definitions> $ <Opt Declaration List> <Statement List> $
+
+Token:OPERATOR        Lexeme:/
+$ expected at line number -1

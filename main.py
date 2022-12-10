@@ -40,20 +40,61 @@ for item in answer:
 f.close()
 """
 
-lexerFile = open("outputFile.txt", "r")
+lexerFile = open("outputFile1.txt", "r")
 parseFile = lexerFile.read()
 lexerFile.close()
 newFile = Syntax_Analyzer.parse(parseFile)
-f = open("parsedFile.txt", "w")
+f = open("parsedFile1.txt", "w")
 for item in newFile:
     f.write("%s\n" % item)
 f.close()
 
-lexerFile = open("parsedFile.txt", "r")
+lexerFile = open("outputFile2.txt", "r")
 parseFile = lexerFile.read()
 lexerFile.close()
-newFile = Code_Generating.gen_instr(parseFile)
-f = open("generatedFile.txt", "w")
+newFile = Syntax_Analyzer.parse(parseFile)
+f = open("parsedFile2.txt", "w")
+for item in newFile:
+    f.write("%s\n" % item)
+f.close()
+
+lexerFile = open("outputFile3.txt", "r")
+parseFile = lexerFile.read()
+lexerFile.close()
+newFile = Syntax_Analyzer.parse(parseFile)
+f = open("parsedFile3.txt", "w")
+for item in newFile:
+    f.write("%s\n" % item)
+f.close()
+
+
+
+lexerFile = open("parsedFile1.txt", "r")
+parseFile = lexerFile.read()
+lexerFile.close()
+newFile = Code_Generating.parse(parseFile)
+
+f = open("generatedFile1.txt", "w")
+for item in newFile:
+    f.write("%s\n" % item)
+f.close()
+
+lexerFile = open("parsedFile2.txt", "r")
+parseFile = lexerFile.read()
+lexerFile.close()
+newFile = Code_Generating.parse(parseFile)
+
+f = open("generatedFile2.txt", "w")
+for item in newFile:
+    f.write("%s\n" % item)
+f.close()
+
+lexerFile = open("parsedFile3.txt", "r")
+parseFile = lexerFile.read()
+lexerFile.close()
+newFile = Code_Generating.parse(parseFile)
+
+f = open("generatedFile3.txt", "w")
 for item in newFile:
     f.write("%s\n" % item)
 f.close()
