@@ -49,6 +49,15 @@ for item in newFile:
     f.write("%s\n" % item)
 f.close()
 
+lexerFile = open("parsedFile.txt", "r")
+parseFile = lexerFile.read()
+lexerFile.close()
+newFile = Code_Generating.parse(parseFile)
+f = open("generatedFile.txt", "w")
+for item in newFile:
+    f.write("%s\n" % item)
+f.close()
+
 
 
 
