@@ -52,37 +52,8 @@ f.close()
 lexerFile = open("parsedFile.txt", "r")
 parseFile = lexerFile.read()
 lexerFile.close()
-newFile = Code_Generating.parse(parseFile)
+newFile = Code_Generating.gen_instr(parseFile)
 f = open("generatedFile.txt", "w")
 for item in newFile:
     f.write("%s\n" % item)
 f.close()
-
-
-
-
-"""
-if oopsie: 
-    print(oopsie.convert_string())
-    f = open("outputFile.txt", "w")
-    f.write(oopsie.convert_string()
-    f.close()
-
-else: 
-    # print a token each row
-    for x in range(len(answer)):
-        print(answer[x])
-"""
-"""
-#prints gen_instr
-parserFile = open("parsedFile.txt", "r")
-codeFile = parserFile.read()
-parserFile.close()
-newFile2 = Code_Generating.gen_instr(codeFile)
-
-f = open("generatedFile.txt", "w")
-for item in newFile2:
-    f.write("%s\n" % item)
-f.close()
-
-"""
